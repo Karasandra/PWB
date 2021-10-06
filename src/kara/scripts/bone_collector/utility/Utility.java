@@ -55,7 +55,7 @@ public class Utility {
     public static boolean isStopping() { return stopping; }
 
     public static GroundItem getNearestBone(Area area) {
-        return GroundItems.stream().id(526).within(area).nearest().first();
+        return GroundItems.stream().within(area).id(526).nearest().first();
     }
 
     public static boolean getBoneCheck(Area area) {

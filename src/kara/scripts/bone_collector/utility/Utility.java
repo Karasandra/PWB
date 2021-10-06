@@ -15,7 +15,7 @@ public class Utility {
     private static boolean stopping = false;
     private static Activity activity = Activity.COLLECT;
     private static String task = "Starting";
-    public static Tile myTile = Players.local().tile();
+
 
     //Utility
     public static String getTask() { return task; }
@@ -58,8 +58,8 @@ public class Utility {
         return GroundItems.stream().within(area).id(526).nearest().first();
     }
 
-    public static Tile northTile = myTile.derive(3, 0);
-    public static Tile southTile = myTile.derive(-3, 0);
-    public static Tile westTile = myTile.derive(0, -3);
-    public static Tile eastTile = myTile.derive(0, 3);
+    public static Tile northTile = Players.local().tile().derive(3, 0);
+    public static Tile southTile = Players.local().tile().derive(-3, 0);
+    public static Tile westTile = Players.local().tile().derive(0, -3);
+    public static Tile eastTile = Players.local().tile().derive(0, 3);
 }

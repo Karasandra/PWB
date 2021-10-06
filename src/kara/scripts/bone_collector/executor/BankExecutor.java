@@ -27,7 +27,7 @@ public class BankExecutor extends ActivityExecutor {
 
     @Override
     public int execute() {
-        Tile currentTile = Utility.myTile;
+
 
         switch (localActivity) {
             case WALKING:
@@ -38,7 +38,7 @@ public class BankExecutor extends ActivityExecutor {
                     return Utility.getLoopReturn();
                 }
 
-                if (Location.EDGEVILLE_BANK.contains(currentTile) && Inventory.isFull()) {
+                if (Location.EDGEVILLE_BANK.contains(Players.local().tile()) && Inventory.isFull()) {
                     Log.fine("We are at the bank.");
                     Utility.setTask("Banking");
                     localActivity = BankActivity.BANKING;

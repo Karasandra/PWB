@@ -23,7 +23,7 @@ public class CollectExecutor extends ActivityExecutor {
 
     @Override
     public int execute() {
-        Tile currentTile = Utility.myTile;
+
 
         switch (localActivity) {
             case WALKING:
@@ -35,7 +35,7 @@ public class CollectExecutor extends ActivityExecutor {
                     return Utility.getLoopReturn();
                 }
 
-                if (Location.DUNGEON_AREA_LEFT.contains(currentTile)) {
+                if (Location.DUNGEON_AREA_LEFT.contains(Players.local().tile())) {
                     Utility.setTask("Moving to Right Side");
                     Movement.walkTo(Location.DUNGEON_AREA_RIGHT.getRandomTile());
                     Condition.wait(() -> Location.DUNGEON_AREA_RIGHT.contains(Players.local()), 50, 1500);
@@ -44,7 +44,7 @@ public class CollectExecutor extends ActivityExecutor {
                     return Utility.getLoopReturn();
                 }
 
-                if (Location.DUNGEON_AREA_RIGHT.contains(currentTile)) {
+                if (Location.DUNGEON_AREA_RIGHT.contains(Players.local().tile())) {
                     Utility.setTask("Moving to Left Side");
                     Movement.walkTo(Location.DUNGEON_AREA_LEFT.getRandomTile());
                     Condition.wait(() -> Location.DUNGEON_AREA_LEFT.contains(Players.local()), 50, 1500);
@@ -53,7 +53,7 @@ public class CollectExecutor extends ActivityExecutor {
                     return Utility.getLoopReturn();
                 }
 
-                if (!Location.DUNGEON_AREA.contains(currentTile)) {
+                if (!Location.DUNGEON_AREA.contains(Players.local().tile())) {
                     Utility.setTask("???? Where are we????");
                     Movement.walkTo(Location.DUNGEON_AREA_RIGHT.getRandomTile());
                     Condition.wait(() -> Location.DUNGEON_AREA_RIGHT.contains(Players.local()), 50, 1500);

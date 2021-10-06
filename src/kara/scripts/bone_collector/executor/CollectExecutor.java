@@ -78,7 +78,7 @@ public class CollectExecutor extends ActivityExecutor {
                     GroundItem bone = Utility.getNearestBone(Location.DUNGEON_AREA_RIGHT);
                     if (!bone.valid()) {
                         Utility.setTask("Waiting on spawn");
-                        if (!Condition.wait(() -> GroundItems.stream().id(526).within(Location.DUNGEON_AREA_RIGHT).isEmpty(), 50, 100)) {
+                        if (!Condition.wait(() -> GroundItems.stream().id(526).within(Location.DUNGEON_AREA_RIGHT).isEmpty(), 50, 50)) {
                             Log.info("No bone found");
                             Utility.setTask("No spawn moving");
                             localActivity = CollectActivity.WALKING;
@@ -118,7 +118,7 @@ public class CollectExecutor extends ActivityExecutor {
                     GroundItem bone = Utility.getNearestBone(Location.DUNGEON_AREA_LEFT);
                     if (!bone.valid()) {
                         Utility.setTask("Waiting on spawn");
-                        if (Condition.wait(() -> GroundItems.stream().id(526).within(Location.DUNGEON_AREA_LEFT).isEmpty(), 50, 100)) {
+                        if (Condition.wait(() -> GroundItems.stream().id(526).within(Location.DUNGEON_AREA_LEFT).isEmpty(), 50, 50)) {
                             Log.info("No bone found");
                             Utility.setTask("No spawn moving");
                             localActivity = CollectActivity.WALKING;

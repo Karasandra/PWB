@@ -58,10 +58,6 @@ public class Utility {
         return GroundItems.stream().within(area).id(526).nearest().first();
     }
 
-    public static boolean getBoneCheck(Area area) {
-        return GroundItems.stream().id(526).within(area) != null;
-    }
-
     public static Tile northTile = myTile.derive(3, 0);
     public static Tile southTile = myTile.derive(-3, 0);
     public static Tile westTile = myTile.derive(0, -3);

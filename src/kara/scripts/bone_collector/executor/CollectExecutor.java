@@ -7,11 +7,8 @@ import kara.scripts.bone_collector.utility.Utility;
 import org.powbot.api.Condition;
 import org.powbot.api.Tile;
 import org.powbot.api.Random;
-import org.powbot.api.rt4.GroundItem;
-import org.powbot.api.rt4.Inventory;
-import org.powbot.api.rt4.Movement;
-import org.powbot.api.rt4.Players;
-import org.powbot.api.rt4.Camera;
+import org.powbot.api.rt4.*;
+
 import java.lang.Boolean;
 import java.lang.Enum;
 import java.lang.Thread;
@@ -33,12 +30,6 @@ public class CollectExecutor extends ActivityExecutor {
     @Override
     public int execute() {
         Tile currentTile = Utility.myTile;
-
-        // if (!Location.DUNGEON_AREA.contains(currentTile)) {
-        //    Log.info("Not in dungeon. Banking first...");
-        //    Utility.setActivity(Activity.BANK);
-        //    return Utility.getQuickLoopReturn();
-        // }
 
         switch (localActivity) {
             case WALKING:
@@ -91,9 +82,9 @@ public class CollectExecutor extends ActivityExecutor {
 
                 if (Location.DUNGEON_AREA_RIGHT.contains(Players.local())) {
                     GroundItem bone = Utility.getNearestBone(Location.DUNGEON_AREA_RIGHT);
-                    if (bone == null) {
+                    if (!bone.valid()) {
                         Utility.setTask("Waiting on spawn");
-                        if (!Condition.wait(() -> Utility.getBoneCheck(Location.DUNGEON_AREA_RIGHT), 50, 100)) {
+                        if (!Condition.wait(() -> GroundItems.stream().id(526).within(Location.DUNGEON_AREA_RIGHT).isEmpty(), 50, 100)) {
                             Log.info("No bone found");
                             Utility.setTask("No spawn moving");
                             localActivity = CollectActivity.WALKING;
@@ -101,7 +92,7 @@ public class CollectExecutor extends ActivityExecutor {
                         }
                     }
 
-                    if (bone != null) {
+                    if (bone.valid()) {
                         Utility.setTask("Grabbing Bone");
                         if (!bone.inViewport()) {
                             Camera.turnTo(bone);
@@ -131,9 +122,9 @@ public class CollectExecutor extends ActivityExecutor {
 
                 if (Location.DUNGEON_AREA_LEFT.contains(Players.local())) {
                     GroundItem bone = Utility.getNearestBone(Location.DUNGEON_AREA_LEFT);
-                    if (bone == null) {
+                    if (!bone.valid()) {
                         Utility.setTask("Waiting on spawn");
-                        if (!Condition.wait(() -> Utility.getBoneCheck(Location.DUNGEON_AREA_LEFT), 50, 100)) {
+                        if (Condition.wait(() -> GroundItems.stream().id(526).within(Location.DUNGEON_AREA_LEFT).isEmpty(), 50, 100)) {
                             Log.info("No bone found");
                             Utility.setTask("No spawn moving");
                             localActivity = CollectActivity.WALKING;
@@ -141,7 +132,7 @@ public class CollectExecutor extends ActivityExecutor {
                         }
                     }
 
-                    if (bone != null) {
+                    if (bone.valid()) {
                         Utility.setTask("Grabbing Bone");
                         if (!bone.inViewport()) {
                             Camera.turnTo(bone);

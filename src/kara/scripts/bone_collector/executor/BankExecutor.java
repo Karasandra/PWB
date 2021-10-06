@@ -13,7 +13,6 @@ import org.powbot.api.rt4.Camera;
 import org.powbot.api.rt4.Bank;
 import org.powbot.api.rt4.Movement;
 import org.powbot.api.rt4.Objects;
-import java.lang.Enum;
 
 
 public class BankExecutor extends ActivityExecutor {
@@ -30,12 +29,6 @@ public class BankExecutor extends ActivityExecutor {
     public int execute() {
         Tile currentTile = Utility.myTile;
 
-        // if (!Location.EDGEVILLE_BANK.contains(currentTile)) {
-        //    Log.info("Not at bank. Banking first...");
-        //    Utility.setActivity(Activity.COLLECT);
-        //    return Utility.getQuickLoopReturn();
-        // }
-
         switch (localActivity) {
             case WALKING:
                 if (Inventory.isEmpty()) {
@@ -51,9 +44,13 @@ public class BankExecutor extends ActivityExecutor {
                     localActivity = BankActivity.BANKING;
                     return Utility.getLoopReturn();
                 }
-
-                Utility.setTask("????WE FUCKED????");
-                Utility.setStopping(true);
+                Movement.walkTo(Location.EDGEVILLE_BANK.getRandomTile());
+                if (!Condition.wait(() -> Location.EDGEVILLE_BANK.contains(Players.local()), 50, 1500)) {
+                    Utility.setTask("????WE FUCKED????");
+                    Utility.setStopping(true);
+                    return Utility.getLoopReturn();
+                }
+                Log.info("That is odd.");
                 return Utility.getLoopReturn();
 
             case BANKING:

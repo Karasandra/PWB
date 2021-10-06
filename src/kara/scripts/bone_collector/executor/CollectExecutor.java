@@ -6,13 +6,7 @@ import kara.scripts.bone_collector.utility.Location;
 import kara.scripts.bone_collector.utility.Utility;
 import org.powbot.api.Condition;
 import org.powbot.api.Tile;
-import org.powbot.api.Random;
 import org.powbot.api.rt4.*;
-
-import java.lang.Boolean;
-import java.lang.Enum;
-import java.lang.Thread;
-
 
 
 public class CollectExecutor extends ActivityExecutor {

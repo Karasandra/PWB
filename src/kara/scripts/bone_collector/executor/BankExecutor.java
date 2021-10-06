@@ -38,7 +38,7 @@ public class BankExecutor extends ActivityExecutor {
                     return Utility.getLoopReturn();
                 }
 
-                if (Location.EDGEVILLE_BANK.contains(currentTile) && Inventory.isNotEmpty()) {
+                if (Location.EDGEVILLE_BANK.contains(currentTile) && Inventory.isFull()) {
                     Log.fine("We are at the bank.");
                     Utility.setTask("Banking");
                     localActivity = BankActivity.BANKING;

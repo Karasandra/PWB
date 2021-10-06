@@ -111,6 +111,7 @@ public class CollectExecutor extends ActivityExecutor {
                             Log.severe("Failed to pickup bone");
                             return Utility.getLoopReturn();
                         }
+                        Condition.wait(() -> !bone.valid(), 50, 1500);
                         return Utility.getLoopReturn();
                     }
                     return Utility.getLoopReturn();
@@ -150,6 +151,7 @@ public class CollectExecutor extends ActivityExecutor {
                             Log.severe("Failed to pickup bone");
                             return Utility.getLoopReturn();
                         }
+                        Condition.wait(() -> !bone.valid(), 50, 1500);
                         return Utility.getLoopReturn();
                     }
                     return Utility.getLoopReturn();

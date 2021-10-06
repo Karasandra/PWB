@@ -28,7 +28,7 @@ public class Bone_Collector extends AbstractScript {
     private final CollectExecutor collectExecutor = new CollectExecutor();
 
     public static void main(String[] args) {
-        new ScriptUploader().uploadAndStart("Bone Collector", "karasandra", "127.0.0.1:5559", true, true);
+        new ScriptUploader().uploadAndStart("Bone Collector", "karasandra", "127.0.0.1:5559", false, false);
     }
 
     @Override

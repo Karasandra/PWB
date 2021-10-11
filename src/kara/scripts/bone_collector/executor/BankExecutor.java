@@ -58,7 +58,7 @@ public class BankExecutor extends ActivityExecutor {
                     Log.fine("We arrived at bank with full inv.");
                     Utility.setTask("Opening Bank");
 
-                    GameObject booth = Objects.stream().id(10355).nearest().first();
+                    GameObject booth = Objects.stream().id(Utility.BOOTH).nearest().first();
                     if (!booth.inViewport()) {
                         Camera.turnTo(booth);
                     }

@@ -15,6 +15,8 @@ public class Utility {
     private static boolean stopping = false;
     private static Activity activity = Activity.COLLECT;
     private static String task = "Starting";
+    public static int BONE = 526;
+    public static int BOOTH = 10355;
 
 
     //Utility
@@ -55,7 +57,7 @@ public class Utility {
     public static boolean isStopping() { return stopping; }
 
     public static GroundItem getNearestBone(Area area) {
-        return GroundItems.stream().within(area).id(526).nearest().first();
+        return GroundItems.stream().within(area).id(Utility.BONE).nearest().first();
     }
 
     public static Tile northTile = Players.local().tile().derive(3, 0);

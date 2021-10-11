@@ -34,7 +34,7 @@ public class Bone_Collector extends AbstractScript {
     @Override
     public void onStart() {
         Paint p = new PaintBuilder()
-                .trackInventoryItem(526, "Bones", TrackInventoryOption.QuantityChange)
+                .trackInventoryItem(Utility.BONE, "Bones", TrackInventoryOption.QuantityChange)
                 .addString("Task: ", (Callable<String>) Utility::getTask)
                 .x(30)
                 .y(65)

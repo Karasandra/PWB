@@ -1,34 +1,20 @@
-package kara.scripts.bone_collector.utility;
+package kara.scripts.blood_rune;
 
 import kara.scripts.api.Log;
-import org.powbot.api.Area;
 import org.powbot.api.Random;
-import org.powbot.api.Tile;
-import org.powbot.api.rt4.GroundItem;
-import org.powbot.api.rt4.GroundItems;
 import org.powbot.api.rt4.Movement;
-import org.powbot.api.rt4.Players;
-
 
 public class Utility {
     //General
     private static boolean stopping = false;
-    private static Activity activity = Activity.COLLECT;
     private static String task = "Starting";
-    public static int BONE = 526;
-    public static int BOOTH = 10355;
+    public static int _BLOODRUNE = 526;
+
 
 
     //Utility
     public static String getTask() { return task; }
 
-    public static Activity getActivity() {
-        return activity;
-    }
-
-    public static void setActivity(Activity activity) {
-        Utility.activity = activity;
-    }
 
     public static int getLoopReturnQuick() { return Random.nextInt(0, 10); }
     public static int getLoopReturn() { return Random.nextInt(0, 50); }
@@ -49,19 +35,10 @@ public class Utility {
 
     public static void setTask(String task) {
         Log.info("TASK: " + task);
-        Utility.task = task;
+        kara.scripts.blood_rune.Utility.task = task;
     }
 
     public static void setStopping(boolean stopping) { Utility.stopping = stopping; }
 
     public static boolean isStopping() { return stopping; }
-
-    public static GroundItem getNearestBone(Area area) {
-        return GroundItems.stream().within(area).id(Utility.BONE).nearest().first();
-    }
-
-    public static Tile northTile = Players.local().tile().derive(3, 0);
-    public static Tile southTile = Players.local().tile().derive(-3, 0);
-    public static Tile westTile = Players.local().tile().derive(0, -3);
-    public static Tile eastTile = Players.local().tile().derive(0, 3);
 }

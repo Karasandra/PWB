@@ -62,7 +62,7 @@ public class BankExecutor extends ActivityExecutor {
                     if (!booth.inViewport()) {
                         Camera.turnTo(booth);
                     }
-                    if (!Bank.opened() && !Bank.open()) {
+                    if (!Bank.open()) {
                         Log.severe("Failed to Bank");
                         return Utility.getLoopReturn();
                     }
@@ -96,6 +96,7 @@ public class BankExecutor extends ActivityExecutor {
                 localActivity = BankActivity.WALKING;
 
                 if (Inventory.isEmpty()) {
+                    Utility.setTask("Returning");
                     Movement.walkTo(Location.DUNGEON_AREA.getRandomTile());
                     Condition.wait(() -> Location.DUNGEON_AREA.contains(Players.local()), 50, 1500);
                     Utility.setActivity(Activity.COLLECT);

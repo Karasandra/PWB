@@ -38,7 +38,7 @@ public class CollectExecutor extends ActivityExecutor {
                 if (Location.DUNGEON_AREA_LEFT.contains(Players.local().tile())) {
                     Utility.setTask("Moving to Right Side");
                     Movement.walkTo(Location.DUNGEON_AREA_RIGHT.getRandomTile());
-                    Condition.wait(() -> Location.DUNGEON_AREA_RIGHT.contains(Players.local()), 50, 1500);
+                    Condition.wait(() -> Location.DUNGEON_AREA_RIGHT.contains(Players.local()), 50, 200);
                     Log.fine("Walk Complete");
                     localActivity = CollectActivity.COLLECTING_RIGHT;
                     return Utility.getLoopReturn();
@@ -47,7 +47,7 @@ public class CollectExecutor extends ActivityExecutor {
                 if (Location.DUNGEON_AREA_RIGHT.contains(Players.local().tile())) {
                     Utility.setTask("Moving to Left Side");
                     Movement.walkTo(Location.DUNGEON_AREA_LEFT.getRandomTile());
-                    Condition.wait(() -> Location.DUNGEON_AREA_LEFT.contains(Players.local()), 50, 1500);
+                    Condition.wait(() -> Location.DUNGEON_AREA_LEFT.contains(Players.local()), 50, 200);
                     Log.fine("Walk Complete");
                     localActivity = CollectActivity.COLLECTING_LEFT;
                     return Utility.getLoopReturn();
@@ -56,7 +56,7 @@ public class CollectExecutor extends ActivityExecutor {
                 if (!Location.DUNGEON_AREA.contains(Players.local().tile())) {
                     Utility.setTask("???? Where are we????");
                     Movement.walkTo(Location.DUNGEON_AREA_RIGHT.getRandomTile());
-                    Condition.wait(() -> Location.DUNGEON_AREA_RIGHT.contains(Players.local()), 50, 1500);
+                    Condition.wait(() -> Location.DUNGEON_AREA_RIGHT.contains(Players.local()), 50, 200);
                     Log.fine("Unknown area");
                     localActivity = CollectActivity.COLLECTING_RIGHT;
                     return Utility.getLoopReturn();

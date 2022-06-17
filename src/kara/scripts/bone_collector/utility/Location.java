@@ -5,8 +5,14 @@ import org.powbot.api.Tile;
 
 public class Location {
     public static final Area DUNGEON_AREA = new Area(new Tile(3092, 9895), new Tile(3124, 9866));
-    public static final Area DUNGEON_AREA_LEFT = new Area(new Tile(3113, 9896), new Tile(3123, 9888));
-    public static final Area DUNGEON_AREA_RIGHT = new Area(new Tile(3091, 9890), new Tile(3100, 9877));
+    public static final Area DUNGEON_AREA_LEFT = new Area(
+            new Tile(3116, 9892),
+            new Tile(3119, 9892),
+            new Tile(3119, 9894),
+            new Tile(3122, 9894),
+            new Tile(3122, 9891),
+            new Tile(3116, 9891));
+    public static final Area DUNGEON_AREA_RIGHT = new Area(new Tile(3093, 9886), new Tile(3098, 9879));
     public static final Area EDGEVILLE_BANK = new Area(new Tile(3091, 3491), new Tile(3094, 3488));
 
     // public static final Tile[] BONE_RIGHT = {

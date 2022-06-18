@@ -1,6 +1,10 @@
 package kara.scripts.blood_rune;
 
 
+import kara.scripts.blood_rune.executor.BankExecutor;
+import kara.scripts.blood_rune.executor.CraftExecutor;
+import kara.scripts.blood_rune.executor.WalkExecutor;
+import kara.scripts.blood_rune.utility.Utility;
 import org.powbot.api.rt4.Game;
 import org.powbot.api.rt4.Movement;
 import org.powbot.api.script.AbstractScript;
@@ -9,7 +13,8 @@ import org.powbot.api.script.paint.Paint;
 import org.powbot.api.script.paint.PaintBuilder;
 import org.powbot.api.script.paint.TrackInventoryOption;
 import org.powbot.mobile.service.ScriptUploader;
-import java.util.concurrent.Callable;
+
+import static kara.scripts.blood_rune.utility.Activity.*;
 
 @ScriptManifest(
         name = "Blood Rune",
@@ -19,6 +24,11 @@ import java.util.concurrent.Callable;
 
 
 public class Blood_Rune extends AbstractScript {
+
+    private final BankExecutor bankExecutor = new BankExecutor();
+    private final WalkExecutor walkExecutor = new WalkExecutor();
+    private final CraftExecutor craftExecutor = new CraftExecutor();
+
     public static void main(String[] args) {
         new ScriptUploader().uploadAndStart("Blood Rune", "karasandra", "127.0.0.1:5559", true, true);
     }
@@ -28,11 +38,11 @@ public class Blood_Rune extends AbstractScript {
         Paint paint = PaintBuilder.newBuilder()
                 .withoutDiscordWebhook()
                 .trackInventoryItem(Utility._BLOODRUNE, "Blood Runes", TrackInventoryOption.QuantityChange)
-                .addString("Task: ", (Callable<String>) Utility::getTask)
+                .addString("Task: ", Utility::getTask)
                 .x(30)
                 .y(65)
                 .build();
-            addPaint(paint);
+        addPaint(paint);
     }
 
     @Override
@@ -66,5 +76,17 @@ public class Blood_Rune extends AbstractScript {
             return Utility.getLoopReturn();
         }
 
+            //Activity Starts
+            switch (Utility.getActivity()) {
+        case WALK:
+            return walkExecutor.execute();
+        case BANK:
+            return bankExecutor.execute();
+        case CRAFT:
+            return craftExecutor.execute();
+            }
+            //Activity Ends
+
         return Utility.getLoopReturn();
+    }
 }

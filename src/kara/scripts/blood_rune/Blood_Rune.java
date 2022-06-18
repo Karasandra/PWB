@@ -14,8 +14,6 @@ import org.powbot.api.script.paint.PaintBuilder;
 import org.powbot.api.script.paint.TrackInventoryOption;
 import org.powbot.mobile.service.ScriptUploader;
 
-import static kara.scripts.blood_rune.utility.Activity.*;
-
 @ScriptManifest(
         name = "Blood Rune",
         description = "Blood Runes",
@@ -70,11 +68,12 @@ public class Blood_Rune extends AbstractScript {
             return Utility.getLoopReturn();
         }
 
-        if (Utility.needsToRun()) {
+        if (Movement.running() != Movement.running(true) ) {
             Utility.setTask("Enabling run");
             Movement.running(true);
             return Utility.getLoopReturn();
         }
+            //Global Conditions End
 
             //Activity Starts
             switch (Utility.getActivity()) {
@@ -87,6 +86,6 @@ public class Blood_Rune extends AbstractScript {
             }
             //Activity Ends
 
-        return Utility.getLoopReturn();
+        return Utility.getLoopReturnQuick();
     }
 }

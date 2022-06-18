@@ -1,6 +1,6 @@
 package kara.scripts.bone_collector.utility;
 
-import kara.scripts.api.Log;
+import kara.scripts.bone_collector.executor.Activity;
 import org.powbot.api.Area;
 import org.powbot.api.Random;
 import org.powbot.api.Tile;

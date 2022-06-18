@@ -1,4 +1,4 @@
-package kara.scripts.blood_rune.utility;
+package kara.scripts.blood_rune.executor;
 
 public enum Activity {
     BANK,

@@ -1,8 +1,8 @@
 package kara.scripts.blood_rune.utility;
 
-import kara.scripts.api.Log;
+import kara.scripts.blood_rune.executor.Activity;
+import kara.scripts.bone_collector.utility.Log;
 import org.powbot.api.Random;
-import org.powbot.api.rt4.Movement;
 
 public class Utility {
     //General
@@ -30,17 +30,9 @@ public class Utility {
     public static int getLoopReturnLong() { return Random.nextInt(200, 400); }
 
     private static final int LOWER_RUN_THRESH = 10;
-    private static final int UPPER_RUN_THRESH = 30;
-    private static int runThreshold = Random.nextInt(LOWER_RUN_THRESH, UPPER_RUN_THRESH);
+    private static final int UPPER_RUN_THRESH = 60;
+    public static int runThreshold = Random.nextInt(LOWER_RUN_THRESH, UPPER_RUN_THRESH);
 
-
-    public static boolean needsToRun() {
-        if (!Movement.running() && Movement.energyLevel() > runThreshold) {
-            runThreshold = Random.nextInt(LOWER_RUN_THRESH, UPPER_RUN_THRESH);
-            return true;
-        }
-        return false;
-    }
 
     public static void setTask(String task) {
         Log.info("TASK: " + task);

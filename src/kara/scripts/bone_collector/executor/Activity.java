@@ -1,4 +1,4 @@
-package kara.scripts.bone_collector.utility;
+package kara.scripts.bone_collector.executor;
 
 public enum Activity {
     BANK,

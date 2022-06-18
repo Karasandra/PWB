@@ -1,11 +1,9 @@
 package kara.scripts.bone_collector.executor;
 
-import kara.scripts.api.Log;
-import kara.scripts.bone_collector.utility.Activity;
+import kara.scripts.bone_collector.utility.Log;
 import kara.scripts.bone_collector.utility.Location;
 import kara.scripts.bone_collector.utility.Utility;
 import org.powbot.api.Condition;
-import org.powbot.api.Tile;
 import org.powbot.api.rt4.Players;
 import org.powbot.api.rt4.Inventory;
 import org.powbot.api.rt4.GameObject;

@@ -1,4 +1,4 @@
-package kara.scripts.api;
+package kara.scripts.bone_collector.utility;
 
 public class Log {
 

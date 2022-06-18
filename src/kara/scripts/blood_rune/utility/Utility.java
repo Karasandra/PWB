@@ -30,7 +30,7 @@ public class Utility {
     public static int getLoopReturnLong() { return Random.nextInt(200, 400); }
 
     private static final int LOWER_RUN_THRESH = 10;
-    private static final int UPPER_RUN_THRESH = 60;
+    private static final int UPPER_RUN_THRESH = 80;
     public static int runThreshold = Random.nextInt(LOWER_RUN_THRESH, UPPER_RUN_THRESH);
 
 

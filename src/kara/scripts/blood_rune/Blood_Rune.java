@@ -77,16 +77,12 @@ public class Blood_Rune extends AbstractScript {
             //Global Conditions End
 
             //Activity Starts
-            switch (Utility.getActivity()) {
-        case WALK:
-            return walkExecutor.execute();
-        case BANK:
-            return bankExecutor.execute();
-        case CRAFT:
-            return craftExecutor.execute();
-            }
+        return switch (Utility.getActivity()) {
+            case WALK -> walkExecutor.execute();
+            case BANK -> bankExecutor.execute();
+            case CRAFT -> craftExecutor.execute();
+        };
             //Activity Ends
 
-        return Utility.getLoopReturnQuick();
     }
 }

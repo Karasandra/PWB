@@ -6,7 +6,7 @@ import kara.scripts.blood_rune.utility.Utility;
 import org.powbot.api.rt4.Inventory;
 import org.powbot.api.rt4.Players;
 import org.powbot.api.rt4.Varpbits;
-import org.powbot.api.rt4.stream.item.InventoryItemStream;
+
 
 public class BankExecutor extends ActivityExecutor {
 
@@ -23,7 +23,13 @@ public class BankExecutor extends ActivityExecutor {
 
         switch (localActivity) {
             case RETURNING:
-                if (ing) {}
+                if (!Location.MYTH_GUID_UPPER.contains(Players.local().tile())) {
+                    if (Inventory.stream().contains(12345)) {
+                        Log.severe("No Cape!");
+                        Utility.setStopping(true);
+                        return Utility.getLoopReturnQuick();
+                    }
+                }
 
                 if (Location.MYTH_GUID_UPPER.contains(Players.local().tile())) {
                     localActivity = BankActivity.POTIONING;
@@ -41,6 +47,7 @@ public class BankExecutor extends ActivityExecutor {
                     // Stamina potion is active
                     Log.info("Potion is Good.");
                 } else {
+                    Utility.setTask("Drinking Potion!");
                     // stamina potion is not active
                     Log.info("Need to Sip Potion.");
                 }

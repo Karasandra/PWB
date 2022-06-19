@@ -12,7 +12,7 @@ import org.powbot.api.script.paint.Paint;
 import org.powbot.api.script.paint.PaintBuilder;
 import org.powbot.api.script.paint.TrackInventoryOption;
 import org.powbot.mobile.service.ScriptUploader;
-import java.util.concurrent.Callable;
+
 
 
 @ScriptManifest(
@@ -35,7 +35,7 @@ public class Bone_Collector extends AbstractScript {
     public void onStart() {
         Paint p = new PaintBuilder()
                 .trackInventoryItem(Utility.BONE, "Bones", TrackInventoryOption.QuantityChange)
-                .addString("Task: ", (Callable<String>) Utility::getTask)
+                .addString("Task: ", Utility::getTask)
                 .x(30)
                 .y(65)
                 .build();
@@ -78,15 +78,12 @@ public class Bone_Collector extends AbstractScript {
         //GLOBAL CONDITIONS (End)
 
         //ACTIVITIES (Start)
-        switch (Utility.getActivity()) {
-            case BANK:
-                return bankExecutor.execute();
-            case COLLECT:
-                return collectExecutor.execute();
-        }
+        return switch (Utility.getActivity()) {
+            case BANK -> bankExecutor.execute();
+            case COLLECT -> collectExecutor.execute();
+        };
         //ACTIVITIES (End)
 
-        return Utility.getLoopReturn();
     }
 
 }

@@ -14,6 +14,7 @@ import org.powbot.api.script.paint.PaintBuilder;
 import org.powbot.api.script.paint.TrackInventoryOption;
 import org.powbot.mobile.service.ScriptUploader;
 
+
 @ScriptManifest(
         name = "Blood Rune",
         description = "Blood Runes",

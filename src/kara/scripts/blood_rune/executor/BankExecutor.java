@@ -24,7 +24,7 @@ public class BankExecutor extends ActivityExecutor {
         switch (localActivity) {
             case RETURNING:
                 if (!Location.MYTH_GUID_UPPER.contains(Players.local().tile())) {
-                    if (Inventory.stream().contains(12345)) {
+                    if (Inventory) {
                         Log.severe("No Cape!");
                         Utility.setStopping(true);
                         return Utility.getLoopReturnQuick();

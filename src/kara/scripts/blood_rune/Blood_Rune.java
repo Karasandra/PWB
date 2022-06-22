@@ -58,11 +58,11 @@ public class Blood_Rune extends AbstractScript {
         if (Utility.isStopping()) {
             Utility.setTask("Stopping");
             this.controller.stop();
-            return Utility.getLoopReturn();
+            return Utility.getLoopReturnQuick();
         }
         if (!Game.loggedIn()) {
             Utility.setTask("Not logged in");
-            return Utility.getLoopReturn();
+            return Utility.getLoopReturnLong();
         }
         if (Game.tab() != Game.Tab.INVENTORY) {
             Utility.setTask("Opening inventory");

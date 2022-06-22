@@ -48,7 +48,7 @@ public class BankExecutor extends ActivityExecutor {
                 if (Location.MYTH_GUILD_LOWER.contains(Players.local().tile())) {
                     Utility.setTask("Walking to bank");
                     Log.info("Location lower");
-                    Movement.walkTo(Location.MYTH_GUID_UPPER.getRandomTile());
+                    Movement.walkTo(Location.MYTH_GUID_UPPER_STAIRS.getRandomTile());
                     if (Condition.wait(() -> Location.MYTH_GUID_UPPER.contains(Players.local().tile()), 50, 1500)) {
                         Log.fine("walk successful");
                     }
@@ -59,20 +59,28 @@ public class BankExecutor extends ActivityExecutor {
                 }
                 if (Location.MYTH_GUID_UPPER.contains(Players.local().tile())) {
                     Log.fine("Successful return");
-                    localActivity = BankActivity.POTIONING;
+                    localActivity = BankActivity.BANKING;
                 }
                 return Utility.getLoopReturn();
 
             case BANKING:
                 Log.info("Bank-Banking");
+                Utility.setTask("Bank Management");
                 if (Utility.getPouchVarpbit() == 30 && Inventory.isFull()) {
+                    Log.fine("Inv Good");
                     Utility.setActivity(Activity.WALK);
-                    return Utility.getLoopReturn();
+                    return Utility.getLoopReturnQuick();
                 }
+                if ()
+                if (Utility.getPotionVarpbit() <= 40) {
+                    Log.info("Potion Low");
+                    localActivity = BankActivity.POTIONING;
+                }
+                return Utility.getLoopReturnQuick();
 
             case POTIONING:
                 Log.info("Bank-Potioning");
-                Utility.setTask("Potion Check");
+                Utility.setTask("Potion Time");
                 if(Utility.getPotionVarpbit() > 40) {
                     // Stamina potion is active
                     Log.info("Potion is Good.");

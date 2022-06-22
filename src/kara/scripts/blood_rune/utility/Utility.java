@@ -16,6 +16,7 @@ public class Utility {
     //Item and Object ID's
     public static int BLOOD_RUNE = 565;
     public static int MYTH_CAPE = 12345;
+    public static int QP_CAPE = 12345;
     public static int BANK_CHEST = 12345;
     public static int POTION_VARPBIT = 277;
     public static int POUCH_VARPBIT = 1234;

@@ -3,18 +3,22 @@ package kara.scripts.blood_rune.utility;
 import kara.scripts.blood_rune.executor.Activity;
 import kara.scripts.bone_collector.utility.Log;
 import org.powbot.api.Random;
-import org.powbot.api.rt4.Movement;
-import org.w3c.dom.ranges.Range;
+import org.powbot.api.rt4.Varpbits;
+
 
 public class Utility {
     //General
     private static boolean stopping = false;
-
-    private static boolean threshold = false;
     private static Activity activity = Activity.BANK;
     private static String task = "Starting";
-    public static int _BLOODRUNE = 565;
 
+
+    //Item and Object ID's
+    public static int BLOOD_RUNE = 565;
+    public static int MYTH_CAPE = 12345;
+    public static int BANK_CHEST = 12345;
+    public static int POTION_VARPBIT = 277;
+    public static int POUCH_VARPBIT = 1234;
 
 
     //Utility
@@ -31,15 +35,6 @@ public class Utility {
     public static int getLoopReturnQuick() { return Random.nextInt(0, 10); }
     public static int getLoopReturn() { return Random.nextInt(0, 50); }
     public static int getLoopReturnLong() { return Random.nextInt(200, 400); }
-
-    private static final int LOWER_RUN_THRESH = 20;
-    private static final int UPPER_RUN_THRESH = 50;
-    public static boolean runThreshold() {
-        return Movement.energyLevel() < 60;
-    }
-
-
-
     public static void setTask(String task) {
         Log.info("TASK: " + task);
         Utility.task = task;
@@ -48,4 +43,6 @@ public class Utility {
     public static void setStopping(boolean stopping) { Utility.stopping = stopping; }
 
     public static boolean isStopping() { return stopping; }
+    public static int getPouchVarpbit() { return Varpbits.varpbit(POUCH_VARPBIT); }
+    public static int getPotionVarpbit() { return Varpbits.varpbit(POTION_VARPBIT); }
 }

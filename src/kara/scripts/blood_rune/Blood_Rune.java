@@ -36,8 +36,8 @@ public class Blood_Rune extends AbstractScript {
     public void onStart() {
         Paint paint = PaintBuilder.newBuilder()
                 .withoutDiscordWebhook()
-                .trackInventoryItem(Utility._BLOODRUNE, "Blood Runes", TrackInventoryOption.QuantityChange)
-                .trackInventoryItem(Utility._BLOODRUNE, "Gold", TrackInventoryOption.values())
+                .trackInventoryItem(Utility.BLOOD_RUNE, "Blood Runes", TrackInventoryOption.QuantityChange)
+                .trackInventoryItem(Utility.BLOOD_RUNE, "Gold", TrackInventoryOption.values())
                 .addString("Task: ", Utility::getTask)
                 .x(30)
                 .y(65)

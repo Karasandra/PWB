@@ -19,7 +19,8 @@ public class Utility {
     public static int QP_CAPE = 12345;
     public static int BANK_CHEST = 12345;
     public static int POTION_VARPBIT = 277;
-    public static int POUCH_VARPBIT = 1234;
+    public static int POUCH_VARPBIT_ITEM = 1234;
+    public static int POUCH_VARPBIT_FULL = 123456;
 
 
     //Utility
@@ -44,6 +45,6 @@ public class Utility {
     public static void setStopping(boolean stopping) { Utility.stopping = stopping; }
 
     public static boolean isStopping() { return stopping; }
-    public static int getPouchVarpbit() { return Varpbits.varpbit(POUCH_VARPBIT); }
+    public static int getPouchVarpbitItem() { return Varpbits.varpbit(POUCH_VARPBIT_ITEM); }
     public static int getPotionVarpbit() { return Varpbits.varpbit(POTION_VARPBIT); }
 }

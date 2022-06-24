@@ -32,6 +32,7 @@ public class BankExecutor extends ActivityExecutor {
                     if (!cape.valid()) {
                         Log.severe("No Cape!");
                         Utility.setStopping(true);
+                        return Utility.getLoopReturnQuick();
                     }
                     if (cape.valid()) {
                         Log.fine("Cape Found");
@@ -42,6 +43,7 @@ public class BankExecutor extends ActivityExecutor {
                         else {
                             Log.severe("Teleport failed");
                             Utility.setStopping(true);
+                            return Utility.getLoopReturnQuick();
                         }
                     }
                 }
@@ -60,21 +62,41 @@ public class BankExecutor extends ActivityExecutor {
                 if (Location.MYTH_GUID_UPPER.contains(Players.local().tile())) {
                     Log.fine("Successful return");
                     localActivity = BankActivity.BANKING;
+                    return Utility.getLoopReturnQuick();
                 }
                 return Utility.getLoopReturn();
 
             case BANKING:
                 Log.info("Bank-Banking");
                 Utility.setTask("Bank Management");
-                if (Utility.getPouchVarpbit() == 30 && Inventory.isFull()) {
-                    Log.fine("Inv Good");
-                    Utility.setActivity(Activity.WALK);
+                if (!Location.MYTH_GUID_UPPER.contains(Players.local().tile())) {
+                    Log.severe("Not at bank");
+                    localActivity = BankActivity.RETURNING;
                     return Utility.getLoopReturnQuick();
                 }
-                if ()
-                if (Utility.getPotionVarpbit() <= 40) {
-                    Log.info("Potion Low");
-                    localActivity = BankActivity.POTIONING;
+                else {
+                    GameObject bank = Objects.stream().id(Utility.BANK_CHEST).nearest().first();
+                    if (!bank.inViewport()) {
+                        Camera.turnTo(bank);
+                    }
+                    if (!Condition.wait(Bank::opened, 50, 1500)) {
+                        Log.severe("Bank failed to open");
+                        return Utility.getLoopReturn();
+                    }
+                    if (Utility.getPouchVarpbitItem() == Utility.POUCH_VARPBIT_FULL && Inventory.isFull()) {
+                        Log.fine("Inv Good");
+                        Utility.setActivity(Activity.WALK);
+                        return Utility.getLoopReturnQuick();
+                    }
+                    if (Utility.getPotionVarpbit() <= 40) {
+                        Log.info("Potion Low");
+                        localActivity = BankActivity.POTIONING;
+                        return Utility.getLoopReturnQuick();
+                    }
+                    Item rune = Inventory.stream().id(Utility.BLOOD_RUNE).first();
+                    if (rune.valid()) {
+                        Bank.deposit(Utility.BLOOD_RUNE, Bank.Amount.ALL);
+                    }
                 }
                 return Utility.getLoopReturnQuick();
 

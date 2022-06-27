@@ -3,6 +3,8 @@ package kara.scripts.blood_rune.utility;
 import kara.scripts.blood_rune.executor.Activity;
 import kara.scripts.bone_collector.utility.Log;
 import org.powbot.api.Random;
+import org.powbot.api.rt4.Inventory;
+import org.powbot.api.rt4.Item;
 import org.powbot.api.rt4.Varpbits;
 
 
@@ -15,12 +17,15 @@ public class Utility {
 
     //Item and Object ID's
     public static int BLOOD_RUNE = 565;
-    public static int MYTH_CAPE = 12345;
-    public static int QP_CAPE = 12345;
-    public static int BANK_CHEST = 12345;
+    public static int MYTH_CAPE = 123456;
+    public static int CON_CAPE = 123456;
+    public static int QP_CAPE = 123456;
+    public static int CRAFT_CAPE = 123456;
+    public static int POUCH_ITEM = 123456;
     public static int POTION_VARPBIT = 277;
-    public static int POUCH_VARPBIT_ITEM = 1234;
+    public static int POUCH_VARPBIT_ITEM = 123456;
     public static int POUCH_VARPBIT_FULL = 123456;
+    public static int PURE_ESSENCE = 123456;
 
 
     //Utility
@@ -47,4 +52,6 @@ public class Utility {
     public static boolean isStopping() { return stopping; }
     public static int getPouchVarpbitItem() { return Varpbits.varpbit(POUCH_VARPBIT_ITEM); }
     public static int getPotionVarpbit() { return Varpbits.varpbit(POTION_VARPBIT); }
+    public static int getEssenceCount() { return (int) Inventory.stream().id(PURE_ESSENCE).count(); }
+    public static Item getInvBloodRune() { return Inventory.stream().id(BLOOD_RUNE).first(); }
 }

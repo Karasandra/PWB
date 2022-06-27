@@ -4,8 +4,8 @@ import kara.scripts.blood_rune.utility.Location;
 import kara.scripts.blood_rune.utility.Log;
 import kara.scripts.blood_rune.utility.Utility;
 import org.powbot.api.Condition;
+import org.powbot.api.Locatable;
 import org.powbot.api.rt4.*;
-
 
 
 public class BankExecutor extends ActivityExecutor {
@@ -57,6 +57,7 @@ public class BankExecutor extends ActivityExecutor {
                     else {
                         Log.severe("walk failed");
                         Utility.setStopping(true);
+                        return Utility.getLoopReturnQuick();
                     }
                 }
                 if (Location.MYTH_GUID_UPPER.contains(Players.local().tile())) {
@@ -75,13 +76,14 @@ public class BankExecutor extends ActivityExecutor {
                     return Utility.getLoopReturnQuick();
                 }
                 else {
-                    GameObject bank = Objects.stream().id(Utility.BANK_CHEST).nearest().first();
-                    if (!bank.inViewport()) {
+                    Locatable bank = Bank.nearest();
+                    if (!Bank.inViewport()) {
                         Camera.turnTo(bank);
                     }
-                    if (!Condition.wait(Bank::opened, 50, 1500)) {
+                    if (!Condition.wait(Bank::open, 50, 1500)) {
                         Log.severe("Bank failed to open");
-                        return Utility.getLoopReturn();
+                        Utility.setStopping(true);
+                        return Utility.getLoopReturnQuick();
                     }
                     if (Utility.getPouchVarpbitItem() == Utility.POUCH_VARPBIT_FULL && Inventory.isFull()) {
                         Log.fine("Inv Good");
@@ -93,9 +95,24 @@ public class BankExecutor extends ActivityExecutor {
                         localActivity = BankActivity.POTIONING;
                         return Utility.getLoopReturnQuick();
                     }
-                    Item rune = Inventory.stream().id(Utility.BLOOD_RUNE).first();
-                    if (rune.valid()) {
+                    if (Utility.getInvBloodRune().valid()) {
+                        Log.info("Have Blood Runes");
                         Bank.deposit(Utility.BLOOD_RUNE, Bank.Amount.ALL);
+                        Log.info("Depositing Runes");
+                        Condition.wait(() -> !Utility.getInvBloodRune().valid(), 50, 100);
+                        Log.fine("Done Depositing");
+                    }
+                    if (Utility.getEssenceCount() <= 18) {
+                        Log.info("Essence Count Low");
+                        Bank.withdraw(Utility.PURE_ESSENCE, Bank.Amount.ALL);
+                        Condition.wait(() -> Utility.getEssenceCount() >=18, 50, 200);
+                        Log.fine("Essence Withdrawn");
+                    }
+                    if (Utility.getEssenceCount() >= 18 && Utility.getPouchVarpbitItem() != Utility.POUCH_VARPBIT_FULL) {
+                        Log.info("Need to Fill Pouch");
+                        Inventory.stream().id(Utility.POUCH_ITEM).action("Fill");
+                        Condition.wait(() -> Utility.getEssenceCount() <=18, 50, 200);
+                        Log.fine("Filled Pouch");
                     }
                 }
                 return Utility.getLoopReturnQuick();

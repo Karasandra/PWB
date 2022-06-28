@@ -30,6 +30,7 @@ public class Utility {
     public static int PURE_ESSENCE = 123456;
     public static int BLOOD_ESSENCE_INERT = 123456;
     public static int BLOOD_ESSENCE_ACTIVE = 123456;
+    public static int BLOOD_ALTER = 123456;
 
 
     //Utility

@@ -79,7 +79,7 @@ public class BankExecutor extends ActivityExecutor {
                         Condition.wait(() -> Utility.getEssenceCount() <=18, 50, 200);
                         Log.fine("Filled Pouch");
                 }
-                return Utility.getLoopReturnQuick();
+                return Utility.getLoopReturn();
 
             case POTIONING:
                 Log.info("Bank-Potioning");
@@ -108,7 +108,7 @@ public class BankExecutor extends ActivityExecutor {
                 }
                 return Utility.getLoopReturn();
         }
-        return Utility.getLoopReturnQuick();
+        return Utility.getLoopReturn();
     }
 
 }

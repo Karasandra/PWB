@@ -114,9 +114,9 @@ public class ReturnExecutor extends ActivityExecutor {
                         Utility.setActivity(Activity.BANK);
                         return Utility.getLoopReturnQuick();
                     }
-                    return Utility.getLoopReturnQuick();
+                    return Utility.getLoopReturn();
             }
 
-            return Utility.getLoopReturnQuick();
+            return Utility.getLoopReturn();
     }
 }

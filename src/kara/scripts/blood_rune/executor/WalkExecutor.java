@@ -34,6 +34,6 @@ public class WalkExecutor extends ActivityExecutor {
 
 
 
-        return Utility.getLoopReturnQuick();
+        return Utility.getLoopReturn();
     }
 }

@@ -4,12 +4,11 @@ import kara.scripts.blood_rune.utility.Location;
 import kara.scripts.blood_rune.utility.Log;
 import kara.scripts.blood_rune.utility.Utility;
 import org.powbot.api.Condition;
+import org.powbot.api.Random;
 import org.powbot.api.rt4.GameObject;
 import org.powbot.api.rt4.Objects;
 import org.powbot.api.rt4.Player;
 import org.powbot.api.rt4.Players;
-
-import java.util.Random;
 
 public class CraftExecutor extends ActivityExecutor {
 
@@ -37,7 +36,7 @@ public class CraftExecutor extends ActivityExecutor {
                 if (Utility.getEssenceCount() > 1) {
                     Log.info("We have Essence");
                     alter.click();
-                    Thread.sleep(Utility.getLoopReturnLong());
+                    Condition.sleep();
                 }
 
             case EXTRACT:

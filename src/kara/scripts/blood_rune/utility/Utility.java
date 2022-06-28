@@ -5,6 +5,7 @@ import kara.scripts.bone_collector.utility.Log;
 import org.powbot.api.Random;
 import org.powbot.api.rt4.Inventory;
 import org.powbot.api.rt4.Item;
+import org.powbot.api.rt4.Players;
 import org.powbot.api.rt4.Varpbits;
 
 
@@ -60,4 +61,5 @@ public class Utility {
     public static int getEssenceCount() { return (int) Inventory.stream().id(PURE_ESSENCE).count(); }
     public static Item getInvPotion() { return Inventory.stream().id(POTION_ITEM).first(); }
     public static Item getInvBloodRune() { return Inventory.stream().id(BLOOD_RUNE).first(); }
+    public static int getIdle() { return Players.local().idleAnimation(); }
 }

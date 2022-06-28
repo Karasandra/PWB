@@ -5,5 +5,6 @@ public enum Activity {
 
     CRAFT,
 
-    WALK
+    WALK,
+    RETURN
 }

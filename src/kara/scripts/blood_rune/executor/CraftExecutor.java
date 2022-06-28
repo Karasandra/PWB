@@ -1,5 +1,7 @@
 package kara.scripts.blood_rune.executor;
 
+import kara.scripts.blood_rune.utility.Log;
+
 public class CraftExecutor extends ActivityExecutor {
 
     private CraftActivity localActivity = CraftActivity.CRAFT;
@@ -11,14 +13,13 @@ public class CraftExecutor extends ActivityExecutor {
 
     @Override
     public int execute() {
+        Log.info("Craft Executor");
 
         switch (localActivity) {
             case CRAFT:
-                if () {}
-                    return ;
+
             case EXTRACT:
-                if () {}
-                return ;
+
 
         }
         return 0;

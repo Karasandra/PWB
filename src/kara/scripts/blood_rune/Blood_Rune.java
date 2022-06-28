@@ -3,6 +3,7 @@ package kara.scripts.blood_rune;
 
 import kara.scripts.blood_rune.executor.BankExecutor;
 import kara.scripts.blood_rune.executor.CraftExecutor;
+import kara.scripts.blood_rune.executor.ReturnExecutor;
 import kara.scripts.blood_rune.executor.WalkExecutor;
 import kara.scripts.blood_rune.utility.Utility;
 import org.powbot.api.rt4.Game;
@@ -27,6 +28,7 @@ public class Blood_Rune extends AbstractScript {
     private final BankExecutor bankExecutor = new BankExecutor();
     private final WalkExecutor walkExecutor = new WalkExecutor();
     private final CraftExecutor craftExecutor = new CraftExecutor();
+    private final ReturnExecutor returnExecutor = new ReturnExecutor();
 
     public static void main(String[] args) {
         new ScriptUploader().uploadAndStart("Blood Rune", "karasandra", "127.0.0.1:5559", true, true);
@@ -82,6 +84,7 @@ public class Blood_Rune extends AbstractScript {
             case WALK -> walkExecutor.execute();
             case BANK -> bankExecutor.execute();
             case CRAFT -> craftExecutor.execute();
+            case RETURN -> returnExecutor.execute();
         };
             //Activity Ends
 

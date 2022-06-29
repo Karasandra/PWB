@@ -3,12 +3,10 @@ package kara.scripts.blood_rune.executor;
 import kara.scripts.blood_rune.utility.Location;
 import kara.scripts.blood_rune.utility.Log;
 import kara.scripts.blood_rune.utility.Utility;
+import kotlin.jvm.functions.Function0;
 import org.powbot.api.Condition;
-import org.powbot.api.Random;
-import org.powbot.api.rt4.GameObject;
-import org.powbot.api.rt4.Objects;
-import org.powbot.api.rt4.Player;
-import org.powbot.api.rt4.Players;
+import org.powbot.api.event.SkillExpGainedEvent;
+import org.powbot.api.rt4.*;
 
 public class CraftExecutor extends ActivityExecutor {
 
@@ -36,7 +34,6 @@ public class CraftExecutor extends ActivityExecutor {
                 if (Utility.getEssenceCount() > 1) {
                     Log.info("We have Essence");
                     alter.click();
-                    Condition.sleep();
                 }
 
             case EXTRACT:

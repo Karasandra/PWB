@@ -76,7 +76,7 @@ public class BankExecutor extends ActivityExecutor {
                 if (Utility.getEssenceCount() >= 18 && Utility.getPouchVarpbitItem() != Utility.POUCH_VARPBIT_FULL) {
                         Log.info("Need to Fill Pouch");
                         Inventory.stream().id(Utility.POUCH_ITEM).action("Fill");
-                        Condition.wait(() -> Utility.getEssenceCount() <=18, 50, 200);
+                        Condition.wait(() -> Utility.getEssenceCount() <= 18, 50, 200);
                         Log.fine("Filled Pouch");
                 }
                 return Utility.getLoopReturn();

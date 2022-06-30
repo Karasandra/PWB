@@ -8,18 +8,20 @@ import kara.scripts.blood_rune.executor.WalkExecutor;
 import kara.scripts.blood_rune.utility.Utility;
 import org.powbot.api.rt4.Game;
 import org.powbot.api.rt4.Movement;
-import org.powbot.api.script.AbstractScript;
-import org.powbot.api.script.ScriptManifest;
+import org.powbot.api.script.*;
 import org.powbot.api.script.paint.Paint;
 import org.powbot.api.script.paint.PaintBuilder;
 import org.powbot.api.script.paint.TrackInventoryOption;
 import org.powbot.mobile.service.ScriptUploader;
 
 
+
 @ScriptManifest(
         name = "Blood Rune",
         description = "Blood Runes",
-        version =  "0.0.1"
+        version =  "0.0.1",
+        category = ScriptCategory.Runecrafting,
+        author = "Karasandra"
 )
 
 

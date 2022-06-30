@@ -34,7 +34,11 @@ public class BankExecutor extends ActivityExecutor {
                 if (!Bank.inViewport()) {
                     Camera.turnTo(bank);
                 }
-                if (!Condition.wait(Bank::open, 250, 100)) {
+                if (!Bank.open()) {
+                    Log.severe("Bank failed to open");
+                    Utility.setStopping(true);
+                }
+                if (!Condition.wait(Bank::opened, 250, 100)) {
                     Log.severe("Bank failed to open");
                     Utility.setStopping(true);
                     return Utility.getLoopReturnQuick();

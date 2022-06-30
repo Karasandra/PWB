@@ -2,10 +2,8 @@ package kara.scripts.blood_rune.executor;
 
 import kara.scripts.blood_rune.utility.Log;
 import kara.scripts.blood_rune.utility.Utility;
-import org.powbot.api.rt4.Players;
-import org.powbot.api.rt4.Skills;
 import org.powbot.api.rt4.walking.model.Skill;
-import org.powbot.proto.rt4.Player;
+
 
 public class WalkExecutor extends ActivityExecutor {
 

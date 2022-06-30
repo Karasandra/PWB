@@ -27,35 +27,35 @@ public class BankExecutor extends ActivityExecutor {
         }
 
         switch (localActivity) {
-
-            case BANKING:
+            case BANKING -> {
                 Log.info("Bank-Banking");
                 Utility.setTask("Bank Management");
                 Locatable bank = Bank.nearest();
                 if (!Bank.inViewport()) {
-                        Camera.turnTo(bank);
+                    Camera.turnTo(bank);
                 }
                 if (!Condition.wait(Bank::open, 250, 100)) {
-                        Log.severe("Bank failed to open");
-                        Utility.setStopping(true);
-                        return Utility.getLoopReturnQuick();
+                    Log.severe("Bank failed to open");
+                    Utility.setStopping(true);
+                    return Utility.getLoopReturnQuick();
                 }
                 if (Utility.getPouchVarpbitItem() == Utility.POUCH_VARPBIT_FULL && Inventory.isFull()) {
-                        Log.fine("Inv Good");
-                        Utility.setActivity(Activity.WALK);
-                        return Utility.getLoopReturnQuick();
+                    Log.fine("Inv Good");
+                    Utility.setActivity(Activity.WALK);
+                    CraftExecutor.EXTRACT_COUNT = 0;
+                    return Utility.getLoopReturnQuick();
                 }
                 if (Utility.getPotionVarpbit() <= 40) {
-                        Log.info("Potion Low");
-                        localActivity = BankActivity.POTIONING;
-                        return Utility.getLoopReturnQuick();
+                    Log.info("Potion Low");
+                    localActivity = BankActivity.POTIONING;
+                    return Utility.getLoopReturnQuick();
                 }
                 if (Utility.getInvBloodRune().valid()) {
-                        Log.info("Have Blood Runes");
-                        Bank.deposit(Utility.BLOOD_RUNE, Bank.Amount.ALL);
-                        Log.info("Depositing Runes");
-                        Condition.wait(() -> !Utility.getInvBloodRune().valid(), 50, 100);
-                        Log.fine("Done Depositing");
+                    Log.info("Have Blood Runes");
+                    Bank.deposit(Utility.BLOOD_RUNE, Bank.Amount.ALL);
+                    Log.info("Depositing Runes");
+                    Condition.wait(() -> !Utility.getInvBloodRune().valid(), 50, 100);
+                    Log.fine("Done Depositing");
                 }
                 Item bloodEssenceI = Inventory.stream().id(Utility.BLOOD_ESSENCE_INERT).first();
                 Item bloodEssenceA = Inventory.stream().id(Utility.BLOOD_ESSENCE_ACTIVE).first();
@@ -68,23 +68,23 @@ public class BankExecutor extends ActivityExecutor {
                     bloodEssenceI.interact("activate");
                 }
                 if (Utility.getEssenceCount() <= 18) {
-                        Log.info("Essence Count Low");
-                        Bank.withdraw(Utility.PURE_ESSENCE, Bank.Amount.ALL);
-                        Condition.wait(() -> Utility.getEssenceCount() >=18, 50, 200);
-                        Log.fine("Essence Withdrawn");
+                    Log.info("Essence Count Low");
+                    Bank.withdraw(Utility.PURE_ESSENCE, Bank.Amount.ALL);
+                    Condition.wait(() -> Utility.getEssenceCount() >= 18, 50, 200);
+                    Log.fine("Essence Withdrawn");
                 }
                 if (Utility.getEssenceCount() >= 18 && Utility.getPouchVarpbitItem() != Utility.POUCH_VARPBIT_FULL) {
-                        Log.info("Need to Fill Pouch");
-                        Inventory.stream().id(Utility.POUCH_ITEM).action("Fill");
-                        Condition.wait(() -> Utility.getEssenceCount() <= 18, 50, 200);
-                        Log.fine("Filled Pouch");
+                    Log.info("Need to Fill Pouch");
+                    Inventory.stream().id(Utility.POUCH_ITEM).action("Fill");
+                    Condition.wait(() -> Utility.getEssenceCount() <= 18, 50, 200);
+                    Log.fine("Filled Pouch");
                 }
                 return Utility.getLoopReturn();
-
-            case POTIONING:
+            }
+            case POTIONING -> {
                 Log.info("Bank-Potioning");
                 Utility.setTask("Potion Time");
-                if(Utility.getPotionVarpbit() > 40) {
+                if (Utility.getPotionVarpbit() > 40) {
                     Bank.deposit(Utility.POTION_ITEM, Bank.Amount.ALL);
                     Condition.wait(() -> !Utility.getInvPotion().valid(), 100, 200);
                     Log.info("Potion Deposited");
@@ -107,6 +107,7 @@ public class BankExecutor extends ActivityExecutor {
                     }
                 }
                 return Utility.getLoopReturn();
+            }
         }
         return Utility.getLoopReturn();
     }

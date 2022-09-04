@@ -67,6 +67,7 @@ public class CraftExecutor extends ActivityExecutor {
                     localActivity = CraftActivity.SECCRAFT;
                 } else {
                     Log.info("No More Runes");
+                    EXTRACT_COUNT = 0;
                     Utility.setActivity(Activity.RETURN);
                 }
                 return Utility.getLoopReturn();

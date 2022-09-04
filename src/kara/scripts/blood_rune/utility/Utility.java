@@ -15,20 +15,34 @@ public class Utility {
 
     //Item and Object ID's
     public static int BLOOD_RUNE = 565;
-    public static int MYTH_CAPE = 123456;
+    public static int MYTH_CAPE = 22114;
     public static int CON_CAPE = 123456;
-    public static int QP_CAPE = 123456;
+    public static int QP_CAPE = 9813;
     public static int CRAFT_CAPE = 123456;
-    public static int POUCH_ITEM = 123456;
-    public static int POTION_ITEM = 123456;
+    public static int POUCH_ITEM = 26784;
+    public static int POTION_ITEM = 12625, 12627, 12629, 12631;
     public static int POTION_VARPBIT = 277;
     public static int POUCH_VARPBIT_ITEM = 123456;
     public static int POUCH_VARPBIT_FULL = 123456;
     public static int POUCH_VARPBIT_EMPTY = 123456;
-    public static int PURE_ESSENCE = 123456;
-    public static int BLOOD_ESSENCE_INERT = 123456;
-    public static int BLOOD_ESSENCE_ACTIVE = 123456;
-    public static int BLOOD_ALTER = 123456;
+    public static int PURE_ESSENCE = 7936;
+    public static int BLOOD_ESSENCE_INERT = 26390;
+    public static int BLOOD_ESSENCE_ACTIVE = 26392;
+    public static int MYST_RUIN = 43477;
+    public static int BLOOD_ALTER = 43479;
+    public static int FAIRY_RING = 29517;
+    public static int CAVE_DOOR_1 = 16308;
+    public static int CAVE_DOOR_2 = 5046;
+    public static int CAVE_DOOR_HA_1 = 43759;
+    public static int CAVE_DOOR_HA_2 = 12323598;
+    public static int CAVE_DOOR_LA_1 = 12770;
+    public static int CAVE_DOOR_LA_2 = 12771;
+    public static int CAVE_DOOR_LA_3 = 123787492;
+    public static int CAVE_DOOR_LA_4 = 1237843792;
+
+
+
+
 
 
     //Utility

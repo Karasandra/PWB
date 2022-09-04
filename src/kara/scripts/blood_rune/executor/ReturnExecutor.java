@@ -47,7 +47,7 @@ public class ReturnExecutor extends ActivityExecutor {
                     Log.info("Location Xupper-Xlower");
                     Item cape = Inventory.stream().id(Utility.MYTH_CAPE).first();
                     if (!cape.valid()) {
-                        Log.severe("No Cape!");
+                        Log.severe("No Myth Cape!");
                         Utility.setStopping(true);
                         return Utility.getLoopReturnQuick();
                     }
@@ -56,7 +56,8 @@ public class ReturnExecutor extends ActivityExecutor {
                         cape.interact("teleport");
                         if (Condition.wait(() -> Location.MYTH_GUILD_LOWER.contains(Players.local().tile()), 50, 1500)) {
                             Log.fine("teleport successful");
-                        } else {
+                        }
+                        else {
                             Log.severe("Teleport failed");
                             Utility.setStopping(true);
                             return Utility.getLoopReturnQuick();
@@ -89,7 +90,7 @@ public class ReturnExecutor extends ActivityExecutor {
                     Log.info("Location Xcraft");
                     Item cape = Inventory.stream().id(Utility.CRAFT_CAPE).first();
                     if (!cape.valid()) {
-                        Log.severe("No Cape!");
+                        Log.severe("No Craft Cape!");
                         Utility.setStopping(true);
                         return Utility.getLoopReturnQuick();
                     }

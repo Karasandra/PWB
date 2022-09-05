@@ -46,7 +46,6 @@ public class BankExecutor extends ActivityExecutor {
                 if (Utility.getPouchVarpbitItem() == Utility.POUCH_VARPBIT_FULL && Inventory.isFull()) {
                     Log.fine("Inv Good");
                     Utility.setActivity(Activity.WALK);
-                    CraftExecutor.EXTRACT_COUNT = 0;
                     return Utility.getLoopReturnQuick();
                 }
                 if (Utility.getPotionVarpbit() <= 40) {
@@ -89,7 +88,10 @@ public class BankExecutor extends ActivityExecutor {
                 Log.info("Bank-Potioning");
                 Utility.setTask("Potion Time");
                 if (Utility.getPotionVarpbit() > 40) {
-                    Bank.deposit(Utility.POTION_ITEM, Bank.Amount.ALL);
+                    Bank.deposit(Utility.POTION_ITEM_4, Bank.Amount.ALL);
+                    Bank.deposit(Utility.POTION_ITEM_3, Bank.Amount.ALL);
+                    Bank.deposit(Utility.POTION_ITEM_2, Bank.Amount.ALL);
+                    Bank.deposit(Utility.POTION_ITEM_1, Bank.Amount.ALL);
                     Condition.wait(() -> !Utility.getInvPotion().valid(), 100, 200);
                     Log.info("Potion Deposited");
                     localActivity = BankActivity.BANKING;
@@ -97,15 +99,16 @@ public class BankExecutor extends ActivityExecutor {
                 } else {
                     Utility.setTask("Drinking Potion!");
                     Log.info("Need to Sip Potion.");
-                    if (!Utility.getInvPotion().valid()) {
+                    Item potion = Utility.getInvPotion();
+                    if (!potion.valid()) {
                         Log.info("Grabbing Potion");
-                        Bank.withdraw(Utility.POTION_ITEM, Bank.Amount.ONE);
+                        Bank.withdraw("Stamina", Bank.Amount.ONE);
                         Condition.wait(() -> Utility.getInvPotion().valid(), 100, 200);
                         Log.fine("Grabbed Potion");
                     }
-                    if (Utility.getInvPotion().valid()) {
+                    if (potion.valid()) {
                         Log.info("Drinking");
-                        Inventory.stream().id(Utility.POTION_ITEM).first().click();
+                        potion.click();
                         Condition.wait(() -> Utility.getPotionVarpbit() > 40, 100, 200);
                         Log.fine("Drank Potion");
                     }

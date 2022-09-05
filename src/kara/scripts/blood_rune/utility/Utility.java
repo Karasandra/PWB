@@ -20,11 +20,13 @@ public class Utility {
     public static int QP_CAPE = 9813;
     public static int CRAFT_CAPE = 123456;
     public static int POUCH_ITEM = 26784;
-    public static int POTION_ITEM = 12625, 12627, 12629, 12631;
+    public static int POTION_ITEM_4 = 12625;
+    public static int POTION_ITEM_3 = 12627;
+    public static int POTION_ITEM_2 = 12629;
+    public static int POTION_ITEM_1 = 12631;
     public static int POTION_VARPBIT = 277;
-    public static int POUCH_VARPBIT_ITEM = 123456;
-    public static int POUCH_VARPBIT_FULL = 123456;
-    public static int POUCH_VARPBIT_EMPTY = 123456;
+    public static int POUCH_VARPBIT_ITEM = 261;
+    public static int POUCH_VARPBIT_FULL = 16;
     public static int PURE_ESSENCE = 7936;
     public static int BLOOD_ESSENCE_INERT = 26390;
     public static int BLOOD_ESSENCE_ACTIVE = 26392;
@@ -70,7 +72,9 @@ public class Utility {
     public static int getPouchVarpbitItem() { return Varpbits.varpbit(POUCH_VARPBIT_ITEM); }
     public static int getPotionVarpbit() { return Varpbits.varpbit(POTION_VARPBIT); }
     public static int getEssenceCount() { return (int) Inventory.stream().id(PURE_ESSENCE).count(); }
-    public static Item getInvPotion() { return Inventory.stream().id(POTION_ITEM).first(); }
+    public static Item getInvPotion() { return Inventory.stream().id(POTION_ITEM_4, POTION_ITEM_3, POTION_ITEM_2, POTION_ITEM_1).first(); }
     public static Item getInvBloodRune() { return Inventory.stream().id(BLOOD_RUNE).first(); }
-    public static int getIdle() { return Players.local().idleAnimation(); }
+    public static GameObject getObject(int door) { return Objects.stream().id(door).nearest().first(); }
+    public static boolean getIdle() { return !Players.local().inMotion(); }
+
 }

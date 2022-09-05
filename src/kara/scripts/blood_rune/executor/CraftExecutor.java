@@ -8,10 +8,11 @@ import org.powbot.api.rt4.*;
 
 public class CraftExecutor extends ActivityExecutor {
 
-    private CraftActivity localActivity = CraftActivity.INITCRAFT;
-    public static int EXTRACT_COUNT;
+    private CraftActivity localActivity = CraftActivity.SETUP;
+    private static int EXTRACT_COUNT;
 
     enum CraftActivity {
+        SETUP,
         INITCRAFT,
         SECCRAFT,
         EXTRACT
@@ -27,6 +28,11 @@ public class CraftExecutor extends ActivityExecutor {
         }
 
         switch (localActivity) {
+            case SETUP -> {
+                EXTRACT_COUNT = 0;
+                localActivity = CraftActivity.INITCRAFT;
+                return Utility.getLoopReturnQuick();
+            }
             case INITCRAFT -> {
                 Log.info("Craft - First Craft");
                 Utility.setTask("Crafting");
@@ -44,15 +50,16 @@ public class CraftExecutor extends ActivityExecutor {
                 Log.info("Craft - Second Craft");
                 Utility.setTask("Crafting");
                 GameObject alter2 = Objects.stream().id(Utility.BLOOD_ALTER).nearest().first();
-                if (EXTRACT_COUNT == 2) {
-                    Log.fine("Done Crafting");
-                    Utility.setActivity(Activity.RETURN);
-                    return Utility.getLoopReturn();
-                }
                 if (Utility.getEssenceCount() > 1) {
                     Log.info("We have Essence");
                     alter2.click();
                     Log.fine("Crafted Runes");
+                }
+                if (EXTRACT_COUNT == 2) {
+                    Log.fine("Done Crafting");
+                    EXTRACT_COUNT = 0;
+                    Utility.setActivity(Activity.RETURN);
+                    return Utility.getLoopReturn();
                 }
                 localActivity = CraftActivity.EXTRACT;
                 return Utility.getLoopReturn();
@@ -67,7 +74,6 @@ public class CraftExecutor extends ActivityExecutor {
                     localActivity = CraftActivity.SECCRAFT;
                 } else {
                     Log.info("No More Runes");
-                    EXTRACT_COUNT = 0;
                     Utility.setActivity(Activity.RETURN);
                 }
                 return Utility.getLoopReturn();

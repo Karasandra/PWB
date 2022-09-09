@@ -25,15 +25,12 @@ public class Utility {
         return false;
     }
     public static String getTask() { return task; }
-
     public static Activity getActivity() {
         return activity;
     }
-
     public static void setActivity(Activity activity) {
         Utility.activity = activity;
     }
-
     public static int getLoopReturnQuick() { return Random.nextInt(0, 10); }
     public static int getLoopReturn() { return Random.nextInt(0, 50); }
     public static int getLoopReturnLong() { return Random.nextInt(200, 400); }
@@ -41,9 +38,7 @@ public class Utility {
         Log.info("TASK: " + task);
         Utility.task = task;
     }
-
     public static void setStopping(boolean stopping) { Utility.stopping = stopping; }
-
     public static boolean isStopping() { return stopping; }
     public static int getPouchVarpbitItem() { return Varpbits.varpbit(ObjectId.POUCH_VARPBIT_ITEM); }
     public static int getPotionVarpbit() { return Varpbits.varpbit(ObjectId.POTION_VARPBIT); }
@@ -52,5 +47,4 @@ public class Utility {
     public static Item getInvBloodRune() { return Inventory.stream().id(ObjectId.BLOOD_RUNE).first(); }
     public static GameObject getObject(int door) { return Objects.stream().id(door).nearest().first(); }
     public static boolean getIdle() { return !Players.local().inMotion(); }
-
 }

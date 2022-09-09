@@ -14,6 +14,7 @@ public class WalkExecutor extends ActivityExecutor {
     private WalkActivity localActivity = WalkActivity.METHOD;
     private static int LA_DOOR_COUNT;
     private static int HA_DOOR_COUNT;
+    private static int SN_DOOR_COUNT;
 
     enum WalkActivity {
         METHOD,
@@ -65,11 +66,12 @@ public class WalkExecutor extends ActivityExecutor {
                         }
                     }
                 }
-                return Utility.getLoopReturn();
+                return Utility.getLoopReturnLong();
             }
             case METHOD -> {
                 LA_DOOR_COUNT = 0;
                 HA_DOOR_COUNT = 0;
+                SN_DOOR_COUNT = 0;
                 Log.info("Choosing Method");
                 int agility = Skill.Agility.realLevel();
                 int mining = Skill.Mining.realLevel();
@@ -122,7 +124,11 @@ public class WalkExecutor extends ActivityExecutor {
                 if (Location.BLOOD_ALTER_RUIN_LA.contains(Players.local().tile())) {
                     Log.info("Finished Path");
                     LA_DOOR_COUNT = 0;
-                    Utility.getObject(ObjectId.MYST_RUIN).click();
+                    GameObject ruin = Utility.getObject(ObjectId.MYST_RUIN);
+                    if (!ruin.inViewport()) {
+                        Camera.turnTo(ruin);
+                    }
+                    ruin.click();
                     if (Condition.wait(() -> Location.BLOOD_ALTER.contains(Players.local().tile()), 50, 600)) {
                         Log.fine("Entered Alter");
                         Utility.setActivity(Activity.CRAFT);
@@ -132,7 +138,7 @@ public class WalkExecutor extends ActivityExecutor {
                         Utility.setStopping(true);
                     }
                 }
-                return Utility.getLoopReturnQuick();
+                return Utility.getLoopReturnLong();
             }
             case HIGH -> {
                 Log.info("High Agility");
@@ -164,7 +170,11 @@ public class WalkExecutor extends ActivityExecutor {
                 if (Location.BLOOD_ALTER_RUIN_HA.contains(Players.local().tile())) {
                     Log.info("Finished Path");
                     HA_DOOR_COUNT = 0;
-                    Utility.getObject(ObjectId.MYST_RUIN).click();
+                    GameObject ruin = Utility.getObject(ObjectId.MYST_RUIN);
+                    if (!ruin.inViewport()) {
+                        Camera.turnTo(ruin);
+                    }
+                    ruin.click();
                     if (Condition.wait(() -> Location.BLOOD_ALTER.contains(Players.local().tile()), 50, 600)) {
                         Log.fine("Entered Alter");
                         Utility.setActivity(Activity.CRAFT);
@@ -174,11 +184,56 @@ public class WalkExecutor extends ActivityExecutor {
                         Utility.setStopping(true);
                     }
                 }
-                return Utility.getLoopReturnQuick();
+                return Utility.getLoopReturnLong();
             }
             case OHGOD -> {
                 Log.info("Why God");
                 Utility.setTask("Walking - Snail Style");
+                GameObject doorCountSN = null;
+                if (!Location.BLOOD_ALTER_RUIN_SNAIL.contains(Players.local().tile())) {
+                    if (SN_DOOR_COUNT == 0) {
+                        doorCountSN = Utility.getObject(ObjectId.CAVE_DOOR_1);
+                    }
+                    if (SN_DOOR_COUNT == 1) {
+                        doorCountSN = Utility.getObject(ObjectId.CAVE_DOOR_2);
+                    }
+                    if (SN_DOOR_COUNT == 2) {
+                        doorCountSN = Utility.getObject(ObjectId.CAVE_DOOR_LA_1);
+                    }
+                    if (SN_DOOR_COUNT == 3) {
+                        doorCountSN = Utility.getObject(ObjectId.CAVE_DOOR_LA_2);
+                    }
+                    if (SN_DOOR_COUNT == 4) {
+                        Movement.walkTo(Location.BLOOD_ALTER_RUIN_SNAIL.getRandomTile());
+                        return Utility.getLoopReturn();
+                    }
+                    if (doorCountSN != null && !doorCountSN.inViewport()) {
+                        Camera.turnTo(doorCountSN);
+                    }
+                    if (doorCountSN != null) {
+                        doorCountSN.click();
+                    }
+                    Condition.wait(Utility::getIdle, 100, 500);
+                    SN_DOOR_COUNT++;
+                }
+                if (Location.BLOOD_ALTER_RUIN_SNAIL.contains(Players.local().tile())) {
+                    Log.info("Finished Path");
+                    SN_DOOR_COUNT = 0;
+                    GameObject ruin = Utility.getObject(ObjectId.MYST_RUIN);
+                    if (!ruin.inViewport()) {
+                       Camera.turnTo(ruin);
+                    }
+                    ruin.click();
+                    if (Condition.wait(() -> Location.BLOOD_ALTER.contains(Players.local().tile()), 50, 600)) {
+                       Log.fine("Entered Alter");
+                       Utility.setActivity(Activity.CRAFT);
+                       return Utility.getLoopReturnQuick();
+                    } else {
+                       Log.severe("Did not go into Ruins");
+                       Utility.setStopping(true);
+                    }
+                }
+                return Utility.getLoopReturnLong();
             }
         }
         return Utility.getLoopReturn();

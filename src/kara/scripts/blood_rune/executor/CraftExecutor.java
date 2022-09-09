@@ -2,6 +2,7 @@ package kara.scripts.blood_rune.executor;
 
 import kara.scripts.blood_rune.utility.Location;
 import kara.scripts.blood_rune.utility.Log;
+import kara.scripts.blood_rune.utility.ObjectId;
 import kara.scripts.blood_rune.utility.Utility;
 import org.powbot.api.Condition;
 import org.powbot.api.rt4.*;
@@ -36,7 +37,7 @@ public class CraftExecutor extends ActivityExecutor {
             case INITCRAFT -> {
                 Log.info("Craft - First Craft");
                 Utility.setTask("Crafting");
-                GameObject alter = Objects.stream().id(Utility.BLOOD_ALTER).nearest().first();
+                GameObject alter = Objects.stream().id(ObjectId.BLOOD_ALTER).nearest().first();
                 if (Utility.getEssenceCount() > 1) {
                     Log.info("We have Essence");
                     alter.click();
@@ -49,7 +50,7 @@ public class CraftExecutor extends ActivityExecutor {
             case SECCRAFT -> {
                 Log.info("Craft - Second Craft");
                 Utility.setTask("Crafting");
-                GameObject alter2 = Objects.stream().id(Utility.BLOOD_ALTER).nearest().first();
+                GameObject alter2 = Objects.stream().id(ObjectId.BLOOD_ALTER).nearest().first();
                 if (Utility.getEssenceCount() > 1) {
                     Log.info("We have Essence");
                     alter2.click();
@@ -67,7 +68,7 @@ public class CraftExecutor extends ActivityExecutor {
             case EXTRACT -> {
                 Log.info("Craft - Extract");
                 Utility.setTask("Extracting Pouch");
-                Inventory.stream().id(Utility.POUCH_ITEM).action("Empty");
+                Inventory.stream().id(ObjectId.POUCH_ITEM).action("Empty");
                 if (Condition.wait(() -> Utility.getEssenceCount() > 0, 50, 40)) {
                     Log.fine("Runes Extracted");
                     EXTRACT_COUNT++;

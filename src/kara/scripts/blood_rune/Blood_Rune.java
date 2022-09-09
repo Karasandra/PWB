@@ -5,6 +5,7 @@ import kara.scripts.blood_rune.executor.BankExecutor;
 import kara.scripts.blood_rune.executor.CraftExecutor;
 import kara.scripts.blood_rune.executor.ReturnExecutor;
 import kara.scripts.blood_rune.executor.WalkExecutor;
+import kara.scripts.blood_rune.utility.ObjectId;
 import kara.scripts.blood_rune.utility.Utility;
 import org.powbot.api.rt4.Game;
 import org.powbot.api.rt4.Movement;
@@ -40,8 +41,8 @@ public class Blood_Rune extends AbstractScript {
     public void onStart() {
         Paint paint = PaintBuilder.newBuilder()
                 .withoutDiscordWebhook()
-                .trackInventoryItem(Utility.BLOOD_RUNE, "Blood Runes", TrackInventoryOption.QuantityChange)
-                .trackInventoryItem(Utility.BLOOD_RUNE, "Gold", TrackInventoryOption.values())
+                .trackInventoryItem(ObjectId.BLOOD_RUNE, "Blood Runes", TrackInventoryOption.QuantityChange)
+                .trackInventoryItem(ObjectId.BLOOD_RUNE, "Gold", TrackInventoryOption.values())
                 .addString("Task: ", Utility::getTask)
                 .x(30)
                 .y(65)
@@ -74,7 +75,7 @@ public class Blood_Rune extends AbstractScript {
             return Utility.getLoopReturn();
         }
 
-        if (Movement.running() != Movement.running(true) ) {
+        if (Utility.needsToRun()) {
             Utility.setTask("Enabling run");
             Movement.running(true);
             return Utility.getLoopReturn();

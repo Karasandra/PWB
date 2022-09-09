@@ -2,6 +2,7 @@ package kara.scripts.blood_rune.executor;
 
 import kara.scripts.blood_rune.utility.Location;
 import kara.scripts.blood_rune.utility.Log;
+import kara.scripts.blood_rune.utility.ObjectId;
 import kara.scripts.blood_rune.utility.Utility;
 import org.powbot.api.Condition;
 import org.powbot.api.rt4.*;
@@ -27,9 +28,9 @@ public class WalkExecutor extends ActivityExecutor {
         Log.info("Walk Executor");
 
         switch (localActivity) {
-            case FAIRY:
+            case FAIRY -> {
                 if (Location.LEGEND_GUILD.contains(Players.local().tile())) {
-                    GameObject fairy = Objects.stream().id(Utility.FAIRY_RING).nearest().first();
+                    GameObject fairy = Objects.stream().id(ObjectId.FAIRY_RING).nearest().first();
                     if (!fairy.inViewport()) {
                         Camera.turnTo(fairy);
                     }
@@ -43,11 +44,10 @@ public class WalkExecutor extends ActivityExecutor {
                         Utility.setStopping(true);
                         return Utility.getLoopReturnQuick();
                     }
-                }
-                else {
+                } else {
                     Log.info("Tp to Fairy");
                     Utility.setTask("Tp to Fairy Ring");
-                    Item cape = Inventory.stream().id(Utility.QP_CAPE).first();
+                    Item cape = Inventory.stream().id(ObjectId.QP_CAPE).first();
                     if (!cape.valid()) {
                         Log.severe("No QP Cape!");
                         Utility.setStopping(true);
@@ -66,8 +66,8 @@ public class WalkExecutor extends ActivityExecutor {
                     }
                 }
                 return Utility.getLoopReturn();
-
-            case METHOD:
+            }
+            case METHOD -> {
                 LA_DOOR_COUNT = 0;
                 HA_DOOR_COUNT = 0;
                 Log.info("Choosing Method");
@@ -77,70 +77,110 @@ public class WalkExecutor extends ActivityExecutor {
                     Log.info("Using High Method");
                     localActivity = WalkActivity.HIGH;
                 }
-                if (agility < 93 && agility >= 74){
+                if (agility < 93 && agility >= 74) {
                     Log.info("Using Low Method");
                     localActivity = WalkActivity.LOW;
-                }
-                else {
+                } else {
                     Log.info("Person is snail");
                     localActivity = WalkActivity.OHGOD;
                 }
                 return Utility.getLoopReturnQuick();
-
-            case LOW:
+            }
+            case LOW -> {
                 Log.info("Low Agility");
                 Utility.setTask("Walking - Low Agility");
-                if (!Location.BLOOD_ALTER_RUIN_LA.contains(Players.local().tile()))  {
-
-                            switch (doorCount) {
-                        case 0 -> {
-                            int sdoor = Utility.CAVE_DOOR_1;
-                            return sdoor;
-                        }
-                            }
-                    GameObject door = Utility.getObject(doorCount);
+                GameObject doorCountLA = null;
+                if (!Location.BLOOD_ALTER_RUIN_LA.contains(Players.local().tile())) {
                     if (LA_DOOR_COUNT == 0) {
-                        GameObject door = Utility.getObject(Utility.CAVE_DOOR_1);
+                        doorCountLA = Utility.getObject(ObjectId.CAVE_DOOR_1);
                     }
                     if (LA_DOOR_COUNT == 1) {
-                        GameObject door = Utility.getObject(Utility.CAVE_DOOR_2);
+                        doorCountLA = Utility.getObject(ObjectId.CAVE_DOOR_2);
                     }
                     if (LA_DOOR_COUNT == 2) {
-                        GameObject door = Utility.getObject(Utility.CAVE_DOOR_LA_1);
+                        doorCountLA = Utility.getObject(ObjectId.CAVE_DOOR_LA_1);
                     }
                     if (LA_DOOR_COUNT == 3) {
-                        GameObject door = Utility.getObject(Utility.CAVE_DOOR_LA_2);
+                        doorCountLA = Utility.getObject(ObjectId.CAVE_DOOR_LA_2);
                     }
                     if (LA_DOOR_COUNT == 4) {
-                        GameObject door = Utility.getObject(Utility.CAVE_DOOR_LA_3);
+                        Movement.walkTo(Location.LA_DOOR_ENTRY.getRandomTile());
+                        doorCountLA = Utility.getObject(ObjectId.CAVE_DOOR_LA_3);
                     }
                     if (LA_DOOR_COUNT == 5) {
-                        GameObject door = Utility.getObject(Utility.CAVE_DOOR_LA_4);
-                    } else if (!door) {
-                        
+                        doorCountLA = Utility.getObject(ObjectId.CAVE_DOOR_LA_4);
                     }
-                    Condition.wait(() -> Utility.getIdle(), 100, 500);
+                    if (doorCountLA != null && !doorCountLA.inViewport()) {
+                        Camera.turnTo(doorCountLA);
+                    }
+                    if (doorCountLA != null) {
+                        doorCountLA.click();
+                    }
+                    Condition.wait(Utility::getIdle, 100, 500);
                     LA_DOOR_COUNT++;
                 }
                 if (Location.BLOOD_ALTER_RUIN_LA.contains(Players.local().tile())) {
                     Log.info("Finished Path");
-                    Utility.getObject(Utility.MYST_RUIN).click();
+                    LA_DOOR_COUNT = 0;
+                    Utility.getObject(ObjectId.MYST_RUIN).click();
+                    if (Condition.wait(() -> Location.BLOOD_ALTER.contains(Players.local().tile()), 50, 600)) {
+                        Log.fine("Entered Alter");
+                        Utility.setActivity(Activity.CRAFT);
+                        return Utility.getLoopReturnQuick();
+                    } else {
+                        Log.severe("Did not go into Ruins");
+                        Utility.setStopping(true);
+                    }
                 }
                 return Utility.getLoopReturnQuick();
-
-            case HIGH:
+            }
+            case HIGH -> {
                 Log.info("High Agility");
                 Utility.setTask("Walking - High Agility");
-
-            case OHGOD:
+                GameObject doorCountHA = null;
+                if (!Location.BLOOD_ALTER_RUIN_LA.contains(Players.local().tile())) {
+                    if (HA_DOOR_COUNT == 0) {
+                        doorCountHA = Utility.getObject(ObjectId.CAVE_DOOR_1);
+                    }
+                    if (HA_DOOR_COUNT == 1) {
+                        doorCountHA = Utility.getObject(ObjectId.CAVE_DOOR_2);
+                    }
+                    if (HA_DOOR_COUNT == 2) {
+                        Movement.walkTo(Location.HA_DOOR_ENTRY.getRandomTile());
+                        doorCountHA = Utility.getObject(ObjectId.CAVE_DOOR_HA_1);
+                    }
+                    if (HA_DOOR_COUNT == 3) {
+                        doorCountHA = Utility.getObject(ObjectId.CAVE_DOOR_HA_2);
+                    }
+                    if (doorCountHA != null && !doorCountHA.inViewport()) {
+                        Camera.turnTo(doorCountHA);
+                    }
+                    if (doorCountHA != null) {
+                        doorCountHA.click();
+                    }
+                    Condition.wait(Utility::getIdle, 100, 500);
+                    HA_DOOR_COUNT++;
+                }
+                if (Location.BLOOD_ALTER_RUIN_HA.contains(Players.local().tile())) {
+                    Log.info("Finished Path");
+                    HA_DOOR_COUNT = 0;
+                    Utility.getObject(ObjectId.MYST_RUIN).click();
+                    if (Condition.wait(() -> Location.BLOOD_ALTER.contains(Players.local().tile()), 50, 600)) {
+                        Log.fine("Entered Alter");
+                        Utility.setActivity(Activity.CRAFT);
+                        return Utility.getLoopReturnQuick();
+                    } else {
+                        Log.severe("Did not go into Ruins");
+                        Utility.setStopping(true);
+                    }
+                }
+                return Utility.getLoopReturnQuick();
+            }
+            case OHGOD -> {
                 Log.info("Why God");
                 Utility.setTask("Walking - Snail Style");
-
-
+            }
         }
-
-
-
         return Utility.getLoopReturn();
     }
 }

@@ -11,43 +11,19 @@ public class Utility {
     private static boolean stopping = false;
     private static Activity activity = Activity.BANK;
     private static String task = "Starting";
-
-
-    //Item and Object ID's
-    public static int BLOOD_RUNE = 565;
-    public static int MYTH_CAPE = 22114;
-    public static int CON_CAPE = 123456;
-    public static int QP_CAPE = 9813;
-    public static int CRAFT_CAPE = 123456;
-    public static int POUCH_ITEM = 26784;
-    public static int POTION_ITEM_4 = 12625;
-    public static int POTION_ITEM_3 = 12627;
-    public static int POTION_ITEM_2 = 12629;
-    public static int POTION_ITEM_1 = 12631;
-    public static int POTION_VARPBIT = 277;
-    public static int POUCH_VARPBIT_ITEM = 261;
-    public static int POUCH_VARPBIT_FULL = 16;
-    public static int PURE_ESSENCE = 7936;
-    public static int BLOOD_ESSENCE_INERT = 26390;
-    public static int BLOOD_ESSENCE_ACTIVE = 26392;
-    public static int MYST_RUIN = 43477;
-    public static int BLOOD_ALTER = 43479;
-    public static int FAIRY_RING = 29517;
-    public static int CAVE_DOOR_1 = 16308;
-    public static int CAVE_DOOR_2 = 5046;
-    public static int CAVE_DOOR_HA_1 = 43759;
-    public static int CAVE_DOOR_HA_2 = 12323598;
-    public static int CAVE_DOOR_LA_1 = 12770;
-    public static int CAVE_DOOR_LA_2 = 12771;
-    public static int CAVE_DOOR_LA_3 = 123787492;
-    public static int CAVE_DOOR_LA_4 = 1237843792;
-
-
-
-
+    private static final int LOWER_RUN_THRESH = 50;
+    private static final int UPPER_RUN_THRESH = 90;
+    private static int runThreshold = Random.nextInt(LOWER_RUN_THRESH, UPPER_RUN_THRESH);
 
 
     //Utility
+    public static boolean needsToRun() {
+        if (!Movement.running() && Movement.energyLevel() > runThreshold) {
+            runThreshold = Random.nextInt(LOWER_RUN_THRESH, UPPER_RUN_THRESH);
+            return true;
+        }
+        return false;
+    }
     public static String getTask() { return task; }
 
     public static Activity getActivity() {
@@ -69,11 +45,11 @@ public class Utility {
     public static void setStopping(boolean stopping) { Utility.stopping = stopping; }
 
     public static boolean isStopping() { return stopping; }
-    public static int getPouchVarpbitItem() { return Varpbits.varpbit(POUCH_VARPBIT_ITEM); }
-    public static int getPotionVarpbit() { return Varpbits.varpbit(POTION_VARPBIT); }
-    public static int getEssenceCount() { return (int) Inventory.stream().id(PURE_ESSENCE).count(); }
-    public static Item getInvPotion() { return Inventory.stream().id(POTION_ITEM_4, POTION_ITEM_3, POTION_ITEM_2, POTION_ITEM_1).first(); }
-    public static Item getInvBloodRune() { return Inventory.stream().id(BLOOD_RUNE).first(); }
+    public static int getPouchVarpbitItem() { return Varpbits.varpbit(ObjectId.POUCH_VARPBIT_ITEM); }
+    public static int getPotionVarpbit() { return Varpbits.varpbit(ObjectId.POTION_VARPBIT); }
+    public static int getEssenceCount() { return (int) Inventory.stream().id(ObjectId.PURE_ESSENCE).count(); }
+    public static Item getInvPotion() { return Inventory.stream().id(ObjectId.POTION_ITEM_4, ObjectId.POTION_ITEM_3, ObjectId.POTION_ITEM_2, ObjectId.POTION_ITEM_1).first(); }
+    public static Item getInvBloodRune() { return Inventory.stream().id(ObjectId.BLOOD_RUNE).first(); }
     public static GameObject getObject(int door) { return Objects.stream().id(door).nearest().first(); }
     public static boolean getIdle() { return !Players.local().inMotion(); }
 

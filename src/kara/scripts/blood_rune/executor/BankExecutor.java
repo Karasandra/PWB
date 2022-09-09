@@ -2,6 +2,7 @@ package kara.scripts.blood_rune.executor;
 
 import kara.scripts.blood_rune.utility.Location;
 import kara.scripts.blood_rune.utility.Log;
+import kara.scripts.blood_rune.utility.ObjectId;
 import kara.scripts.blood_rune.utility.Utility;
 import org.powbot.api.Condition;
 import org.powbot.api.Locatable;
@@ -43,7 +44,7 @@ public class BankExecutor extends ActivityExecutor {
                     Utility.setStopping(true);
                     return Utility.getLoopReturnQuick();
                 }
-                if (Utility.getPouchVarpbitItem() == Utility.POUCH_VARPBIT_FULL && Inventory.isFull()) {
+                if (Utility.getPouchVarpbitItem() == ObjectId.POUCH_VARPBIT_FULL && Inventory.isFull()) {
                     Log.fine("Inv Good");
                     Utility.setActivity(Activity.WALK);
                     return Utility.getLoopReturnQuick();
@@ -55,16 +56,16 @@ public class BankExecutor extends ActivityExecutor {
                 }
                 if (Utility.getInvBloodRune().valid()) {
                     Log.info("Have Blood Runes");
-                    Bank.deposit(Utility.BLOOD_RUNE, Bank.Amount.ALL);
+                    Bank.deposit(ObjectId.BLOOD_RUNE, Bank.Amount.ALL);
                     Log.info("Depositing Runes");
                     Condition.wait(() -> !Utility.getInvBloodRune().valid(), 50, 100);
                     Log.fine("Done Depositing");
                 }
-                Item bloodEssenceI = Inventory.stream().id(Utility.BLOOD_ESSENCE_INERT).first();
-                Item bloodEssenceA = Inventory.stream().id(Utility.BLOOD_ESSENCE_ACTIVE).first();
+                Item bloodEssenceI = Inventory.stream().id(ObjectId.BLOOD_ESSENCE_INERT).first();
+                Item bloodEssenceA = Inventory.stream().id(ObjectId.BLOOD_ESSENCE_ACTIVE).first();
                 if (!bloodEssenceA.valid() && !bloodEssenceI.valid()) {
                     Log.info("No Blood Essence");
-                    Bank.withdraw(Utility.BLOOD_ESSENCE_INERT, Bank.Amount.ONE);
+                    Bank.withdraw(ObjectId.BLOOD_ESSENCE_INERT, Bank.Amount.ONE);
                 }
                 if (bloodEssenceI.valid()) {
                     Log.info("Blood Essence Inert");
@@ -72,13 +73,13 @@ public class BankExecutor extends ActivityExecutor {
                 }
                 if (Utility.getEssenceCount() <= 18) {
                     Log.info("Essence Count Low");
-                    Bank.withdraw(Utility.PURE_ESSENCE, Bank.Amount.ALL);
+                    Bank.withdraw(ObjectId.PURE_ESSENCE, Bank.Amount.ALL);
                     Condition.wait(() -> Utility.getEssenceCount() >= 18, 50, 200);
                     Log.fine("Essence Withdrawn");
                 }
-                if (Utility.getEssenceCount() >= 18 && Utility.getPouchVarpbitItem() != Utility.POUCH_VARPBIT_FULL) {
+                if (Utility.getEssenceCount() >= 18 && Utility.getPouchVarpbitItem() != ObjectId.POUCH_VARPBIT_FULL) {
                     Log.info("Need to Fill Pouch");
-                    Inventory.stream().id(Utility.POUCH_ITEM).action("Fill");
+                    Inventory.stream().id(ObjectId.POUCH_ITEM).action("Fill");
                     Condition.wait(() -> Utility.getEssenceCount() <= 18, 50, 200);
                     Log.fine("Filled Pouch");
                 }
@@ -88,10 +89,10 @@ public class BankExecutor extends ActivityExecutor {
                 Log.info("Bank-Potioning");
                 Utility.setTask("Potion Time");
                 if (Utility.getPotionVarpbit() > 40) {
-                    Bank.deposit(Utility.POTION_ITEM_4, Bank.Amount.ALL);
-                    Bank.deposit(Utility.POTION_ITEM_3, Bank.Amount.ALL);
-                    Bank.deposit(Utility.POTION_ITEM_2, Bank.Amount.ALL);
-                    Bank.deposit(Utility.POTION_ITEM_1, Bank.Amount.ALL);
+                    Bank.deposit(ObjectId.POTION_ITEM_4, Bank.Amount.ALL);
+                    Bank.deposit(ObjectId.POTION_ITEM_3, Bank.Amount.ALL);
+                    Bank.deposit(ObjectId.POTION_ITEM_2, Bank.Amount.ALL);
+                    Bank.deposit(ObjectId.POTION_ITEM_1, Bank.Amount.ALL);
                     Condition.wait(() -> !Utility.getInvPotion().valid(), 100, 200);
                     Log.info("Potion Deposited");
                     localActivity = BankActivity.BANKING;

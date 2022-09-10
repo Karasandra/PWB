@@ -106,7 +106,7 @@ public class WalkExecutor extends ActivityExecutor {
                         doorCountLA = Utility.getObject(ObjectId.CAVE_DOOR_LA_2);
                     }
                     if (LA_DOOR_COUNT == 4) {
-                        Movement.walkTo(Location.LA_DOOR_ENTRY.getRandomTile());
+                        Movement.step(Location.LA_DOOR_ENTRY.getRandomTile());
                         doorCountLA = Utility.getObject(ObjectId.CAVE_DOOR_LA_3);
                     }
                     if (LA_DOOR_COUNT == 5) {
@@ -117,9 +117,9 @@ public class WalkExecutor extends ActivityExecutor {
                     }
                     if (doorCountLA != null) {
                         doorCountLA.click();
+                        Condition.wait(Utility::getIdle, 100, 500);
+                        LA_DOOR_COUNT++;
                     }
-                    Condition.wait(Utility::getIdle, 100, 500);
-                    LA_DOOR_COUNT++;
                 }
                 if (Location.BLOOD_ALTER_RUIN_LA.contains(Players.local().tile())) {
                     Log.info("Finished Path");
@@ -152,7 +152,7 @@ public class WalkExecutor extends ActivityExecutor {
                         doorCountHA = Utility.getObject(ObjectId.CAVE_DOOR_2);
                     }
                     if (HA_DOOR_COUNT == 2) {
-                        Movement.walkTo(Location.HA_DOOR_ENTRY.getRandomTile());
+                        Movement.step(Location.HA_DOOR_ENTRY.getRandomTile());
                         doorCountHA = Utility.getObject(ObjectId.CAVE_DOOR_HA_1);
                     }
                     if (HA_DOOR_COUNT == 3) {
@@ -163,9 +163,9 @@ public class WalkExecutor extends ActivityExecutor {
                     }
                     if (doorCountHA != null) {
                         doorCountHA.click();
+                        Condition.wait(Utility::getIdle, 100, 500);
+                        HA_DOOR_COUNT++;
                     }
-                    Condition.wait(Utility::getIdle, 100, 500);
-                    HA_DOOR_COUNT++;
                 }
                 if (Location.BLOOD_ALTER_RUIN_HA.contains(Players.local().tile())) {
                     Log.info("Finished Path");
@@ -212,9 +212,9 @@ public class WalkExecutor extends ActivityExecutor {
                     }
                     if (doorCountSN != null) {
                         doorCountSN.click();
+                        Condition.wait(Utility::getIdle, 100, 500);
+                        SN_DOOR_COUNT++;
                     }
-                    Condition.wait(Utility::getIdle, 100, 500);
-                    SN_DOOR_COUNT++;
                 }
                 if (Location.BLOOD_ALTER_RUIN_SNAIL.contains(Players.local().tile())) {
                     Log.info("Finished Path");

@@ -19,10 +19,27 @@ import org.powbot.mobile.service.ScriptUploader;
 
 @ScriptManifest(
         name = "Blood Rune",
-        description = "Blood Runes",
+        description = "Crafts True Blood Runes",
         version =  "0.0.1",
         category = ScriptCategory.Runecrafting,
         author = "Karasandra"
+)
+
+@ScriptConfiguration.List(
+        [
+        ScriptConfiguration(
+            name="Bank Method",
+            allowedValues=["Craft","Myth"],
+            description="What banking method would you like to use?",
+            defaultValue="Myth"
+            ),
+        ScriptConfiguration(
+            name="Fairy Ring Method",
+            allowedValues=["QPC","Construction"],
+            description="How do you wish to get to fairy ring?",
+            defaultValue="QPC"
+            )
+        ]
 )
 
 
@@ -34,12 +51,13 @@ public class Blood_Rune extends AbstractScript {
     private final ReturnExecutor returnExecutor = new ReturnExecutor();
 
     public static void main(String[] args) {
-        new ScriptUploader().uploadAndStart("Blood Rune", "karasandra", "127.0.0.1:5559", true, true);
+        new ScriptUploader().uploadAndStart("Blood Rune", "karasandra", "127.0.0.1:5559", true, false);
     }
 
     @Override
     public void onStart() {
         Paint paint = PaintBuilder.newBuilder()
+                .removeScriptNameVersion()
                 .withoutDiscordWebhook()
                 .trackInventoryItem(ObjectId.BLOOD_RUNE, "Blood Runes", TrackInventoryOption.QuantityChange)
                 .trackInventoryItem(ObjectId.BLOOD_RUNE, "Gold", TrackInventoryOption.values())

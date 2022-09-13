@@ -32,6 +32,10 @@ public class ReturnExecutor extends ActivityExecutor {
                     Log.fine("Myth in Inv");
                     localacvtivity = ReturnActivity.MYTH;
                 }
+                if (Inventory.stream().id(ObjectId.CRAFT_CAPE_T).first().valid()) {
+                    Log.fine("Craft in Inv");
+                    localacvtivity = ReturnActivity.CRAFT;
+                }
                 if (Inventory.stream().id(ObjectId.CRAFT_CAPE).first().valid()) {
                     Log.fine("Craft in Inv");
                     localacvtivity = ReturnActivity.CRAFT;
@@ -90,6 +94,9 @@ public class ReturnExecutor extends ActivityExecutor {
                 if (!Location.CRAFT_GUILD.contains(Players.local().tile())) {
                     Log.info("Location Xcraft");
                     Item cape = Inventory.stream().id(ObjectId.CRAFT_CAPE).first();
+                    if (cape == null) {
+                        cape = Inventory.stream().id(ObjectId.CRAFT_CAPE_T).first();
+                    }
                     if (!cape.valid()) {
                         Log.severe("No Craft Cape!");
                         Utility.setStopping(true);

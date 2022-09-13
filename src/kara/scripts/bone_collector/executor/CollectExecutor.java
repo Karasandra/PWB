@@ -36,7 +36,7 @@ public class CollectExecutor extends ActivityExecutor {
                 if (Location.DUNGEON_AREA_LEFT.contains(Players.local().tile())) {
                     Utility.setTask("Moving to Right Side");
                     Movement.walkTo(Location.DUNGEON_AREA_RIGHT.getRandomTile());
-                    Condition.wait(() -> Location.DUNGEON_AREA_RIGHT.contains(Players.local()), 50, 200);
+                    Condition.wait(() -> Location.DUNGEON_AREA_RIGHT.contains(Players.local()), 100, 500);
                     Log.fine("Walk Complete");
                     localActivity = CollectActivity.COLLECTING_RIGHT;
                     return Utility.getLoopReturn();
@@ -45,7 +45,7 @@ public class CollectExecutor extends ActivityExecutor {
                 if (Location.DUNGEON_AREA_RIGHT.contains(Players.local().tile())) {
                     Utility.setTask("Moving to Left Side");
                     Movement.walkTo(Location.DUNGEON_AREA_LEFT.getRandomTile());
-                    Condition.wait(() -> Location.DUNGEON_AREA_LEFT.contains(Players.local()), 50, 200);
+                    Condition.wait(() -> Location.DUNGEON_AREA_LEFT.contains(Players.local()), 100, 500);
                     Log.fine("Walk Complete");
                     localActivity = CollectActivity.COLLECTING_LEFT;
                     return Utility.getLoopReturn();
@@ -54,7 +54,7 @@ public class CollectExecutor extends ActivityExecutor {
                 if (!Location.DUNGEON_AREA.contains(Players.local().tile())) {
                     Utility.setTask("???? Where are we????");
                     Movement.walkTo(Location.DUNGEON_AREA_RIGHT.getRandomTile());
-                    Condition.wait(() -> Location.DUNGEON_AREA_RIGHT.contains(Players.local()), 50, 200);
+                    Condition.wait(() -> Location.DUNGEON_AREA_RIGHT.contains(Players.local()), 100, 500);
                     Log.fine("Unknown area");
                     localActivity = CollectActivity.COLLECTING_RIGHT;
                     return Utility.getLoopReturn();
@@ -73,16 +73,14 @@ public class CollectExecutor extends ActivityExecutor {
                 }
 
                 if (Location.DUNGEON_AREA_RIGHT.contains(Players.local())) {
-                    GroundItem bone = Utility.getNearestBone(Location.DUNGEON_AREA_RIGHT);
-                    if (!bone.valid()) {
-                        Utility.setTask("Waiting on spawn");
-                        if (Condition.wait(() -> GroundItems.stream().id(Utility.BONE).within(Location.DUNGEON_AREA_RIGHT).isEmpty(), 50, 100)) {
-                            Log.info("No bone foundR");
-                            localActivity = CollectActivity.WALKING;
-                            return Utility.getLoopReturn();
-                        }
+                    Utility.setTask("Waiting on spawn");
+                    if (Condition.wait(() -> Utility.getBone(Location.DUNGEON_AREA_RIGHT).valid(), 100, 100)) {
+                        Log.info("No bone foundR");
+                        localActivity = CollectActivity.WALKING;
+                        return Utility.getLoopReturn();
                     }
-
+                    Log.fine("Bone Found");
+                    GroundItem bone = Utility.getNearestBone(Location.DUNGEON_AREA_RIGHT);
                     if (bone.valid()) {
                         Utility.setTask("Grabbing Bone");
                         if (!bone.inViewport()) {
@@ -112,16 +110,13 @@ public class CollectExecutor extends ActivityExecutor {
                 }
 
                 if (Location.DUNGEON_AREA_LEFT.contains(Players.local())) {
-                    GroundItem bone = Utility.getNearestBone(Location.DUNGEON_AREA_LEFT);
-                    if (!bone.valid()) {
-                        Utility.setTask("Waiting on spawn");
-                        if (Condition.wait(() -> GroundItems.stream().id(Utility.BONE).within(Location.DUNGEON_AREA_LEFT).isEmpty(), 50, 100)) {
-                            Log.info("No bone found Left");
-                            localActivity = CollectActivity.WALKING;
-                            return Utility.getLoopReturn();
-                        }
+                    Utility.setTask("Waiting on spawn");
+                    if (Condition.wait(() -> Utility.getBone(Location.DUNGEON_AREA_LEFT).valid(), 100, 100)) {
+                        Log.info("No bone found Left");
+                        localActivity = CollectActivity.WALKING;
+                        return Utility.getLoopReturn();
                     }
-
+                    GroundItem bone = Utility.getNearestBone(Location.DUNGEON_AREA_LEFT);
                     if (bone.valid()) {
                         Utility.setTask("Grabbing Bone");
                         if (!bone.inViewport()) {

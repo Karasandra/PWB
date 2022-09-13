@@ -57,7 +57,10 @@ public class Utility {
     public static boolean isStopping() { return stopping; }
 
     public static GroundItem getNearestBone(Area area) {
-        return GroundItems.stream().within(area).id(Utility.BONE).nearest().first();
+        return GroundItems.stream().within(area).id(BONE).nearest().first();
+    }
+    public static GroundItem getBone(Area area) {
+        return GroundItems.stream().within(area).id(BONE).first();
     }
 
     public static Tile northTile = Players.local().tile().derive(3, 0);

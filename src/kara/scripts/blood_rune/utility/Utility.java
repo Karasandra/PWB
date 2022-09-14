@@ -3,6 +3,7 @@ package kara.scripts.blood_rune.utility;
 import kara.scripts.blood_rune.executor.Activity;
 import kara.scripts.bone_collector.utility.Log;
 import org.powbot.api.Random;
+import org.powbot.api.Tile;
 import org.powbot.api.rt4.*;
 
 
@@ -47,4 +48,5 @@ public class Utility {
     public static Item getInvBloodRune() { return Inventory.stream().id(ObjectId.BLOOD_RUNE).first(); }
     public static GameObject getObject(int door) { return Objects.stream().id(door).nearest().first(); }
     public static boolean getIdle() { return !Players.local().inMotion(); }
+    public static Tile myTile() { return Players.local().tile(); }
 }

@@ -1,24 +1,21 @@
 package kara.scripts.blood_rune.executor;
 
-import kara.scripts.blood_rune.utility.Location;
-import kara.scripts.blood_rune.utility.Log;
-import kara.scripts.blood_rune.utility.ObjectId;
-import kara.scripts.blood_rune.utility.Utility;
+import kara.scripts.blood_rune.utility.*;
 import org.powbot.api.Condition;
-import org.powbot.api.rt4.Inventory;
-import org.powbot.api.rt4.Item;
-import org.powbot.api.rt4.Movement;
-import org.powbot.api.rt4.Players;
+import org.powbot.api.Locatable;
+import org.powbot.api.Tile;
+import org.powbot.api.rt4.*;
+import org.powbot.api.rt4.walking.local.LocalPath;
+import org.powbot.api.rt4.walking.local.LocalPathFinder;
 
 public class ReturnExecutor extends ActivityExecutor {
 
 
-        private ReturnActivity localacvtivity =  ReturnActivity.METHOD;
+        private ReturnActivity localacvtivity =  ReturnActivity.TELEPORT;
 
         enum ReturnActivity {
-            METHOD,
-            MYTH,
-            CRAFT
+            TELEPORT,
+            WALK
         }
 
     @Override
@@ -26,103 +23,56 @@ public class ReturnExecutor extends ActivityExecutor {
             Log.info("Return Executor");
 
         switch (localacvtivity) {
-            case METHOD -> {
-                Log.info("Deciding Method");
-                if (Inventory.stream().id(ObjectId.MYTH_CAPE).first().valid()) {
-                    Log.fine("Myth in Inv");
-                    localacvtivity = ReturnActivity.MYTH;
-                }
-                if (Inventory.stream().id(ObjectId.CRAFT_CAPE_T).first().valid()) {
-                    Log.fine("Craft in Inv");
-                    localacvtivity = ReturnActivity.CRAFT;
-                }
-                if (Inventory.stream().id(ObjectId.CRAFT_CAPE).first().valid()) {
-                    Log.fine("Craft in Inv");
-                    localacvtivity = ReturnActivity.CRAFT;
-                } else {
-                    Log.severe("No Method");
+            case TELEPORT -> {
+                Log.info("Teleporting");
+                Utility.setTask("Teleporting to Bank");
+                Item capetest = Inventory.stream().id(Config.getRetMethod()).first();
+                Tile mytile = Utility.myTile();
+                if (!capetest.valid()) {
+                    Log.severe("No Teleport");
                     Utility.setStopping(true);
+                    return Utility.getLoopReturnQuick();
                 }
-                return Utility.getLoopReturnQuick();
-            }
-            case MYTH -> {
-                Log.info("Myth Method");
-                Utility.setTask("Return Via Myth");
-                if (!Location.MYTH_GUILD_UPPER.contains(Players.local().tile()) && !Location.MYTH_GUILD_LOWER.contains(Players.local().tile())) {
-                    Log.info("Location Xupper-Xlower");
-                    Item cape = Inventory.stream().id(ObjectId.MYTH_CAPE).first();
-                    if (!cape.valid()) {
-                        Log.severe("No Myth Cape!");
-                        Utility.setStopping(true);
-                        return Utility.getLoopReturnQuick();
-                    }
-                    if (cape.valid()) {
-                        Log.fine("Cape Found");
-                        cape.interact("teleport");
-                        if (Condition.wait(() -> Location.MYTH_GUILD_LOWER.contains(Players.local().tile()), 50, 1500)) {
-                            Log.fine("teleport successful");
-                        }
-                        else {
-                            Log.severe("Teleport failed");
-                            Utility.setStopping(true);
-                            return Utility.getLoopReturnQuick();
-                        }
-                    }
-                }
-                if (Location.MYTH_GUILD_LOWER.contains(Players.local().tile())) {
-                    Utility.setTask("Walking to bank");
-                    Log.info("Location lower");
-                    Movement.walkTo(Location.MYTH_GUILD_UPPER_STAIRS.getRandomTile());
-                    if (Condition.wait(() -> Location.MYTH_GUILD_UPPER.contains(Players.local().tile()), 50, 1500)) {
-                        Log.fine("walk successful");
+                if (capetest.valid()) {
+                    Log.fine("Cape Found");
+                    capetest.interact("teleport");
+                    if (Condition.wait(() -> mytile != Utility.myTile(), 50, 1000   )) {
+                        Log.fine("teleport successful");
+                        localacvtivity = ReturnActivity.WALK;
                     } else {
-                        Log.severe("walk failed");
+                        Log.severe("teleport failed");
                         Utility.setStopping(true);
                         return Utility.getLoopReturnQuick();
                     }
                 }
-                if (Location.MYTH_GUILD_UPPER.contains(Players.local().tile())) {
-                    Log.fine("Successful return");
-                    Utility.setActivity(Activity.BANK);
-                    return Utility.getLoopReturnQuick();
-                }
-                return Utility.getLoopReturn();
+                return Utility.getLoopReturnLong();
             }
-            case CRAFT -> {
-                Log.info("Craft Method");
-                Utility.setTask("Return Via Craft");
-                if (!Location.CRAFT_GUILD.contains(Players.local().tile())) {
-                    Log.info("Location Xcraft");
-                    Item cape = Inventory.stream().id(ObjectId.CRAFT_CAPE).first();
-                    if (cape == null) {
-                        cape = Inventory.stream().id(ObjectId.CRAFT_CAPE_T).first();
+            case WALK -> {
+                Log.info("Walking to Bank");
+                Utility.setTask("Walking to Bank");
+                Locatable bank = Bank.nearest();
+                if (!bank.isRendered() || !bank.reachable()) {
+                    Log.info("Finding Local Path");
+                    LocalPath localPath = LocalPathFinder.INSTANCE.findPath((Tile) bank);
+                    if (localPath.isNotEmpty()) {
+                        localPath.traverseUntilReached(50, Utility::getIdle);
+                    } else {
+                        Log.info("Finding WW Path");
+                        Movement.moveToBank();
                     }
-                    if (!cape.valid()) {
-                        Log.severe("No Craft Cape!");
-                        Utility.setStopping(true);
-                        return Utility.getLoopReturnQuick();
+                    if (Condition.wait(Utility::getIdle, 50, 1000)) {
+                        Log.fine("Walked to bank");
+                        Utility.setActivity(Activity.BANK);
+                        return Utility.getLoopReturn();
                     }
-                    if (cape.valid()) {
-                        Log.fine("Cape Found");
-                        cape.interact("teleport");
-                        if (Condition.wait(() -> Location.CRAFT_GUILD.contains(Players.local().tile()), 50, 1500)) {
-                            Log.fine("teleport successful");
-                        } else {
-                            Log.severe("Teleport failed");
-                            Utility.setStopping(true);
-                            return Utility.getLoopReturnQuick();
-                        }
-                    }
-                }
-                if (Location.CRAFT_GUILD.contains(Players.local().tile())) {
-                    Log.fine("Successful return");
+                } else {
+                    Log.fine("Already at bank");
                     Utility.setActivity(Activity.BANK);
-                    return Utility.getLoopReturnQuick();
                 }
-                return Utility.getLoopReturn();
+                return Utility.getLoopReturnLong();
             }
-        }
 
+        }
             return Utility.getLoopReturn();
     }
 }

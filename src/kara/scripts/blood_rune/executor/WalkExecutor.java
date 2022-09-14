@@ -28,50 +28,46 @@ public class WalkExecutor extends ActivityExecutor {
 
         switch (localActivity) {
             case FAIRY -> {
-                GameObject fairytest = Objects.stream().id(Config.getWalkMethod()).nearest().first();
-                if (fairytest.valid()) {
-                    if (!fairytest.inViewport()) {
-                        Camera.turnTo(fairytest);
+                Log.info("Looking for Fairy");
+                GameObject fairy = Objects.stream().id(ObjectId.FAIRY_RING).nearest().first();
+                if (fairy.valid()) {
+                    Utility.setTask("Using Fairy Ring");
+                    if (!fairy.inViewport()) {
+                        Camera.turnTo(fairy);
                     }
-                    fairytest.click("Last-destination (DLS)");
+                    fairy.click("Last-destination (DLS)");
                     if (Condition.wait(() -> Location.FAIRY_RING_DLS.contains(Players.local().tile()), 50, 250)) {
                         Log.info("TP Good");
                         localActivity = WalkActivity.METHOD;
                         return Utility.getLoopReturn();
                     } else {
                         Log.severe("Fairy TP Failed");
-                        fairytest.click("Configure" );
-                        Widgets.stream().
-                    }
-                }
-                if (Location.LEGEND_GUILD.contains(Players.local().tile())) {
-                    GameObject fairy = Objects.stream().id(ObjectId.FAIRY_RING).nearest().first();
-                    if (!fairy.inViewport()) {
-                        Camera.turnTo(fairy);
-                    }
-                    fairy.click("Last-destination (DLS)");
-                    if (Condition.wait(() -> Location.FAIRY_RING_DLS.contains(Players.local().tile()), 50, 250)) {
-                        Log.info("TP good");
-                        localActivity = WalkActivity.METHOD;
-                        return Utility.getLoopReturn();
-                    } else {
-                        Log.severe("Fairy TP Failed");
-                        Utility.setStopping(true);
-                        return Utility.getLoopReturnQuick();
+                        fairy.click("Configure" );
+                        //Widgets.stream()
+                        if(Condition.wait(() -> Location.FAIRY_RING_DLS.contains(Players.local().tile()), 50, 250)) {
+                            Log.info("TP Good");
+                            localActivity = WalkActivity.METHOD;
+                            return Utility.getLoopReturn();
+                        } else {
+                            Log.severe("TP Failed with Dial");
+                            Utility.setStopping(true);
+                            return Utility.getLoopReturnQuick();
+                        }
+
                     }
                 } else {
                     Log.info("Tp to Fairy");
                     Utility.setTask("Tp to Fairy Ring");
-                    Item cape = Inventory.stream().id(ObjectId.QP_CAPE).first();
+                    Item cape = Inventory.stream().id(Config.getWalkMethod()).first();
                     if (!cape.valid()) {
-                        Log.severe("No QP Cape!");
+                        Log.severe("No TP Method!");
                         Utility.setStopping(true);
                         return Utility.getLoopReturnQuick();
                     }
                     if (cape.valid()) {
-                        Log.fine("Cape found");
+                        Log.fine("TP Method found");
                         cape.interact("teleport");
-                        if (Condition.wait(() -> Location.LEGEND_GUILD.contains(Players.local().tile()), 50, 500)) {
+                        if (Condition.wait(() -> Objects.stream().id(ObjectId.FAIRY_RING).first().valid(), 50, 500)) {
                             Log.fine("teleport successful");
                         } else {
                             Log.severe("Teleport failed");

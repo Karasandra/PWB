@@ -26,17 +26,17 @@ public class ReturnExecutor extends ActivityExecutor {
             case TELEPORT -> {
                 Log.info("Teleporting");
                 Utility.setTask("Teleporting to Bank");
-                Item capetest = Inventory.stream().id(Config.getRetMethod()).first();
-                Tile mytile = Utility.myTile();
-                if (!capetest.valid()) {
+                Item cape = Inventory.stream().id(Config.getRetMethod()).first();
+                Tile myTile = Utility.myTile();
+                if (!cape.valid()) {
                     Log.severe("No Teleport");
                     Utility.setStopping(true);
                     return Utility.getLoopReturnQuick();
                 }
-                if (capetest.valid()) {
+                if (cape.valid()) {
                     Log.fine("Cape Found");
-                    capetest.interact("teleport");
-                    if (Condition.wait(() -> mytile != Utility.myTile(), 50, 1000   )) {
+                    cape.interact("teleport");
+                    if (Condition.wait(() -> myTile != Utility.myTile(), 50, 1000   )) {
                         Log.fine("teleport successful");
                         localacvtivity = ReturnActivity.WALK;
                     } else {

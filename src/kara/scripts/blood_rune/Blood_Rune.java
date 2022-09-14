@@ -5,6 +5,8 @@ import kara.scripts.blood_rune.executor.BankExecutor;
 import kara.scripts.blood_rune.executor.CraftExecutor;
 import kara.scripts.blood_rune.executor.ReturnExecutor;
 import kara.scripts.blood_rune.executor.WalkExecutor;
+import kara.scripts.blood_rune.utility.Config;
+import kara.scripts.blood_rune.utility.Log;
 import kara.scripts.blood_rune.utility.ObjectId;
 import kara.scripts.blood_rune.utility.Utility;
 import org.powbot.api.rt4.Game;
@@ -26,20 +28,28 @@ import org.powbot.mobile.service.ScriptUploader;
 )
 
 @ScriptConfiguration.List(
-        [
-        ScriptConfiguration(
+        {
+        @ScriptConfiguration(
             name="Bank Method",
-            allowedValues=["Craft","Myth"],
-            description="What banking method would you like to use?",
-            defaultValue="Myth"
+            optionType = OptionType.STRING,
+            allowedValues = {"MYTH", "Craft", "Craft(T)"},
+            description = "What banking method would you like to use?",
+            defaultValue = "Myth"
             ),
-        ScriptConfiguration(
-            name="Fairy Ring Method",
-            allowedValues=["QPC","Construction"],
-            description="How do you wish to get to fairy ring?",
-            defaultValue="QPC"
+        @ScriptConfiguration(
+            name="Fairy Method",
+            optionType = OptionType.STRING,
+            allowedValues = {"QPC", "Construction", "Construction(T)"},
+            description = "How do you wish to get to fairy ring?",
+            defaultValue = "QPC"
+            ),
+        @ScriptConfiguration(
+            name="Runecape",
+            optionType = OptionType.BOOLEAN,
+            description = "Runecrafting Cape Equipped?",
+            defaultValue = "false"
             )
-        ]
+        }
 )
 
 
@@ -66,6 +76,24 @@ public class Blood_Rune extends AbstractScript {
                 .y(65)
                 .build();
         addPaint(paint);
+
+        setGUIValues();
+    }
+
+    private void setGUIValues() {
+        Object retMethod = getOption("Bank Method");
+        Object walkMethod = getOption("Fairy Method");
+        Object runeCape = getOption("Runecape");
+
+        if(retMethod == null || walkMethod == null || runeCape == null) {
+            Log.severe("GUI Value Null");
+            Utility.setStopping(true);
+            return;
+        }
+
+        Config.setRetMethod((String) retMethod);
+        Config.setWalkMethod((String) walkMethod);
+        Config.setRuneCape((boolean) runeCape);
     }
 
     @Override

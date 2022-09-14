@@ -1,12 +1,10 @@
 package kara.scripts.blood_rune.executor;
 
-import kara.scripts.blood_rune.utility.Location;
-import kara.scripts.blood_rune.utility.Log;
-import kara.scripts.blood_rune.utility.ObjectId;
-import kara.scripts.blood_rune.utility.Utility;
+import kara.scripts.blood_rune.utility.*;
 import org.powbot.api.Condition;
 import org.powbot.api.rt4.*;
 import org.powbot.api.rt4.walking.model.Skill;
+import org.powbot.proto.rt4.WidgetAction;
 
 
 public class WalkExecutor extends ActivityExecutor {
@@ -30,6 +28,22 @@ public class WalkExecutor extends ActivityExecutor {
 
         switch (localActivity) {
             case FAIRY -> {
+                GameObject fairytest = Objects.stream().id(Config.getWalkMethod()).nearest().first();
+                if (fairytest.valid()) {
+                    if (!fairytest.inViewport()) {
+                        Camera.turnTo(fairytest);
+                    }
+                    fairytest.click("Last-destination (DLS)");
+                    if (Condition.wait(() -> Location.FAIRY_RING_DLS.contains(Players.local().tile()), 50, 250)) {
+                        Log.info("TP Good");
+                        localActivity = WalkActivity.METHOD;
+                        return Utility.getLoopReturn();
+                    } else {
+                        Log.severe("Fairy TP Failed");
+                        fairytest.click("Configure" );
+                        Widgets.stream().
+                    }
+                }
                 if (Location.LEGEND_GUILD.contains(Players.local().tile())) {
                     GameObject fairy = Objects.stream().id(ObjectId.FAIRY_RING).nearest().first();
                     if (!fairy.inViewport()) {

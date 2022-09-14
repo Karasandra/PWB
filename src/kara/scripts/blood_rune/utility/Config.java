@@ -8,13 +8,13 @@ public class Config {
 
     //Set and Return Methods
     public static void setWalkMethod(String walkMethod) {
-        if (walkMethod == "QPC") {
+        if (walkMethod.equals("QPC")) {
             Config.walkMethod = ObjectId.QP_CAPE;
         }
-        if (walkMethod == "Construction") {
+        if (walkMethod.equals("Construction")) {
             Config.walkMethod = ObjectId.CON_CAPE;
         }
-        if (walkMethod == "Construction(T)") {
+        if (walkMethod.equals("Construction(T)")) {
             Config.walkMethod = ObjectId.CON_CAPE_T;
         }
     }
@@ -23,13 +23,13 @@ public class Config {
     }
 
     public static void setRetMethod(String retMethod) {
-        if (retMethod == "MYTH") {
+        if (retMethod.equals("MYTH")) {
             Config.retMethod = ObjectId.MYTH_CAPE;
         }
-        if (retMethod == "Craft") {
+        if (retMethod.equals("Craft")) {
             Config.retMethod = ObjectId.CRAFT_CAPE;
         }
-        if (retMethod == "Craft(T)") {
+        if (retMethod.equals("Craft(T)")) {
             Config.retMethod = ObjectId.CRAFT_CAPE_T;
         }
     }

@@ -36,7 +36,7 @@ public class BankExecutor extends ActivityExecutor {
                     Camera.turnTo(bank);
                 }
                 if (!Bank.open()) {
-                    Log.severe("Bank failed to open");
+                    Log.severe("Bank failed to click");
                     Utility.setStopping(true);
                 }
                 if (!Condition.wait(Bank::opened, 250, 100)) {

@@ -2,9 +2,11 @@ package kara.scripts.blood_rune.executor;
 
 import kara.scripts.blood_rune.utility.*;
 import org.powbot.api.Condition;
+import org.powbot.api.InteractableEntity;
 import org.powbot.api.rt4.*;
 import org.powbot.api.rt4.walking.model.Skill;
 import org.powbot.proto.rt4.WidgetAction;
+import sun.org.mozilla.javascript.internal.UintMap;
 
 
 public class WalkExecutor extends ActivityExecutor {
@@ -29,21 +31,29 @@ public class WalkExecutor extends ActivityExecutor {
         switch (localActivity) {
             case FAIRY -> {
                 Log.info("Looking for Fairy");
-                GameObject fairy = Objects.stream().id(ObjectId.FAIRY_RING).nearest().first();
-                if (fairy.valid()) {
-                    Utility.setTask("Using Fairy Ring");
-                    if (!fairy.inViewport()) {
-                        Camera.turnTo(fairy);
-                    }
-                    fairy.click("Last-destination (DLS)");
-                    if (Condition.wait(() -> Location.FAIRY_RING_DLS.contains(Players.local().tile()), 50, 250)) {
-                        Log.info("TP Good");
-                        localActivity = WalkActivity.METHOD;
-                        return Utility.getLoopReturn();
-                    } else {
-                        Log.severe("Fairy TP Failed");
-                        fairy.click("Configure" );
-                        //Widgets.stream()
+                if (FairyRing.open()) {
+                        if(Condition.wait(FairyRing::opened, 50, 500)) {
+                            Component dest = Components.stream().text("Last-destionation (DLS): ").first();
+                            if(dest.valid() && FairyRing.INSTANCE.clickTeleport()) {
+                                if (Condition.wait(() -> Location.FAIRY_RING_DLS.contains(Players.local().tile()), 50, 250)) {
+                                    Log.info("TP Good");
+                                    localActivity = WalkActivity.METHOD;
+                                    return Utility.getLoopReturn();
+                                }
+                            } else {
+                                if(FairyRing.teleport("DLS")) {
+                                    if (Condition.wait(() -> Location.FAIRY_RING_DLS.contains(Players.local().tile()), 50, 250)) {
+                                        Log.info("TP Good");
+                                        localActivity = WalkActivity.METHOD;
+                                        return Utility.getLoopReturn();
+                                    }
+                                }
+                            }
+                        } else {
+                            if(FairyRing.open()) {
+                                Condition.wait(() -> FairyRing.opened(), 100,20);
+                            }
+                        }
                         if(Condition.wait(() -> Location.FAIRY_RING_DLS.contains(Players.local().tile()), 50, 250)) {
                             Log.info("TP Good");
                             localActivity = WalkActivity.METHOD;
@@ -53,9 +63,7 @@ public class WalkExecutor extends ActivityExecutor {
                             Utility.setStopping(true);
                             return Utility.getLoopReturnQuick();
                         }
-
-                    }
-                } else {
+                        } else {
                     Log.info("Tp to Fairy");
                     Utility.setTask("Tp to Fairy Ring");
                     Item cape = Inventory.stream().id(Config.getWalkMethod()).first();

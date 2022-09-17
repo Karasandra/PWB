@@ -61,12 +61,12 @@ public class BankExecutor extends ActivityExecutor {
                     Condition.wait(() -> !Utility.getInvBloodRune().valid(), 50, 100);
                     Log.fine("Done Depositing");
                 }
-                Item bloodEssenceI = Inventory.stream().id(ObjectId.BLOOD_ESSENCE_INERT).first();
                 Item bloodEssenceA = Inventory.stream().id(ObjectId.BLOOD_ESSENCE_ACTIVE).first();
-                if (!bloodEssenceA.valid() && !bloodEssenceI.valid()) {
+                if (!bloodEssenceA.valid()) {
                     Log.info("No Blood Essence");
                     Bank.withdraw(ObjectId.BLOOD_ESSENCE_INERT, Bank.Amount.ONE);
                 }
+                Item bloodEssenceI = Inventory.stream().id(ObjectId.BLOOD_ESSENCE_INERT).first();
                 if (bloodEssenceI.valid()) {
                     Log.info("Blood Essence Inert");
                     bloodEssenceI.interact("activate");
@@ -104,14 +104,17 @@ public class BankExecutor extends ActivityExecutor {
                     if (!potion.valid()) {
                         Log.info("Grabbing Potion");
                         Bank.withdraw("Stamina", Bank.Amount.ONE);
-                        Condition.wait(() -> Utility.getInvPotion().valid(), 100, 200);
-                        Log.fine("Grabbed Potion");
-                    }
-                    if (potion.valid()) {
-                        Log.info("Drinking");
-                        potion.click();
-                        Condition.wait(() -> Utility.getPotionVarpbit() > 40, 100, 200);
-                        Log.fine("Drank Potion");
+                        if (Condition.wait(() -> Utility.getInvPotion().valid(), 100, 200)) {
+                            Log.fine("Grabbed Potion");
+                            Log.info("Drinking");
+                            potion.click();
+                            Condition.wait(() -> Utility.getPotionVarpbit() > 40, 100, 200);
+                            Log.fine("Drank Potion");
+                        } else {
+                            Log.severe("No more stamina");
+                            Utility.setStopping(true);
+                            return Utility.getLoopReturnQuick();
+                        }
                     }
                 }
                 return Utility.getLoopReturn();

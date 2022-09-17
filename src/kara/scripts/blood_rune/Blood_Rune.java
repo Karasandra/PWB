@@ -60,6 +60,7 @@ public class Blood_Rune extends AbstractScript {
     private final CraftExecutor craftExecutor = new CraftExecutor();
     private final ReturnExecutor returnExecutor = new ReturnExecutor();
 
+    @SuppressWarnings("resource")
     public static void main(String[] args) {
         new ScriptUploader().uploadAndStart("Blood Rune", "karasandra", "127.0.0.1:5559", true, false);
     }

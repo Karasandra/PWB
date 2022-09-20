@@ -58,7 +58,7 @@ public class BankExecutor extends ActivityExecutor {
                     Log.info("Have Blood Runes");
                     Bank.deposit(ObjectId.BLOOD_RUNE, Bank.Amount.ALL);
                     Log.info("Depositing Runes");
-                    Condition.wait(() -> !Utility.getInvBloodRune().valid(), 50, 100);
+                    //Condition.wait(() -> !Utility.getInvBloodRune().valid(), 50, 100);
                     Log.fine("Done Depositing");
                 }
                 Item bloodEssenceA = Inventory.stream().id(ObjectId.BLOOD_ESSENCE_ACTIVE).first();
@@ -74,7 +74,7 @@ public class BankExecutor extends ActivityExecutor {
                 if (Utility.getEssenceCount() <= 18) {
                     Log.info("Essence Count Low");
                     Bank.withdraw(ObjectId.PURE_ESSENCE, Bank.Amount.ALL);
-                    Condition.wait(() -> Utility.getEssenceCount() >= 18, 50, 200);
+                    //Condition.wait(() -> Utility.getEssenceCount() >= 18, 50, 200);
                     Log.fine("Essence Withdrawn");
                 }
                 if (Utility.getEssenceCount() >= 18 && Utility.getPouchVarpbitItem() != ObjectId.POUCH_VARPBIT_FULL) {
@@ -93,7 +93,7 @@ public class BankExecutor extends ActivityExecutor {
                     Bank.deposit(ObjectId.POTION_ITEM_3, Bank.Amount.ALL);
                     Bank.deposit(ObjectId.POTION_ITEM_2, Bank.Amount.ALL);
                     Bank.deposit(ObjectId.POTION_ITEM_1, Bank.Amount.ALL);
-                    Condition.wait(() -> !Utility.getInvPotion().valid(), 100, 200);
+                    //Condition.wait(() -> !Utility.getInvPotion().valid(), 100, 200);
                     Log.info("Potion Deposited");
                     localActivity = BankActivity.BANKING;
                     return Utility.getLoopReturnQuick();
@@ -107,7 +107,7 @@ public class BankExecutor extends ActivityExecutor {
                         if (Condition.wait(() -> Utility.getInvPotion().valid(), 100, 200)) {
                             Log.fine("Grabbed Potion");
                             Log.info("Drinking");
-                            potion.click();
+                            potion.click("Drink");
                             Condition.wait(() -> Utility.getPotionVarpbit() > 40, 100, 200);
                             Log.fine("Drank Potion");
                         } else {

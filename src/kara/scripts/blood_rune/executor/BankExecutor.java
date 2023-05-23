@@ -38,6 +38,7 @@ public class BankExecutor extends ActivityExecutor {
                 if (!Bank.open()) {
                     Log.severe("Bank failed to click");
                     Utility.setStopping(true);
+                    return Utility.getLoopReturnQuick();
                 }
                 if (!Condition.wait(Bank::opened, 250, 100)) {
                     Log.severe("Bank failed to open");

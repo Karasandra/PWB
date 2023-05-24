@@ -73,11 +73,6 @@ public class Wrath_Rune extends AbstractScript {
             return Utility.getLoopReturn();
         }
 
-        if (Utility.needsToRun()) {
-            Utility.setTask("Enabling run");
-            Movement.running(true);
-            return Utility.getLoopReturn();
-        }
         //Global Conditions End
 
         //Activity Starts

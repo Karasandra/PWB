@@ -1,6 +1,7 @@
 package kara.scripts.wrath.executor;
 
-import jdk.jshell.execution.Util;
+
+
 import kara.scripts.wrath.utility.Location;
 import kara.scripts.wrath.utility.Log;
 import kara.scripts.wrath.utility.ObjectId;
@@ -8,6 +9,8 @@ import kara.scripts.wrath.utility.Utility;
 import org.powbot.api.Condition;
 import org.powbot.api.Locatable;
 import org.powbot.api.rt4.*;
+
+
 
 public class BankExecutor extends ActivityExecutor {
     private BankActivity localActivity = BankActivity.BANKING;
@@ -48,6 +51,11 @@ public class BankExecutor extends ActivityExecutor {
                 if (Utility.getPouchVarpbitItem() == ObjectId.POUCH_VARPBIT_FULL && Inventory.isFull()) {
                     Log.fine("Inv Good");
                     Utility.setActivity(Activity.WALK);
+                    return Utility.getLoopReturn();
+                }
+                if (Utility.healthLoss() >= 22) {
+                    Log.info("Healing");
+                    localActivity = BankActivity.HEAL;
                     return Utility.getLoopReturn();
                 }
                 if (Utility.getPotionVarpbit() <= 40) {
@@ -103,6 +111,28 @@ public class BankExecutor extends ActivityExecutor {
             case HEAL -> {
                 Log.info("Bank - Heal");
                 Utility.setTask("Healing");
+                if (Utility.healthLoss() <= 10) {
+                    Log.info("Done Eating");
+                    localActivity = BankActivity.BANKING;
+                    return Utility.getLoopReturnQuick();
+                } else {
+                    Utility.setTask("Eating");
+                    Item food = Utility.getInvFood();
+                    if (!food.valid()) {
+                        Log.info("Grabbing Food");
+                        Bank.withdraw("Shark", Bank.Amount.ONE);
+                        if (Condition.wait(() -> Utility.getInvFood().valid(), 100, 200)) {
+                            Log.fine("Got Food");
+                            food.click("Eat");
+                            Condition.wait(() -> Utility.healthLoss() < 10, 100, 200);
+                            Log.fine("Eaten");
+                        } else {
+                            Log.severe("No More Food");
+                            Utility.setStopping(true);
+                            return Utility.getLoopReturnQuick();
+                        }
+                    }
+                }
                 return Utility.getLoopReturn();
             }
         }

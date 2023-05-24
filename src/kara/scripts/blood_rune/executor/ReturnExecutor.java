@@ -36,7 +36,7 @@ public class ReturnExecutor extends ActivityExecutor {
                 if (cape.valid()) {
                     Log.fine("Cape Found");
                     cape.interact("teleport");
-                    if (Condition.wait(() -> myTile != Utility.myTile(), 50, 1000   )) {
+                    if (Condition.wait(() -> myTile != Utility.myTile(), 50, 1000)) {
                         Log.fine("teleport successful");
                         localacvtivity = ReturnActivity.WALK;
                     } else {

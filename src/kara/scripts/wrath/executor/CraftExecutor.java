@@ -7,6 +7,7 @@ import kara.scripts.wrath.utility.Location;
 import kara.scripts.wrath.utility.Log;
 import kara.scripts.wrath.utility.ObjectId;
 import kara.scripts.wrath.utility.Utility;
+import kara.scripts.wrath.utility.ObjectId;
 import org.powbot.api.Condition;
 import org.powbot.api.rt4.GameObject;
 import org.powbot.api.rt4.Inventory;
@@ -43,7 +44,7 @@ public class CraftExecutor extends ActivityExecutor {
             case INITCRAFT -> {
                 Log.info("Craft - First Craft");
                 Utility.setTask("Crafting");
-                GameObject alter = Objects.stream().id(ObjectId.WRATH_ALTER).nearest().first();
+                GameObject alter = Utility.getObject(ObjectId.WRATH_ALTER);
                 if (Utility.getEssenceCount() > 1) {
                     Log.info("We have Essence");
                     alter.click();
@@ -56,15 +57,16 @@ public class CraftExecutor extends ActivityExecutor {
             case SECCRAFT -> {
                 Log.info("Craft - Second Craft");
                 Utility.setTask("Crafting");
-                GameObject alter2 = Objects.stream().id(ObjectId.WRATH_ALTER).nearest().first();
+                GameObject alter = Utility.getObject(ObjectId.WRATH_ALTER);
                 if (Utility.getEssenceCount() > 1) {
                     Log.info("We have Essence");
-                    alter2.click();
+                    alter.click();
                     Log.fine("Crafted Runes");
                 }
                 if (EXTRACT_COUNT == 2) {
                     Log.fine("Done Crafting");
                     EXTRACT_COUNT = 0;
+                    localActivity = CraftActivity.SETUP;
                     Utility.setActivity(Activity.BANK);
                     return Utility.getLoopReturn();
                 }
@@ -80,8 +82,8 @@ public class CraftExecutor extends ActivityExecutor {
                     EXTRACT_COUNT++;
                     localActivity = CraftActivity.SECCRAFT;
                 } else {
-                    Log.info("No More Runes");
-                    Utility.setActivity(Activity.BANK);
+                    Log.info("Did not Extract");
+                    Utility.setStopping(true);
                 }
                 return Utility.getLoopReturn();
             }

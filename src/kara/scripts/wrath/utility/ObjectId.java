@@ -12,4 +12,7 @@ public class ObjectId {
     public static final int PURE_ESSENCE = 7936;
     public static final int WRATH_RUNE = 99999;
     public static final int WRATH_ALTER = 9999;
+    public static final int BANK = 9999;
+    public static final int FOOD = 99999;
+    public static final int MYTH_CAPE = 99999;
 }

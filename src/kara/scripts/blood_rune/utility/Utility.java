@@ -46,7 +46,7 @@ public class Utility {
     public static int getEssenceCount() { return (int) Inventory.stream().id(ObjectId.PURE_ESSENCE).count(); }
     public static Item getInvPotion() { return Inventory.stream().id(ObjectId.POTION_ITEM_4, ObjectId.POTION_ITEM_3, ObjectId.POTION_ITEM_2, ObjectId.POTION_ITEM_1).first(); }
     public static Item getInvBloodRune() { return Inventory.stream().id(ObjectId.BLOOD_RUNE).first(); }
-    public static GameObject getObject(int door) { return Objects.stream().id(door).nearest().first(); }
+    public static GameObject getObject(int obj) { return Objects.stream().id(obj).nearest().first(); }
     public static boolean getIdle() { return !Players.local().inMotion(); }
     public static Tile myTile() { return Players.local().tile(); }
 }

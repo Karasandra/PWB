@@ -2,26 +2,40 @@ package kara.scripts.wrath.utility;
 
 
 import kara.scripts.wrath.executor.Activity;
+import org.powbot.api.Area;
+import org.powbot.api.Condition;
 import org.powbot.api.Random;
 import org.powbot.api.Tile;
 import org.powbot.api.rt4.*;
+
+import static org.powbot.api.rt4.Combat.health;
+import static org.powbot.api.rt4.Combat.maxHealth;
+
 
 public class Utility {
     private static boolean stopping = false;
     private static Activity activity = Activity.BANK;
     private static String task = "Starting";
-    private static final int LOWER_RUN_THRESH = 50;
-    private static final int UPPER_RUN_THRESH = 90;
-    private static int runThreshold = Random.nextInt(LOWER_RUN_THRESH, UPPER_RUN_THRESH);
-
-
-    //Utility
-    public static boolean needsToRun() {
-        if (!Movement.running() && Movement.energyLevel() > runThreshold) {
-            runThreshold = Random.nextInt(LOWER_RUN_THRESH, UPPER_RUN_THRESH);
-            return true;
+    public static int tpCape = 0;
+    public static void go(Area tile,int obj) { Movement.builder(tile.getRandomTile()).setAutoRun(true).setRunMin(40).setRunMax(95).setWalkUntil(() -> getObject(obj).distance() <= 10).move(); }
+    public static void tele() {
+        Item cape = Inventory.stream().id(ObjectId.MYTH_CAPE).first();
+        Tile myTile = myTile();
+        if (!cape.valid()) {
+            Log.severe("No Teleport");
+            Utility.setStopping(true);
+            return;
         }
-        return false;
+        if (cape.valid()) {
+            Log.fine("Cape Found");
+            cape.interact("teleport");
+            if (Condition.wait(() -> myTile != Utility.myTile(), 50, 1000)) {
+                Log.fine("Teleported?");
+            } else {
+                Log.severe("Did not move");
+                Utility.setStopping(true);
+            }
+        }
     }
     public static String getTask() { return task; }
     public static Activity getActivity() {
@@ -43,8 +57,11 @@ public class Utility {
     public static int getPotionVarpbit() { return Varpbits.varpbit(ObjectId.POTION_VARPBIT); }
     public static int getEssenceCount() { return (int) Inventory.stream().id(ObjectId.PURE_ESSENCE).count(); }
     public static Item getInvPotion() { return Inventory.stream().id(ObjectId.POTION_ITEM_4, ObjectId.POTION_ITEM_3, ObjectId.POTION_ITEM_2, ObjectId.POTION_ITEM_1).first(); }
-    public static Item getInvBloodRune() { return Inventory.stream().id(ObjectId.WRATH_RUNE).first(); }
-    public static GameObject getObject(int door) { return Objects.stream().id(door).nearest().first(); }
-    public static boolean getIdle() { return !Players.local().inMotion(); }
+    public static Item getInvFood() { return Inventory.stream().id(ObjectId.FOOD).first(); }
+    public static GameObject getObject(int obj) { return Objects.stream().id(obj).nearest().first(); }
+    public static Item getInvWrathRune() { return Inventory.stream().id(ObjectId.WRATH_RUNE).first(); }
     public static Tile myTile() { return Players.local().tile(); }
+    public static int healthLoss() {
+        return maxHealth() - health();
+    }
 }

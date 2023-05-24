@@ -53,6 +53,11 @@ public class BankExecutor extends ActivityExecutor {
                     Utility.setActivity(Activity.WALK);
                     return Utility.getLoopReturn();
                 }
+                if (Utility.getInvWrathRune().valid()) {
+                    Log.info("Depositing Runes");
+                    Bank.deposit(ObjectId.WRATH_RUNE, Bank.Amount.ALL);
+                    Condition.wait(() -> !Utility.getInvWrathRune().valid(), 50,100);
+                }
                 if (Utility.healthLoss() >= 22) {
                     Log.info("Healing");
                     localActivity = BankActivity.HEAL;

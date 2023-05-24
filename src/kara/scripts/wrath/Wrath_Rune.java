@@ -7,7 +7,6 @@ import kara.scripts.wrath.executor.WalkExecutor;
 import kara.scripts.wrath.utility.ObjectId;
 import kara.scripts.wrath.utility.Utility;
 import org.powbot.api.rt4.Game;
-import org.powbot.api.rt4.Movement;
 import org.powbot.api.script.*;
 import org.powbot.api.script.paint.Paint;
 import org.powbot.api.script.paint.PaintBuilder;
@@ -28,7 +27,6 @@ public class Wrath_Rune extends AbstractScript {
     private final WalkExecutor walkExecutor = new WalkExecutor();
     private final CraftExecutor craftExecutor = new CraftExecutor();
 
-    @SuppressWarnings("resource")
     public static void main(String[] args) {
         new kara.scripts.wrath.Wrath_Rune().startScript();
         //new ScriptUploader().uploadAndStart("Wrath Rune", "karasandra", "127.0.0.1:5555", true, false);

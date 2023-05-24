@@ -7,11 +7,9 @@ import kara.scripts.wrath.utility.Location;
 import kara.scripts.wrath.utility.Log;
 import kara.scripts.wrath.utility.ObjectId;
 import kara.scripts.wrath.utility.Utility;
-import kara.scripts.wrath.utility.ObjectId;
 import org.powbot.api.Condition;
 import org.powbot.api.rt4.GameObject;
 import org.powbot.api.rt4.Inventory;
-import org.powbot.api.rt4.Objects;
 import org.powbot.api.rt4.Players;
 
 public class CraftExecutor extends ActivityExecutor {

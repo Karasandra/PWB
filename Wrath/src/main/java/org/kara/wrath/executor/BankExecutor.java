@@ -1,7 +1,6 @@
 package org.kara.wrath.executor;
 
 
-
 import org.kara.wrath.utility.Location;
 import org.kara.wrath.utility.Log;
 import org.kara.wrath.utility.ObjectId;
@@ -85,12 +84,14 @@ public class BankExecutor extends ActivityExecutor {
                 Log.info("Bank-Potion");
                 Utility.setTask("Potion Time");
                 if (Utility.getPotionVarpbit() > 40) {
-                    Bank.deposit(ObjectId.POTION_ITEM_4, Bank.Amount.ALL);
-                    Bank.deposit(ObjectId.POTION_ITEM_3, Bank.Amount.ALL);
-                    Bank.deposit(ObjectId.POTION_ITEM_2, Bank.Amount.ALL);
-                    Bank.deposit(ObjectId.POTION_ITEM_1, Bank.Amount.ALL);
-                    Log.info("Potion Deposited");
-                    localActivity = BankActivity.BANKING;
+                    Utility.depBankPotion();
+                    if (Condition.wait(() -> !Utility.getInvPotion().valid(), 100, 200)) {
+                        Log.info("Potion Deposited");
+                        localActivity = BankActivity.BANKING;
+                    } else {
+                        Utility.setStopping(true);
+                        Log.severe("Could not deposit");
+                    }
                     return Utility.getLoopReturnQuick();
                 } else {
                     Utility.setTask("Drinking Potion");
@@ -98,7 +99,7 @@ public class BankExecutor extends ActivityExecutor {
                     Item potion = Utility.getInvPotion();
                     if (!potion.valid()) {
                         Log.info("Grabbing Potion");
-                        Bank.withdraw("Stamina", Bank.Amount.ONE);
+                        Utility.getBankPotion();
                         if (Condition.wait(() -> Utility.getInvPotion().valid(), 100, 200)) {
                             Log.fine("Got Potion & Drink");
                             potion.click("Drink");

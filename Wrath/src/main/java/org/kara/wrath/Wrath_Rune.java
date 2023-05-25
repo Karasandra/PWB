@@ -13,8 +13,6 @@ import org.powbot.api.script.ScriptManifest;
 import org.powbot.api.script.paint.Paint;
 import org.powbot.api.script.paint.PaintBuilder;
 import org.powbot.api.script.paint.TrackInventoryOption;
-import org.powbot.mobile.service.ScriptUploader;
-
 
 
 @ScriptManifest(
@@ -34,7 +32,7 @@ public class Wrath_Rune extends AbstractScript {
 
     public static void main(String[] args) {
         new Wrath_Rune().startScript();
-        new ScriptUploader().uploadAndStart("Wrath Rune", "karasandra", "127.0.0.1:5555", true, true);
+        //new ScriptUploader().uploadAndStart("Wrath", "Kara", "127.0.0.1:5555", true, true);
     }
 
     @Override

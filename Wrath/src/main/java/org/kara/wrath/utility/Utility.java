@@ -54,6 +54,8 @@ public class Utility {
     public static int getPotionVarpbit() { return Varpbits.varpbit(ObjectId.POTION_VARPBIT); }
     public static int getEssenceCount() { return (int) Inventory.stream().id(ObjectId.PURE_ESSENCE).count(); }
     public static Item getInvPotion() { return Inventory.stream().id(ObjectId.POTION_ITEM_4, ObjectId.POTION_ITEM_3, ObjectId.POTION_ITEM_2, ObjectId.POTION_ITEM_1).first(); }
+    public static void getBankPotion() { if(Bank.withdraw(ObjectId.POTION_ITEM_4, Bank.Amount.ONE)) {} else { if(Bank.withdraw(ObjectId.POTION_ITEM_3, Bank.Amount.ONE)) {} else { if(Bank.withdraw(ObjectId.POTION_ITEM_2, Bank.Amount.ONE)) {} else { if(Bank.withdraw(ObjectId.POTION_ITEM_1, Bank.Amount.ONE)) {}}}}}
+    public static void depBankPotion() { if(Bank.deposit(ObjectId.POTION_ITEM_4, Bank.Amount.ONE)) {} else { if(Bank.deposit(ObjectId.POTION_ITEM_3, Bank.Amount.ONE)) {} else { if(Bank.deposit(ObjectId.POTION_ITEM_2, Bank.Amount.ONE)) {} else { if(Bank.deposit(ObjectId.POTION_ITEM_1, Bank.Amount.ONE)) {}}}}}
     public static Item getInvFood() { return Inventory.stream().id(ObjectId.FOOD).first(); }
     public static GameObject getObject(int obj) { return Objects.stream().id(obj).nearest().first(); }
     public static Item getInvWrathRune() { return Inventory.stream().id(ObjectId.WRATH_RUNE).first(); }

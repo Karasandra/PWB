@@ -1,4 +1,4 @@
-package org.kara.scripts.wrath.executor;
+package org.kara.wrath.executor;
 
 abstract class ActivityExecutor {
     abstract int execute();

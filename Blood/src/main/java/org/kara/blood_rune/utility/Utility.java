@@ -1,6 +1,6 @@
-package org.kara.scripts.blood_rune.utility;
+package org.kara.blood_rune.utility;
 
-import org.kara.scripts.blood_rune.executor.Activity;
+import org.kara.blood_rune.executor.Activity;
 import org.powbot.api.Random;
 import org.powbot.api.Tile;
 import org.powbot.api.rt4.*;

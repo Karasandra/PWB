@@ -1,4 +1,4 @@
-package org.kara.scripts.blood_rune.utility;
+package org.kara.wrath.utility;
 
 public class Log {
     public static synchronized void info(String message) {System.out.println(message);}

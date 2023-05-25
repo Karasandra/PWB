@@ -1,4 +1,4 @@
-package org.kara.scripts.wrath.executor;
+package org.kara.wrath.executor;
 
 public enum Activity {
     BANK,

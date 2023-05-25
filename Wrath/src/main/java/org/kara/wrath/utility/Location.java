@@ -1,4 +1,4 @@
-package org.kara.scripts.wrath.utility;
+package org.kara.wrath.utility;
 
 import org.powbot.api.Area;
 import org.powbot.api.Tile;

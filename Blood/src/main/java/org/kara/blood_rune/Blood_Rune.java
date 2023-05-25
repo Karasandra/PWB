@@ -1,14 +1,14 @@
-package org.kara.scripts.blood_rune;
+package org.kara.blood_rune;
 
 
-import org.kara.scripts.blood_rune.executor.BankExecutor;
-import org.kara.scripts.blood_rune.executor.CraftExecutor;
-import org.kara.scripts.blood_rune.executor.ReturnExecutor;
-import org.kara.scripts.blood_rune.executor.WalkExecutor;
-import org.kara.scripts.blood_rune.utility.Config;
-import org.kara.scripts.blood_rune.utility.Log;
-import org.kara.scripts.blood_rune.utility.ObjectId;
-import org.kara.scripts.blood_rune.utility.Utility;
+import org.kara.blood_rune.executor.BankExecutor;
+import org.kara.blood_rune.executor.CraftExecutor;
+import org.kara.blood_rune.executor.ReturnExecutor;
+import org.kara.blood_rune.executor.WalkExecutor;
+import org.kara.blood_rune.utility.Log;
+import org.kara.blood_rune.utility.Config;
+import org.kara.blood_rune.utility.ObjectId;
+import org.kara.blood_rune.utility.Utility;
 import org.powbot.api.rt4.Game;
 import org.powbot.api.rt4.Movement;
 import org.powbot.api.script.*;

@@ -1,4 +1,4 @@
-package org.kara.scripts.blood_rune.utility;
+package org.kara.blood_rune.utility;
 
 public class Config {
     //Config Settings

@@ -1,7 +1,7 @@
-package org.kara.scripts.wrath.utility;
+package org.kara.wrath.utility;
 
 
-import org.kara.scripts.wrath.executor.Activity;
+import org.kara.wrath.executor.Activity;
 import org.powbot.api.Area;
 import org.powbot.api.Condition;
 import org.powbot.api.Random;

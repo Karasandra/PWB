@@ -1,4 +1,4 @@
-package org.kara.scripts.wrath.utility;
+package org.kara.wrath.utility;
 
 public class ObjectId {
     public static final int POUCH_ITEM = 26784;

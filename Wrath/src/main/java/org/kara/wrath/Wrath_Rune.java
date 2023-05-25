@@ -1,11 +1,11 @@
-package org.kara.scripts.wrath;
+package org.kara.wrath;
 
 
-import org.kara.scripts.wrath.executor.BankExecutor;
-import org.kara.scripts.wrath.executor.CraftExecutor;
-import org.kara.scripts.wrath.executor.WalkExecutor;
-import org.kara.scripts.wrath.utility.ObjectId;
-import org.kara.scripts.wrath.utility.Utility;
+import org.kara.wrath.executor.BankExecutor;
+import org.kara.wrath.executor.CraftExecutor;
+import org.kara.wrath.executor.WalkExecutor;
+import org.kara.wrath.utility.ObjectId;
+import org.kara.wrath.utility.Utility;
 import org.powbot.api.rt4.Game;
 import org.powbot.api.script.AbstractScript;
 import org.powbot.api.script.ScriptCategory;

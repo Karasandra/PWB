@@ -1,12 +1,12 @@
-package org.kara.scripts.wrath.executor;
+package org.kara.wrath.executor;
 
 
 
 
-import org.kara.scripts.wrath.utility.Location;
-import org.kara.scripts.wrath.utility.Log;
-import org.kara.scripts.wrath.utility.ObjectId;
-import org.kara.scripts.wrath.utility.Utility;
+import org.kara.wrath.utility.Location;
+import org.kara.wrath.utility.Log;
+import org.kara.wrath.utility.ObjectId;
+import org.kara.wrath.utility.Utility;
 import org.powbot.api.Condition;
 import org.powbot.api.rt4.GameObject;
 import org.powbot.api.rt4.Inventory;

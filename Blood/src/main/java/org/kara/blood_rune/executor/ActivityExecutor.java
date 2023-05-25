@@ -1,4 +1,4 @@
-package org.kara.scripts.blood_rune.executor;
+package org.kara.blood_rune.executor;
 
 abstract class ActivityExecutor {
     abstract int execute();

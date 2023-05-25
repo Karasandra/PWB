@@ -1,9 +1,9 @@
-package org.kara.scripts.blood_rune.executor;
+package org.kara.blood_rune.executor;
 
-import org.kara.scripts.blood_rune.utility.Location;
-import org.kara.scripts.blood_rune.utility.Log;
-import org.kara.scripts.blood_rune.utility.ObjectId;
-import org.kara.scripts.blood_rune.utility.Utility;
+import org.kara.blood_rune.utility.Location;
+import org.kara.blood_rune.utility.Log;
+import org.kara.blood_rune.utility.ObjectId;
+import org.kara.blood_rune.utility.Utility;
 import org.powbot.api.Condition;
 import org.powbot.api.rt4.*;
 

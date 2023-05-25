@@ -1,4 +1,4 @@
-package org.kara.scripts.blood_rune.utility;
+package org.kara.blood_rune.utility;
 
 public class ObjectId {
     //Item and Object ID's

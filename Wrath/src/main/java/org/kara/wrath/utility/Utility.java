@@ -5,7 +5,6 @@ import org.kara.wrath.executor.Activity;
 import org.powbot.api.Area;
 import org.powbot.api.Condition;
 import org.powbot.api.Random;
-import org.powbot.api.Tile;
 import org.powbot.api.rt4.*;
 
 
@@ -14,20 +13,17 @@ public class Utility {
     private static Activity activity = Activity.BANK;
     private static String task = "Starting";
     public static int tpCape = 0;
-    public static void go(Area tile,int obj) { Movement.builder(tile.getRandomTile()).setAutoRun(true).setRunMin(40).setRunMax(95).setWalkUntil(() -> getObject(obj).distance() <= 10).move(); }
+    public static void go(Area area,int obj) { Movement.builder(area.getRandomTile()).setAutoRun(true).setRunMin(40).setRunMax(95).setWalkUntil(() -> getObject(obj).distance() <= 10).move(); }
     public static void tele() {
         Item cape = Inventory.stream().id(ObjectId.MYTH_CAPE).first();
-        Tile myTile = myTile();
         if (!cape.valid()) {
             Log.severe("No Teleport");
             Utility.setStopping(true);
-            return;
-        }
-        if (cape.valid()) {
+        } else {
             Log.fine("Cape Found");
-            cape.interact("teleport");
-            if (Condition.wait(() -> myTile != Utility.myTile(), 50, 1000)) {
-                Log.fine("Teleported?");
+            cape.click("teleport");
+            if (Condition.wait(() -> Utility.myTile(Location.MYTH_GUILD_LOWER), 50, 1000)) {
+                Log.fine("Teleported!");
             } else {
                 Log.severe("Did not move");
                 Utility.setStopping(true);
@@ -42,8 +38,8 @@ public class Utility {
         Utility.activity = activity;
     }
     public static int getLoopReturnQuick() { return Random.nextInt(0, 10); }
-    public static int getLoopReturn() { return Random.nextInt(0, 50); }
-    public static int getLoopReturnLong() { return Random.nextInt(200, 400); }
+    public static int getLoopReturn() { return Random.nextInt(50, 300); }
+    public static int getLoopReturnLong() { return Random.nextInt(300, 500); }
     public static void setTask(String task) {
         Log.info("TASK: " + task);
         Utility.task = task;
@@ -57,9 +53,10 @@ public class Utility {
     public static void getBankPotion() { if(Bank.withdraw(ObjectId.POTION_ITEM_4, Bank.Amount.ONE)) {} else { if(Bank.withdraw(ObjectId.POTION_ITEM_3, Bank.Amount.ONE)) {} else { if(Bank.withdraw(ObjectId.POTION_ITEM_2, Bank.Amount.ONE)) {} else { if(Bank.withdraw(ObjectId.POTION_ITEM_1, Bank.Amount.ONE)) {}}}}}
     public static void depBankPotion() { if(Bank.deposit(ObjectId.POTION_ITEM_4, Bank.Amount.ONE)) {} else { if(Bank.deposit(ObjectId.POTION_ITEM_3, Bank.Amount.ONE)) {} else { if(Bank.deposit(ObjectId.POTION_ITEM_2, Bank.Amount.ONE)) {} else { if(Bank.deposit(ObjectId.POTION_ITEM_1, Bank.Amount.ONE)) {}}}}}
     public static Item getInvFood() { return Inventory.stream().id(ObjectId.FOOD).first(); }
+    public static Item getInvPouch() { return Inventory.stream().id(ObjectId.POUCH_ITEM).first(); }
     public static GameObject getObject(int obj) { return Objects.stream().id(obj).nearest().first(); }
     public static Item getInvWrathRune() { return Inventory.stream().id(ObjectId.WRATH_RUNE).first(); }
-    public static Tile myTile() { return Players.local().tile(); }
+    public static boolean myTile(Area map) { return map.contains(Players.local().tile()); }
     public static boolean healthLoss() {
         return Players.local().healthPercent() <= 70;
     }

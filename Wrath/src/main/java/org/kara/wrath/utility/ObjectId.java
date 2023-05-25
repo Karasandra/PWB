@@ -13,6 +13,8 @@ public class ObjectId {
     public static final int WRATH_RUNE = 21880;
     public static final int WRATH_ALTER = 34772;
     public static final int MYTH_ALTER = 34747;
+    public static final int STATUE = 31626;
+    public static final int CAVE = 31807;
     public static final int BANK = 30087;
     public static final int FOOD = 385;
     public static final int MYTH_CAPE = 22114;

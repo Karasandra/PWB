@@ -1,16 +1,12 @@
 package org.kara.wrath.executor;
 
 
-
-
 import org.kara.wrath.utility.Location;
 import org.kara.wrath.utility.Log;
 import org.kara.wrath.utility.ObjectId;
 import org.kara.wrath.utility.Utility;
 import org.powbot.api.Condition;
 import org.powbot.api.rt4.GameObject;
-import org.powbot.api.rt4.Inventory;
-import org.powbot.api.rt4.Players;
 
 public class CraftExecutor extends ActivityExecutor {
 
@@ -27,7 +23,7 @@ public class CraftExecutor extends ActivityExecutor {
     @Override
     public int execute() {
         Log.info("Craft Executor");
-        if (!Location.WRATH_ALTER.contains(Players.local().tile())) {
+        if (!Utility.myTile(Location.WRATH_ALTER)) {
             Log.severe("Not at Alter");
             Utility.setStopping(true);
             return Utility.getLoopReturnQuick();
@@ -74,7 +70,7 @@ public class CraftExecutor extends ActivityExecutor {
             case EXTRACT -> {
                 Log.info("Craft - Extract");
                 Utility.setTask("Extracting Pouch");
-                Inventory.stream().id(ObjectId.POUCH_ITEM).action("Empty");
+                Utility.getInvPouch().click("Empty");
                 if (Condition.wait(() -> Utility.getEssenceCount() > 0, 50, 40)) {
                     Log.fine("Runes Extracted");
                     EXTRACT_COUNT++;

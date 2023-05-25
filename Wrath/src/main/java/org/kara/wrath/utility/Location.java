@@ -4,6 +4,7 @@ import org.powbot.api.Area;
 import org.powbot.api.Tile;
 
 public class Location {
+    public static final Area CAVE = new Area(new Tile(1938, 8967, 1), new Tile(1940, 8969, 1));
     public static final Area MYTH_GUILD_UPPER = new Area(
             new Tile(2461, 2849, 1),
             new Tile(2461, 2843, 1),

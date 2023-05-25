@@ -23,7 +23,7 @@ public class BankExecutor extends ActivityExecutor {
     @Override
     public int execute() {
         Log.info("Bank Executor");
-    if (!Location.MYTH_GUILD_UPPER.contains(Players.local().tile())) {
+    if (!Utility.myTile(Location.MYTH_GUILD_UPPER)) {
         Log.severe("Not at bank");
         Utility.setActivity(Activity.WALK);
         return Utility.getLoopReturnQuick();
@@ -33,6 +33,11 @@ public class BankExecutor extends ActivityExecutor {
             case BANKING -> {
                 Log.info("Bank-Bank");
                 Utility.setTask("Bank Time");
+                if (Utility.getPouchVarpbitItem() == ObjectId.POUCH_VARPBIT_FULL && Inventory.isFull()) {
+                    Log.fine("Inv Good");
+                    Utility.setActivity(Activity.WALK);
+                    return Utility.getLoopReturn();
+                }
                 Locatable bank = Bank.nearest();
                 if (!Bank.inViewport()) {
                     Camera.turnTo(bank);
@@ -46,11 +51,6 @@ public class BankExecutor extends ActivityExecutor {
                     Log.severe("Bank failed to open");
                     Utility.setStopping(true);
                     return  Utility.getLoopReturnQuick();
-                }
-                if (Utility.getPouchVarpbitItem() == ObjectId.POUCH_VARPBIT_FULL && Inventory.isFull()) {
-                    Log.fine("Inv Good");
-                    Utility.setActivity(Activity.WALK);
-                    return Utility.getLoopReturn();
                 }
                 if (Utility.getInvWrathRune().valid()) {
                     Log.info("Depositing Runes");
@@ -74,7 +74,7 @@ public class BankExecutor extends ActivityExecutor {
                 }
                 if (Utility.getEssenceCount() >= 18 && Utility.getPouchVarpbitItem() != ObjectId.POUCH_VARPBIT_FULL) {
                     Log.info("Need to fill Pouch");
-                    Inventory.stream().id(ObjectId.POUCH_ITEM).action("Fill");
+                    Utility.getInvPouch().click("Fill");
                     Condition.wait(() -> Utility.getEssenceCount() <= 18, 50, 200);
                     Log.fine("Filled Pouch");
                 }
@@ -96,23 +96,34 @@ public class BankExecutor extends ActivityExecutor {
                 } else {
                     Utility.setTask("Drinking Potion");
                     Log.info("Sip Potion");
-                    Item potion = Utility.getInvPotion();
-                    if (!potion.valid()) {
+                    if (!Utility.getInvPotion().valid()) {
                         Log.info("Grabbing Potion");
                         Utility.getBankPotion();
                         if (Condition.wait(() -> Utility.getInvPotion().valid(), 100, 200)) {
                             Log.fine("Got Potion & Drink");
-                            potion.click("Drink");
-                            Condition.wait(() -> Utility.getPotionVarpbit() > 40, 100, 200);
+                            Utility.getInvPotion().click("Drink");
+                            if(Condition.wait(() -> Utility.getPotionVarpbit() > 40, 100, 200)) {
+                                Log.fine("Drank");
+                            } else {
+                                Log.severe("No more stamina");
+                                Utility.setStopping(true);
+                            }
+                        } else {
+                            Log.severe("No more stamina");
+                            Utility.setStopping(true);
+                        }
+                    } else {
+                        Log.fine("Got Potion & Drink");
+                        Utility.getInvPotion().click("Drink");
+                        if(Condition.wait(() -> Utility.getPotionVarpbit() > 40, 100, 200)) {
                             Log.fine("Drank");
                         } else {
                             Log.severe("No more stamina");
                             Utility.setStopping(true);
-                            return Utility.getLoopReturnLong();
                         }
                     }
+                    return Utility.getLoopReturnLong();
                 }
-                return Utility.getLoopReturn();
             }
             case HEAL -> {
                 Log.info("Bank - Heal");

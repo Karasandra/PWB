@@ -60,9 +60,10 @@ public class CraftExecutor extends ActivityExecutor {
                 if (EXTRACT_COUNT == 2) {
                     Log.fine("Done Crafting");
                     EXTRACT_COUNT = 0;
+                    Condition.wait(() -> Utility.getEssenceCount() == 0, 100, 250);
                     localActivity = CraftActivity.SETUP;
-                    Utility.setActivity(Activity.BANK);
-                    return Utility.getLoopReturn();
+                    Utility.setActivity(Activity.WALK);
+                    return Utility.getLoopReturnLong();
                 }
                 localActivity = CraftActivity.EXTRACT;
                 return Utility.getLoopReturn();

@@ -35,8 +35,9 @@ public class BankExecutor extends ActivityExecutor {
                 Utility.setTask("Bank Time");
                 if (Utility.getPouchVarpbitItem() == ObjectId.POUCH_VARPBIT_FULL && Inventory.isFull()) {
                     Log.fine("Inv Good");
+                    Bank.close();
                     Utility.setActivity(Activity.WALK);
-                    return Utility.getLoopReturn();
+                    return Utility.getLoopReturnLong();
                 }
                 Locatable bank = Bank.nearest();
                 if (!Bank.inViewport()) {

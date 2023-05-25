@@ -14,6 +14,7 @@ public class Utility {
     private static String task = "Starting";
     public static int tpCape = 0;
     public static void go(Area area,int obj) { Movement.builder(area.getRandomTile()).setAutoRun(true).setRunMin(40).setRunMax(95).setWalkUntil(() -> getObject(obj).distance() <= 10).move(); }
+    public static void step(Area area) { Movement.step(area.getRandomTile()); }
     public static void tele() {
         Item cape = Inventory.stream().id(ObjectId.MYTH_CAPE).first();
         if (!cape.valid()) {
@@ -38,8 +39,8 @@ public class Utility {
         Utility.activity = activity;
     }
     public static int getLoopReturnQuick() { return Random.nextInt(0, 10); }
-    public static int getLoopReturn() { return Random.nextInt(50, 300); }
-    public static int getLoopReturnLong() { return Random.nextInt(300, 500); }
+    public static int getLoopReturn() { return Random.nextInt(10, 200); }
+    public static int getLoopReturnLong() { return Random.nextInt(500, 1000); }
     public static void setTask(String task) {
         Log.info("TASK: " + task);
         Utility.task = task;

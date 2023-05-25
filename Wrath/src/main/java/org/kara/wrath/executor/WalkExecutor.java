@@ -6,7 +6,10 @@ import org.kara.wrath.utility.Log;
 import org.kara.wrath.utility.ObjectId;
 import org.kara.wrath.utility.Utility;
 import org.powbot.api.Condition;
+import org.powbot.api.Locatable;
+import org.powbot.api.rt4.Camera;
 import org.powbot.api.rt4.Inventory;
+import org.powbot.api.rt4.Objects;
 
 public class WalkExecutor extends ActivityExecutor {
 
@@ -49,7 +52,7 @@ public class WalkExecutor extends ActivityExecutor {
                 } else {
                     Utility.go(Location.MYTH_GUILD_UPPER, ObjectId.BANK);
                     Condition.wait(() -> Utility.myTile(Location.MYTH_GUILD_UPPER), 100, 250);
-                    return Utility.getLoopReturn();
+                    return Utility.getLoopReturnQuick();
                 }
             }
             case UNDER -> {
@@ -57,14 +60,16 @@ public class WalkExecutor extends ActivityExecutor {
                 Log.info("Walk - Under");
                 if (Utility.myTile(Location.MYTH_GUILD_LOWER)) {
                     Utility.getObject(ObjectId.STATUE).click();
+                    return Utility.getLoopReturnLong();
                 }
-                Condition.wait(() -> !Utility.myTile(Location.MYTH_GUILD_LOWER), 100, 250);
                 if (Utility.myTile(Location.MYTH_ALTER)) {
                     localActivity = WalkActivity.ALTER;
                     return Utility.getLoopReturn();
                 }
                 if (!Utility.myTile(Location.MYTH_GUILD_LOWER)) {
-                    Utility.go(Location.CAVE, ObjectId.CAVE);
+                    Utility.step(Location.CAVE);
+                    Locatable cave = Objects.stream().id(ObjectId.CAVE).first();
+                    Camera.turnTo(cave);
                     Utility.getObject(ObjectId.CAVE).click();
                     return Utility.getLoopReturn();
                 }
@@ -78,8 +83,7 @@ public class WalkExecutor extends ActivityExecutor {
                     return Utility.getLoopReturnLong();
                 } else {
                     Utility.getObject(ObjectId.MYTH_ALTER).click();
-                    Condition.wait(() -> Utility.myTile(Location.WRATH_ALTER), 100, 250);
-                    return Utility.getLoopReturn();
+                    return Utility.getLoopReturnLong();
                 }
             }
         }

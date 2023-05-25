@@ -58,7 +58,7 @@ public class BankExecutor extends ActivityExecutor {
                     Bank.deposit(ObjectId.WRATH_RUNE, Bank.Amount.ALL);
                     Condition.wait(() -> !Utility.getInvWrathRune().valid(), 50,100);
                 }
-                if (Utility.healthLoss() >= 22) {
+                if (Utility.healthLoss()) {
                     Log.info("Healing");
                     localActivity = BankActivity.HEAL;
                     return Utility.getLoopReturn();
@@ -116,7 +116,7 @@ public class BankExecutor extends ActivityExecutor {
             case HEAL -> {
                 Log.info("Bank - Heal");
                 Utility.setTask("Healing");
-                if (Utility.healthLoss() <= 10) {
+                if (Utility.healthLoss()) {
                     Log.info("Done Eating");
                     localActivity = BankActivity.BANKING;
                     return Utility.getLoopReturnQuick();
@@ -129,7 +129,7 @@ public class BankExecutor extends ActivityExecutor {
                         if (Condition.wait(() -> Utility.getInvFood().valid(), 100, 200)) {
                             Log.fine("Got Food");
                             food.click("Eat");
-                            Condition.wait(() -> Utility.healthLoss() < 10, 100, 200);
+                            Condition.wait(() -> !Utility.healthLoss(), 100, 200);
                             Log.fine("Eaten");
                         } else {
                             Log.severe("No More Food");

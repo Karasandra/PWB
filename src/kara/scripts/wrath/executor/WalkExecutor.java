@@ -1,10 +1,12 @@
 package kara.scripts.wrath.executor;
 
 
+
 import kara.scripts.wrath.utility.Location;
 import kara.scripts.wrath.utility.Log;
 import kara.scripts.wrath.utility.ObjectId;
 import kara.scripts.wrath.utility.Utility;
+import org.powbot.api.Condition;
 import org.powbot.api.rt4.Inventory;
 import org.powbot.api.rt4.Players;
 
@@ -20,8 +22,10 @@ public class WalkExecutor extends ActivityExecutor {
             return Utility.getLoopReturnQuick();
         }
         if (Utility.getPouchVarpbitItem() == ObjectId.POUCH_VARPBIT_FULL && Inventory.isFull()) {
-            if (Location.WRATH_ALTER.contains(Players.local().tile())) {
+            if (Location.MYTH_ALTER.contains(Players.local().tile())) {
                 Log.fine("Got to Alter");
+                Utility.getObject(ObjectId.MYTH_ALTER).click();
+                Condition.wait(() -> Location.WRATH_ALTER.contains(Players.local().tile()), 100, 250);
                 Utility.setActivity(Activity.CRAFT);
                 Utility.tpCape = 0;
                 return Utility.getLoopReturn();

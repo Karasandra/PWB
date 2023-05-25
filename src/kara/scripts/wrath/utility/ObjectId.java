@@ -10,9 +10,10 @@ public class ObjectId {
     public static final int POUCH_VARPBIT_ITEM = 261;
     public static final int POUCH_VARPBIT_FULL = 16;
     public static final int PURE_ESSENCE = 7936;
-    public static final int WRATH_RUNE = 99999;
-    public static final int WRATH_ALTER = 9999;
-    public static final int BANK = 9999;
-    public static final int FOOD = 99999;
-    public static final int MYTH_CAPE = 99999;
+    public static final int WRATH_RUNE = 21880;
+    public static final int WRATH_ALTER = 34772;
+    public static final int MYTH_ALTER = 34747;
+    public static final int BANK = 30087;
+    public static final int FOOD = 385;
+    public static final int MYTH_CAPE = 22114;
 }

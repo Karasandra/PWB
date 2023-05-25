@@ -52,33 +52,33 @@ public class CraftExecutor extends ActivityExecutor {
                 Log.info("Craft - Second Craft");
                 Utility.setTask("Crafting");
                 GameObject alter = Utility.getObject(ObjectId.WRATH_ALTER);
-                if (Utility.getEssenceCount() > 1) {
+            if (Utility.getEssenceCount() > 1) {
                     Log.info("We have Essence");
                     alter.click();
+                    Condition.wait(() -> Utility.getEssenceCount() == 0, 50, 200);
                     Log.fine("Crafted Runes");
                 }
-                if (EXTRACT_COUNT == 2) {
+            if (EXTRACT_COUNT == 2 && Utility.getEssenceCount() == 0) {
                     Log.fine("Done Crafting");
                     EXTRACT_COUNT = 0;
-                    Condition.wait(() -> Utility.getEssenceCount() == 0, 100, 250);
                     localActivity = CraftActivity.SETUP;
                     Utility.setActivity(Activity.WALK);
                     return Utility.getLoopReturnLong();
-                }
+            } else {
                 localActivity = CraftActivity.EXTRACT;
                 return Utility.getLoopReturn();
+                }
             }
             case EXTRACT -> {
                 Log.info("Craft - Extract");
                 Utility.setTask("Extracting Pouch");
                 Utility.getInvPouch().click("Empty");
-                if (Condition.wait(() -> Utility.getEssenceCount() > 0, 50, 40)) {
+                if (Condition.wait(() -> Utility.getEssenceCount() != 0, 50, 250)) {
                     Log.fine("Runes Extracted");
-                    EXTRACT_COUNT++;
+                    EXTRACT_COUNT = EXTRACT_COUNT + 1;
                     localActivity = CraftActivity.SECCRAFT;
                 } else {
-                    Log.info("Did not Extract");
-                    Utility.setStopping(true);
+                    Log.info("waiting");
                 }
                 return Utility.getLoopReturn();
             }

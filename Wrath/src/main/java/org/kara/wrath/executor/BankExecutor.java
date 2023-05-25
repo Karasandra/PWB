@@ -41,16 +41,14 @@ public class BankExecutor extends ActivityExecutor {
                 }
                 Locatable bank = Bank.nearest();
                 if (!Bank.inViewport()) {
-                    Camera.turnTo(bank);
+                    Camera.turnTo(bank, 45);
                 }
                 if (!Bank.open()) {
                     Log.severe("Bank failed to click");
-                    Utility.setStopping(true);
                     return Utility.getLoopReturnQuick();
                 }
                 if (!Condition.wait(Bank::opened, 250, 100)) {
                     Log.severe("Bank failed to open");
-                    Utility.setStopping(true);
                     return  Utility.getLoopReturnQuick();
                 }
                 if (Utility.getInvWrathRune().valid()) {
@@ -63,7 +61,7 @@ public class BankExecutor extends ActivityExecutor {
                     localActivity = BankActivity.HEAL;
                     return Utility.getLoopReturn();
                 }
-                if (Utility.getPotionVarpbit() <= 40) {
+                if (Utility.getPotionVarpbit() <= 40 && Movement.energyLevel() <= 60) {
                     Log.info("Potion Low");
                     localActivity = BankActivity.POTION;
                     return Utility.getLoopReturn();
@@ -90,7 +88,6 @@ public class BankExecutor extends ActivityExecutor {
                         Log.info("Potion Deposited");
                         localActivity = BankActivity.BANKING;
                     } else {
-                        Utility.setStopping(true);
                         Log.severe("Could not deposit");
                     }
                     return Utility.getLoopReturnQuick();
@@ -129,7 +126,7 @@ public class BankExecutor extends ActivityExecutor {
             case HEAL -> {
                 Log.info("Bank - Heal");
                 Utility.setTask("Healing");
-                if (Utility.healthLoss()) {
+                if (!Utility.healthLoss() && !Utility.getInvFood().valid()) {
                     Log.info("Done Eating");
                     localActivity = BankActivity.BANKING;
                     return Utility.getLoopReturnQuick();
@@ -138,15 +135,14 @@ public class BankExecutor extends ActivityExecutor {
                     Item food = Utility.getInvFood();
                     if (!food.valid()) {
                         Log.info("Grabbing Food");
-                        Bank.withdraw("Shark", Bank.Amount.ONE);
+                        Bank.withdraw(ObjectId.FOOD, Bank.Amount.ONE);
                         if (Condition.wait(() -> Utility.getInvFood().valid(), 100, 200)) {
                             Log.fine("Got Food");
                             food.click("Eat");
                             Condition.wait(() -> !Utility.healthLoss(), 100, 200);
                             Log.fine("Eaten");
                         } else {
-                            Log.severe("No More Food");
-                            Utility.setStopping(true);
+                            Log.severe("No More Food?");
                             return Utility.getLoopReturnQuick();
                         }
                     }

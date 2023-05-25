@@ -13,7 +13,7 @@ public class Utility {
     private static Activity activity = Activity.BANK;
     private static String task = "Starting";
     public static int tpCape = 0;
-    public static void go(Area area,int obj) { Movement.builder(area.getRandomTile()).setAutoRun(true).setRunMin(40).setRunMax(95).setWalkUntil(() -> getObject(obj).distance() <= 10).move(); }
+    //public static void go(Area area,int obj) { Movement.builder(area.getRandomTile()).setAutoRun(true).setRunMin(40).setRunMax(95).setWalkUntil(() -> getObject(obj).distance() <= 10).move(); }
     public static void step(Area area) { Movement.step(area.getRandomTile()); }
     public static void tele() {
         Item cape = Inventory.stream().id(ObjectId.MYTH_CAPE).first();

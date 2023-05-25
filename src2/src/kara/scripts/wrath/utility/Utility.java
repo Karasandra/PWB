@@ -8,8 +8,6 @@ import org.powbot.api.Random;
 import org.powbot.api.Tile;
 import org.powbot.api.rt4.*;
 
-import static org.powbot.api.rt4.Players.local;
-
 
 public class Utility {
     private static boolean stopping = false;
@@ -59,7 +57,7 @@ public class Utility {
     public static Item getInvFood() { return Inventory.stream().id(ObjectId.FOOD).first(); }
     public static GameObject getObject(int obj) { return Objects.stream().id(obj).nearest().first(); }
     public static Item getInvWrathRune() { return Inventory.stream().id(ObjectId.WRATH_RUNE).first(); }
-    public static Tile myTile() { return local().tile(); }
+    public static Tile myTile() { return Players.local().tile(); }
     public static boolean healthLoss() {
         return Players.local().healthPercent() <= 70;
     }

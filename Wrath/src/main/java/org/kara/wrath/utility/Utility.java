@@ -24,12 +24,7 @@ public class Utility {
         } else {
             //Log.fine("Cape Found");
             cape.click("teleport");
-            if (Condition.wait(() -> Utility.myTile(Location.MYTH_GUILD_LOWER), 50, 1000)) {
-                //Log.fine("Teleported!");
-            } else {
-                //Log.severe("Did not move");
-                Utility.setStopping(true);
-            }
+            Condition.wait(() -> Utility.myTile(Location.MYTH_GUILD_LOWER), 50, 1000);
         }
     }
     public static String getTask() { return task; }

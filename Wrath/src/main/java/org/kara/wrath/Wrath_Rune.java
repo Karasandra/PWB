@@ -6,6 +6,7 @@ import org.kara.wrath.executor.CraftExecutor;
 import org.kara.wrath.executor.WalkExecutor;
 import org.kara.wrath.utility.ObjectId;
 import org.kara.wrath.utility.Utility;
+import org.powbot.api.rt4.Camera;
 import org.powbot.api.rt4.Game;
 import org.powbot.api.script.AbstractScript;
 import org.powbot.api.script.ScriptCategory;
@@ -39,14 +40,14 @@ public class Wrath_Rune extends AbstractScript {
     public void onStart() {
         Paint paint = PaintBuilder.newBuilder()
                 .removeScriptNameVersion()
-                .withoutDiscordWebhook()
-                .trackInventoryItem(ObjectId.WRATH_RUNE, "Blood Runes", TrackInventoryOption.QuantityChange)
-                .trackInventoryItem(ObjectId.WRATH_RUNE, "Gold", TrackInventoryOption.values())
+                .trackInventoryItem(ObjectId.WRATH_RUNE, "Wrath Runes", TrackInventoryOption.QuantityChange)
+                .trackInventoryItem(ObjectId.WRATH_RUNE, "Gold", TrackInventoryOption.Price)
                 .addString("Task: ", Utility::getTask)
                 .x(30)
                 .y(65)
                 .build();
         addPaint(paint);
+        Camera.turnTo(Utility.yaw, 99);
     }
 
     @Override

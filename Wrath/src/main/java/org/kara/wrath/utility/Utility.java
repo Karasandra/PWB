@@ -12,21 +12,22 @@ public class Utility {
     private static boolean stopping = false;
     private static Activity activity = Activity.BANK;
     private static String task = "Starting";
+    public static int yaw = Random.nextInt(80, 100);
     public static int tpCape = 0;
     //public static void go(Area area,int obj) { Movement.builder(area.getRandomTile()).setAutoRun(true).setRunMin(40).setRunMax(95).setWalkUntil(() -> getObject(obj).distance() <= 10).move(); }
     public static void step(Area area) { Movement.step(area.getRandomTile()); }
     public static void tele() {
         Item cape = Inventory.stream().id(ObjectId.MYTH_CAPE).first();
         if (!cape.valid()) {
-            Log.severe("No Teleport");
+            //Log.severe("No Teleport");
             Utility.setStopping(true);
         } else {
-            Log.fine("Cape Found");
+            //Log.fine("Cape Found");
             cape.click("teleport");
             if (Condition.wait(() -> Utility.myTile(Location.MYTH_GUILD_LOWER), 50, 1000)) {
-                Log.fine("Teleported!");
+                //Log.fine("Teleported!");
             } else {
-                Log.severe("Did not move");
+                //Log.severe("Did not move");
                 Utility.setStopping(true);
             }
         }
@@ -40,7 +41,7 @@ public class Utility {
     }
     public static int getLoopReturnQuick() { return Random.nextInt(0, 10); }
     public static int getLoopReturn() { return Random.nextInt(10, 200); }
-    public static int getLoopReturnLong() { return Random.nextInt(500, 1000); }
+    public static int getLoopReturnLong() { return Random.nextInt(250, 600); }
     public static void setTask(String task) {
         Log.info("TASK: " + task);
         Utility.task = task;
@@ -59,6 +60,8 @@ public class Utility {
     public static Item getInvWrathRune() { return Inventory.stream().id(ObjectId.WRATH_RUNE).first(); }
     public static boolean myTile(Area map) { return map.contains(Players.local().tile()); }
     public static boolean healthLoss() {
-        return Players.local().healthPercent() <= 70;
+        return Players.local().healthPercent() <= healthRandom();
     }
+    private static int healthRandom() { return Random.nextInt(60, 75); }
+    public static int health() { return Players.local().healthPercent(); }
 }

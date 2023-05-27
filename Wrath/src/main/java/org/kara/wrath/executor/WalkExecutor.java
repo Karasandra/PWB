@@ -64,24 +64,22 @@ public class WalkExecutor extends ActivityExecutor {
             case UNDER -> {
                 Utility.setTask("Going Underground");
                 //Log.info("Walk - Under");
-                if (Utility.myTile(Location.MYTH_GUILD_LOWER)) {
-                    Utility.getObject(ObjectId.STATUE).click();
-                    Condition.wait(() -> !Utility.myTile(Location.MYTH_GUILD_LOWER), 50, 250);
+                GameObject statue = Utility.getObject(ObjectId.STATUE);
+                if (Utility.myTile(Location.MYTH_GUILD_LOWER) || statue.valid()) {
+                    statue.click();
+                    Condition.wait(() -> !Utility.myTile(Location.MYTH_GUILD_LOWER), 50, 30);
                     return Utility.getLoopReturnLong();
                 }
-                if (Utility.myTile(Location.MYTH_ALTER)) {
-                    localActivity = WalkActivity.ALTER;
-                    return Utility.getLoopReturn();
-                }
-                if (!Utility.myTile(Location.MYTH_GUILD_LOWER)) {
+                while (!Utility.myTile(Location.MYTH_ALTER)) {
                     Utility.step(Location.CAVE);
                     GameObject cave = Utility.getObject(ObjectId.CAVE);
                     if (cave.valid() && cave.inViewport()) {
                         cave.interactionType(ModelInteractionType.HullAccurate).click();
                         Condition.wait(() -> Utility.myTile(Location.MYTH_ALTER), 50, 20);
                     }
-                    return Utility.getLoopReturn();
                 }
+                localActivity = WalkActivity.ALTER;
+                return Utility.getLoopReturn();
             }
             case ALTER -> {
                 Utility.setTask("Going to Wrath Alter");

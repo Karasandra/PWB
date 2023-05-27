@@ -8,9 +8,7 @@ import org.kara.wrath.utility.ObjectId;
 import org.kara.wrath.utility.Utility;
 import org.powbot.api.rt4.Camera;
 import org.powbot.api.rt4.Game;
-import org.powbot.api.script.AbstractScript;
-import org.powbot.api.script.ScriptCategory;
-import org.powbot.api.script.ScriptManifest;
+import org.powbot.api.script.*;
 import org.powbot.api.script.paint.Paint;
 import org.powbot.api.script.paint.PaintBuilder;
 import org.powbot.api.script.paint.TrackInventoryOption;
@@ -26,8 +24,11 @@ import static java.lang.System.exit;
         author = "Karasandra"
 )
 
+@ScriptConfiguration(name = "Example", description = "Example GUI option", optionType = OptionType.INFO)
+
 
 public class Wrath_Rune extends AbstractScript {
+
 
     private final BankExecutor bankExecutor = new BankExecutor();
     private final WalkExecutor walkExecutor = new WalkExecutor();

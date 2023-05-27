@@ -83,7 +83,7 @@ public class BankExecutor extends ActivityExecutor {
                 Utility.setTask("Potion Time");
                 if (Utility.getPotionVarpbit() > 40) {
                     Utility.depBankPotion();
-                    if (Condition.wait(() -> !Utility.getInvPotion().valid(), 100, 200)) {
+                    if (Condition.wait(() -> !Utility.getInvPotion().valid(), 50, 40)) {
                         //Log.info("Potion Deposited");
                         localActivity = BankActivity.BANKING;
                     }
@@ -94,30 +94,16 @@ public class BankExecutor extends ActivityExecutor {
                     if (!Utility.getInvPotion().valid()) {
                         //Log.info("Grabbing Potion");
                         Utility.getBankPotion();
-                        if (Condition.wait(() -> Utility.getInvPotion().valid(), 100, 200)) {
-                            //Log.fine("Got Potion & Drink");
-                            Utility.getInvPotion().click("Drink");
-                            if(Condition.wait(() -> Utility.getPotionVarpbit() > 40, 100, 200)) {
-                                //Log.fine("Drank");
-                            } else {
-                                //Log.severe("No more stamina");
-                                Utility.setStopping(true);
-                            }
-                        } else {
+                        if (!Condition.wait(() -> Utility.getInvPotion().valid(), 50, 40)) {
                             //Log.severe("No more stamina");
                             Utility.setStopping(true);
                         }
                     } else {
                         //Log.fine("Got Potion & Drink");
                         Utility.getInvPotion().click("Drink");
-                        if(Condition.wait(() -> Utility.getPotionVarpbit() > 40, 100, 200)) {
-                            //Log.fine("Drank");
-                        } else {
-                            //Log.severe("No more stamina");
-                            Utility.setStopping(true);
-                        }
+                        Condition.wait(() -> Utility.getPotionVarpbit() > 40, 50, 30);
                     }
-                    return Utility.getLoopReturnLong();
+                    return Utility.getLoopReturn();
                 }
             }
             case HEAL -> {
@@ -133,17 +119,16 @@ public class BankExecutor extends ActivityExecutor {
                     if (!food.valid()) {
                         //Log.info("Grabbing Food");
                         Bank.withdraw(ObjectId.FOOD, Bank.Amount.ONE);
-                    } else {
-                        if (Condition.wait(() -> Utility.getInvFood().valid(), 100, 200)) {
-                            //Log.fine("Got Food");
-                            int curhealth = Utility.health();
-                            food.click("Eat");
-                            Condition.wait(() -> Utility.health() != curhealth, 50, 20);
-                            //Log.fine("Eaten");
-                        } else{
-                            //Log.severe("No More Food?");
-                            return Utility.getLoopReturnQuick();
+                        if (!Condition.wait(() -> Utility.getInvFood().valid(), 50, 40)) {
+                            //Log.severe("No more stamina");
+                            Utility.setStopping(true);
                         }
+                    } else {
+                        //Log.fine("Got Food");
+                        int curhealth = Utility.health();
+                        food.click("Eat");
+                        Condition.wait(() -> Utility.health() != curhealth, 50, 20);
+                        //Log.fine("Eaten");
                     }
                 }
                 return Utility.getLoopReturn();

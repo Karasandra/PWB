@@ -5,6 +5,7 @@ import org.kara.wrath.utility.Location;
 import org.kara.wrath.utility.ObjectId;
 import org.kara.wrath.utility.Utility;
 import org.powbot.api.Condition;
+import org.powbot.api.rt4.Camera;
 import org.powbot.api.rt4.GameObject;
 
 public class CraftExecutor extends ActivityExecutor {
@@ -30,6 +31,7 @@ public class CraftExecutor extends ActivityExecutor {
 
         switch (localActivity) {
             case SETUP -> {
+                Camera.turnTo(Utility.yawReg, Utility.pitch);
                 EXTRACT_COUNT = 0;
                 localActivity = CraftActivity.INITCRAFT;
                 return Utility.getLoopReturnQuick();

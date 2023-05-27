@@ -6,6 +6,7 @@ import org.kara.wrath.utility.ObjectId;
 import org.kara.wrath.utility.Utility;
 import org.powbot.api.Condition;
 import org.powbot.api.ModelInteractionType;
+import org.powbot.api.rt4.Camera;
 import org.powbot.api.rt4.GameObject;
 import org.powbot.api.rt4.Inventory;
 
@@ -34,6 +35,7 @@ public class WalkExecutor extends ActivityExecutor {
                     return Utility.getLoopReturnQuick();
                 }
                 if (Utility.getPouchVarpbitItem() == ObjectId.POUCH_VARPBIT_FULL && Inventory.isFull()) {
+                    Camera.turnTo(Utility.yawUnd, Utility.pitch);
                     localActivity = WalkActivity.UNDER;
                 } else {
                     localActivity = WalkActivity.BANK;
@@ -44,7 +46,7 @@ public class WalkExecutor extends ActivityExecutor {
             case BANK -> {
                 Utility.setTask("Going to Bank");
                 //Log.info("Walk - Bank");
-                if (Utility.myTile(Location.MYTH_GUILD_UPPER) || Utility.getObject(ObjectId.BANK).inViewport()) {
+                if (Utility.myTile(Location.MYTH_GUILD_UPPER) || Utility.getObject(ObjectId.BANK).valid()) {
                     Utility.setActivity(Activity.BANK);
                     localActivity = WalkActivity.START;
                     return Utility.getLoopReturnLong();
@@ -76,7 +78,7 @@ public class WalkExecutor extends ActivityExecutor {
                     GameObject cave = Utility.getObject(ObjectId.CAVE);
                     if (cave.valid() && cave.inViewport()) {
                         cave.interactionType(ModelInteractionType.HullAccurate).click();
-                        Condition.wait(() -> Utility.myTile(Location.MYTH_ALTER), 50, 10);
+                        Condition.wait(() -> Utility.myTile(Location.MYTH_ALTER), 50, 20);
                     }
                     return Utility.getLoopReturn();
                 }

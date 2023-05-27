@@ -22,7 +22,7 @@ public class BankExecutor extends ActivityExecutor {
     @Override
     public int execute() {
         //Log.info("Bank Executor");
-    if (!Utility.myTile(Location.MYTH_GUILD_UPPER) || !Utility.getObject(ObjectId.BANK).inViewport()) {
+    if (!Utility.myTile(Location.MYTH_GUILD_UPPER) && !Utility.getObject(ObjectId.BANK).valid()) {
         //Log.severe("Not at bank");
         Utility.setActivity(Activity.WALK);
         return Utility.getLoopReturnQuick();
@@ -40,7 +40,7 @@ public class BankExecutor extends ActivityExecutor {
                 }
                 Locatable bank = Bank.nearest();
                 if (!Bank.inViewport()) {
-                    Camera.turnTo(bank, 45);
+                    Camera.turnTo(bank, 20);
                 }
                 if (!Bank.open()) {
                     //Log.severe("Bank failed to click");

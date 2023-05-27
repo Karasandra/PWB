@@ -15,6 +15,8 @@ import org.powbot.api.script.paint.Paint;
 import org.powbot.api.script.paint.PaintBuilder;
 import org.powbot.api.script.paint.TrackInventoryOption;
 
+import static java.lang.System.exit;
+
 
 @ScriptManifest(
         name = "Wrath Rune",
@@ -47,7 +49,7 @@ public class Wrath_Rune extends AbstractScript {
                 .y(65)
                 .build();
         addPaint(paint);
-        Camera.turnTo(Utility.yaw, 99);
+        Camera.turnTo(Utility.yawReg, Utility.pitch);
     }
 
     @Override
@@ -63,6 +65,7 @@ public class Wrath_Rune extends AbstractScript {
         if (Utility.isStopping()) {
             Utility.setTask("Stopping");
             this.controller.stop();
+            exit(0);
             return Utility.getLoopReturnQuick();
         }
         if (!Game.loggedIn()) {

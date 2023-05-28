@@ -78,8 +78,6 @@ public class CraftExecutor extends ActivityExecutor {
                     //Log.fine("Runes Extracted");
                     EXTRACT_COUNT = EXTRACT_COUNT + 1;
                     localActivity = CraftActivity.SECCRAFT;
-                } else {
-                    //Log.info("waiting");
                 }
                 return Utility.getLoopReturn();
             }

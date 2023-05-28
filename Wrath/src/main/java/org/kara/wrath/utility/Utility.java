@@ -10,7 +10,6 @@ import org.powbot.api.rt4.*;
 
 public class Utility {
     private static boolean stopping = false;
-    public static boolean readyToBreak = true;
     private static Activity activity = Activity.BANK;
     private static String task = "Starting";
     public static int yawReg = Random.nextInt(50, 90);

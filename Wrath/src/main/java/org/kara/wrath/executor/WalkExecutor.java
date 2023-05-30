@@ -35,7 +35,6 @@ public class WalkExecutor extends ActivityExecutor {
                     return Utility.getLoopReturnQuick();
                 }
                 if (Utility.getPouchVarpbitItem() == ObjectId.POUCH_VARPBIT_FULL && Inventory.isFull()) {
-                    Camera.turnTo(Utility.yawUnd, Utility.pitch);
                     localActivity = WalkActivity.UNDER;
                 } else {
                     localActivity = WalkActivity.BANK;
@@ -67,6 +66,7 @@ public class WalkExecutor extends ActivityExecutor {
                 GameObject statue = Utility.getObject(ObjectId.STATUE);
                 if (Utility.myTile(Location.MYTH_GUILD_LOWER) || statue.valid()) {
                     statue.click();
+                    Camera.turnTo(Utility.yawUnd, Utility.pitch);
                     Condition.wait(() -> !Utility.myTile(Location.MYTH_GUILD_LOWER), 50, 30);
                     return Utility.getLoopReturnLong();
                 }

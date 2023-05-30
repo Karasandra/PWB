@@ -2,7 +2,6 @@ package org.kara.wrath.utility;
 
 import com.google.common.eventbus.Subscribe;
 import org.powbot.api.event.BreakEvent;
-import org.powbot.api.event.TickEvent;
 import org.powbot.api.rt4.Bank;
 
 public class BreakTime {
@@ -16,8 +15,8 @@ public class BreakTime {
         }
     }
 
-    @Subscribe
-    public void onGameTick(TickEvent tickEvent) {
-        System.out.println("Game Tick");
-    }
+    //@Subscribe
+    //public void onGameTick(TickEvent tickEvent) {
+    //    System.out.println("Game Tick");
+    //}
 }

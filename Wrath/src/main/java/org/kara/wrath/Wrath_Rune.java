@@ -4,10 +4,8 @@ package org.kara.wrath;
 import org.kara.wrath.executor.BankExecutor;
 import org.kara.wrath.executor.CraftExecutor;
 import org.kara.wrath.executor.WalkExecutor;
-import org.kara.wrath.utility.BreakTime;
 import org.kara.wrath.utility.ObjectId;
 import org.kara.wrath.utility.Utility;
-import org.powbot.api.Events;
 import org.powbot.api.rt4.Camera;
 import org.powbot.api.rt4.Game;
 import org.powbot.api.script.*;
@@ -55,7 +53,6 @@ public class Wrath_Rune extends AbstractScript {
                 .build();
         addPaint(paint);
         Camera.turnTo(Utility.yawReg, Utility.pitch);
-        Events.register(new BreakTime());
     }
 
     @Override

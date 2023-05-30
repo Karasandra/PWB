@@ -13,7 +13,7 @@ public class Utility {
     private static Activity activity = Activity.BANK;
     private static String task = "Starting";
     public static int yawReg = Random.nextInt(50, 90);
-    public static int yawUnd = Random.nextInt(120, 180);
+    public static int yawUnd = Random.nextInt(170, 190);
     public static int pitch = Random.nextInt(94, 99);
     public static int tpCape = 0;
     //public static void go(Area area,int obj) { Movement.builder(area.getRandomTile()).setAutoRun(true).setRunMin(40).setRunMax(95).setWalkUntil(() -> getObject(obj).distance() <= 10).move(); }

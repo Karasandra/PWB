@@ -4,8 +4,8 @@ package org.kara.wrath;
 import org.kara.wrath.executor.BankExecutor;
 import org.kara.wrath.executor.CraftExecutor;
 import org.kara.wrath.executor.WalkExecutor;
+import org.kara.wrath.utility.BreakTime;
 import org.kara.wrath.utility.ObjectId;
-import org.kara.wrath.utility.SomeTask;
 import org.kara.wrath.utility.Utility;
 import org.powbot.api.Events;
 import org.powbot.api.rt4.Camera;
@@ -14,7 +14,6 @@ import org.powbot.api.script.*;
 import org.powbot.api.script.paint.Paint;
 import org.powbot.api.script.paint.PaintBuilder;
 import org.powbot.api.script.paint.TrackInventoryOption;
-import org.powbot.mobile.service.ScriptUploader;
 
 import static java.lang.System.exit;
 
@@ -40,8 +39,8 @@ public class Wrath_Rune extends AbstractScript {
 
 
     public static void main(String[] args) {
-        //new Wrath_Rune().startScript();
-        new ScriptUploader().uploadAndStart("Wrath", "Kara", "127.0.0.1:5555", true, false);
+        new Wrath_Rune().startScript();
+        //new ScriptUploader().uploadAndStart("Wrath", "Kara", "127.0.0.1:5555", true, false);
     }
 
     @Override
@@ -56,7 +55,7 @@ public class Wrath_Rune extends AbstractScript {
                 .build();
         addPaint(paint);
         Camera.turnTo(Utility.yawReg, Utility.pitch);
-        Events.register(new SomeTask());
+        Events.register(new BreakTime());
     }
 
     @Override

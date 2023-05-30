@@ -75,7 +75,7 @@ public class WalkExecutor extends ActivityExecutor {
                     GameObject cave = Utility.getObject(ObjectId.CAVE);
                     if (cave.valid() && cave.inViewport()) {
                         cave.interactionType(ModelInteractionType.HullAccurate).click();
-                        Condition.wait(() -> Utility.myTile(Location.MYTH_ALTER), 50, 20);
+                        Condition.wait(() -> Utility.myTile(Location.MYTH_ALTER), 50, 30);
                     }
                 }
                 localActivity = WalkActivity.ALTER;

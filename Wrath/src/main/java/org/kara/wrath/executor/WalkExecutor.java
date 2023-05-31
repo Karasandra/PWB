@@ -54,7 +54,11 @@ public class WalkExecutor extends ActivityExecutor {
                     if (stairs.valid()) {
                         stairs.click();
                     } else {
-                        Utility.step(Location.MYTH_GUILD_UPPER);
+                        if (Utility.myTile(Location.MYTH_GUILD_LOWER)) {
+                            Utility.step(Location.CAVE);
+                        } else {
+                            Utility.step(Location.MYTH_GUILD_UPPER);
+                        }
                     }
                     Condition.wait(() -> Utility.myTile(Location.MYTH_GUILD_UPPER), 50, 20);
                     return Utility.getLoopReturnQuick();
@@ -65,6 +69,9 @@ public class WalkExecutor extends ActivityExecutor {
                 //Log.info("Walk - Under");
                 GameObject statue = Utility.getObject(ObjectId.STATUE);
                 if (Utility.myTile(Location.MYTH_GUILD_LOWER) || statue.valid()) {
+                    if (!statue.inViewport()) {
+                        Camera.turnTo(statue);
+                    }
                     statue.click();
                     Camera.turnTo(Utility.yawUnd, Utility.pitch);
                     Condition.wait(() -> !Utility.myTile(Location.MYTH_GUILD_LOWER), 50, 30);

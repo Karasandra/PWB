@@ -6,12 +6,14 @@ import org.kara.wrath.executor.CraftExecutor;
 import org.kara.wrath.executor.WalkExecutor;
 import org.kara.wrath.utility.ObjectId;
 import org.kara.wrath.utility.Utility;
+import org.powbot.api.rt4.Bank;
 import org.powbot.api.rt4.Camera;
 import org.powbot.api.rt4.Game;
 import org.powbot.api.script.*;
 import org.powbot.api.script.paint.Paint;
 import org.powbot.api.script.paint.PaintBuilder;
 import org.powbot.api.script.paint.TrackInventoryOption;
+import org.powbot.mobile.service.ScriptUploader;
 
 import static java.lang.System.exit;
 
@@ -37,8 +39,8 @@ public class Wrath_Rune extends AbstractScript {
 
 
     public static void main(String[] args) {
-        new Wrath_Rune().startScript();
-        //new ScriptUploader().uploadAndStart("Wrath", "Kara", "127.0.0.1:5555", true, false);
+        //new Wrath_Rune().startScript();
+        new ScriptUploader().uploadAndStart("Wrath", "Kara", "127.0.0.1:5555", true, false);
     }
 
     @Override
@@ -75,7 +77,7 @@ public class Wrath_Rune extends AbstractScript {
             Utility.setTask("Not logged in");
             return Utility.getLoopReturnLong();
         }
-        if (Game.tab() != Game.Tab.INVENTORY) {
+        if (Game.tab() != Game.Tab.INVENTORY && !Bank.opened()) {
             Utility.setTask("Opening inventory");
             Game.tab(Game.Tab.INVENTORY);
             return Utility.getLoopReturn();

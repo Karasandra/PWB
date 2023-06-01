@@ -1,4 +1,4 @@
-package org.kara.wrath.utility;
+package org.kara.gotr.utility;
 
 import com.google.common.eventbus.Subscribe;
 import org.powbot.api.event.BreakEvent;
@@ -10,8 +10,7 @@ public class BreakTime {
         if (breakEvent == null) {
             return;
         }
-        boolean walking = Utility.myTile(Location.MYTH_ALTER);
-        if (!walking && Utility.getTask().equals("Going Underground") || Bank.opened()) {
+        if (Utility.getTask().equals("Going Underground") || Bank.opened()) {
             breakEvent.delay(5000);
         } else {
             breakEvent.accept();

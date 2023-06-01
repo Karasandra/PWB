@@ -1,27 +1,23 @@
-package org.kara.wrath;
+package org.kara.gotr;
 
-
-import org.kara.wrath.executor.BankExecutor;
-import org.kara.wrath.executor.CraftExecutor;
-import org.kara.wrath.executor.WalkExecutor;
-import org.kara.wrath.utility.BreakTime;
-import org.kara.wrath.utility.ObjectId;
-import org.kara.wrath.utility.Utility;
+import org.kara.gotr.executor.CraftExecutor;
+import org.kara.gotr.executor.CreateExecutor;
+import org.kara.gotr.executor.StartExecutor;
+import org.kara.gotr.executor.WalkExecutor;
+import org.kara.gotr.utility.BreakTime;
+import org.kara.gotr.utility.Utility;
 import org.powbot.api.rt4.Bank;
 import org.powbot.api.rt4.Camera;
 import org.powbot.api.rt4.Game;
 import org.powbot.api.script.*;
 import org.powbot.api.script.paint.Paint;
 import org.powbot.api.script.paint.PaintBuilder;
-import org.powbot.api.script.paint.TrackInventoryOption;
-import org.powbot.mobile.service.ScriptUploader;
 
 import static java.lang.System.exit;
 
-
 @ScriptManifest(
-        name = "Wrath Rune",
-        description = "Crafts True Wrath Runes",
+        name = "GotR",
+        description = "Does GotR",
         version =  "0.0.1",
         category = ScriptCategory.Runecrafting,
         author = "Karasandra"
@@ -30,26 +26,25 @@ import static java.lang.System.exit;
 @ScriptConfiguration(name = "Example", description = "Example GUI option", optionType = OptionType.INFO)
 
 
-public class Wrath_Rune extends AbstractScript {
+public class Gotr extends AbstractScript {
 
 
-    private final BankExecutor bankExecutor = new BankExecutor();
+    private final StartExecutor startExecutor = new StartExecutor();
     private final WalkExecutor walkExecutor = new WalkExecutor();
     private final CraftExecutor craftExecutor = new CraftExecutor();
+    private final CreateExecutor createExecutor = new CreateExecutor();
 
 
 
     public static void main(String[] args) {
-        //new Wrath_Rune().startScript();
-        new ScriptUploader().uploadAndStart("Wrath", "Kara", "127.0.0.1:5555", true, false);
+        new Gotr().startScript();
+        //new ScriptUploader().uploadAndStart("Gotr", "Kara", "127.0.0.1:5555", true, false);
     }
 
     @Override
     public void onStart() {
         Paint paint = PaintBuilder.newBuilder()
                 .removeScriptNameVersion()
-                .trackInventoryItem(ObjectId.WRATH_RUNE, "Wrath Runes", TrackInventoryOption.QuantityChange)
-                .trackInventoryItem(ObjectId.WRATH_RUNE, "Gold", TrackInventoryOption.Price)
                 .addString("Task: ", Utility::getTask)
                 .x(30)
                 .y(65)
@@ -89,9 +84,10 @@ public class Wrath_Rune extends AbstractScript {
 
         //Activity Starts
         return switch (Utility.getActivity()) {
+            case START -> startExecutor.execute();
             case WALK -> walkExecutor.execute();
-            case BANK -> bankExecutor.execute();
             case CRAFT -> craftExecutor.execute();
+            case CREATE -> createExecutor.execute();
         };
         //Activity Ends
 

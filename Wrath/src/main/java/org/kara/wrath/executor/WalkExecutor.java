@@ -71,12 +71,13 @@ public class WalkExecutor extends ActivityExecutor {
                 if (Utility.myTile(Location.MYTH_GUILD_LOWER) || statue.valid()) {
                     if (!statue.inViewport()) {
                         Camera.turnTo(statue);
+                        return Utility.getLoopReturn();
                     }
                     statue.click();
-                    Camera.turnTo(Utility.yawUnd, Utility.pitch);
                     Condition.wait(() -> !Utility.myTile(Location.MYTH_GUILD_LOWER), 50, 30);
                     return Utility.getLoopReturnLong();
                 }
+                Camera.turnTo(Utility.yawUnd, Utility.pitch);
                 while (!Utility.myTile(Location.MYTH_ALTER)) {
                     Utility.step(Location.CAVE);
                     GameObject cave = Utility.getObject(ObjectId.CAVE);

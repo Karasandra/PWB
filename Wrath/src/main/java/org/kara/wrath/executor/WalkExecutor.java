@@ -75,9 +75,9 @@ public class WalkExecutor extends ActivityExecutor {
                     }
                     statue.click("Enter");
                     Condition.wait(() -> !Utility.myTile(Location.MYTH_GUILD_LOWER), 50, 30);
+                    Camera.turnTo(Utility.yawUnd, Utility.pitch);
                     return Utility.getLoopReturnLong();
                 }
-                Camera.turnTo(Utility.yawUnd, Utility.pitch);
                 if (!Utility.myTile(Location.MYTH_ALTER)) {
                     Utility.step(Location.CAVE);
                     GameObject cave = Utility.getObject(ObjectId.CAVE);

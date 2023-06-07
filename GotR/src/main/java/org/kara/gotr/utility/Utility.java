@@ -22,7 +22,7 @@ public class Utility {
     }
     public static int getLoopReturnQuick() { return Random.nextInt(0, 10); }
     public static int getLoopReturn() { return Random.nextInt(10, 200); }
-    public static int getLoopReturnLong() { return Random.nextInt(250, 600); }
+    public static int getLoopReturnLong() { return Random.nextInt(200, 400); }
     public static void setTask(String task) {
         Log.info("TASK: " + task);
         Utility.task = task;

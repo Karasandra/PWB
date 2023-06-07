@@ -52,7 +52,7 @@ public class WalkExecutor extends ActivityExecutor {
                 } else {
                     GameObject stairs = Utility.getObject(ObjectId.MYTH_STAIRS);
                     if (stairs.valid()) {
-                        stairs.click();
+                        stairs.click("Climb-up");
                     } else {
                         if (Utility.myTile(Location.MYTH_GUILD_LOWER)) {
                             Utility.step(Location.CAVE);
@@ -73,7 +73,7 @@ public class WalkExecutor extends ActivityExecutor {
                         Camera.turnTo(statue);
                         return Utility.getLoopReturn();
                     }
-                    statue.click();
+                    statue.click("Enter");
                     Condition.wait(() -> !Utility.myTile(Location.MYTH_GUILD_LOWER), 50, 30);
                     return Utility.getLoopReturnLong();
                 }
@@ -82,7 +82,7 @@ public class WalkExecutor extends ActivityExecutor {
                     Utility.step(Location.CAVE);
                     GameObject cave = Utility.getObject(ObjectId.CAVE);
                     if (cave.valid() && cave.inViewport()) {
-                        cave.interactionType(ModelInteractionType.HullAccurate).click();
+                        cave.interactionType(ModelInteractionType.HullAccurate).click("Enter");
                         Condition.wait(() -> Utility.myTile(Location.MYTH_ALTER), 50, 30);
                     }
                 }
@@ -96,7 +96,7 @@ public class WalkExecutor extends ActivityExecutor {
                     Utility.setActivity(Activity.CRAFT);
                     localActivity = WalkActivity.START;
                 } else {
-                    Utility.getObject(ObjectId.MYTH_ALTER).click();
+                    Utility.getObject(ObjectId.MYTH_ALTER).click("Enter");
                     Condition.wait(() -> Utility.myTile(Location.WRATH_ALTER), 50, 20);
                 }
                 return Utility.getLoopReturnLong();

@@ -26,7 +26,7 @@ import static java.lang.System.exit;
 @ScriptConfiguration(name = "Example", description = "Example GUI option", optionType = OptionType.INFO)
 
 
-public class Gotr extends AbstractScript {
+public class  Gotr extends AbstractScript {
 
 
     private final StartExecutor startExecutor = new StartExecutor();
@@ -73,7 +73,7 @@ public class Gotr extends AbstractScript {
         if (!Game.loggedIn()) {
             Utility.setTask("Not logged in");
             return Utility.getLoopReturnLong();
-        }
+          }
         if (Game.tab() != Game.Tab.INVENTORY && !Bank.opened()) {
             Utility.setTask("Opening inventory");
             Game.tab(Game.Tab.INVENTORY);

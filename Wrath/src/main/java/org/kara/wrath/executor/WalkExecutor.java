@@ -55,7 +55,7 @@ public class WalkExecutor extends ActivityExecutor {
                         stairs.click("Climb-up");
                     } else {
                         if (Utility.myTile(Location.MYTH_GUILD_LOWER)) {
-                            Utility.step(Location.CAVE);
+                            Utility.step(Location.MYTH_STAIRS);
                         } else {
                             Utility.step(Location.MYTH_GUILD_UPPER);
                         }

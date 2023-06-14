@@ -79,11 +79,12 @@ public class WalkExecutor extends ActivityExecutor {
                     return Utility.getLoopReturnLong();
                 }
                 if (!Utility.myTile(Location.MYTH_ALTER)) {
-                    Utility.step(Location.CAVE);
                     GameObject cave = Utility.getObject(ObjectId.CAVE);
                     if (cave.valid() && cave.inViewport()) {
                         cave.interactionType(ModelInteractionType.HullAccurate).click("Enter");
                         Condition.wait(() -> Utility.myTile(Location.MYTH_ALTER), 50, 30);
+                    } else {
+                        Utility.step(Location.CAVE);
                     }
                     return Utility.getLoopReturnQuick();
                 }

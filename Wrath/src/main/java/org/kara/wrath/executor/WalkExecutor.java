@@ -45,7 +45,7 @@ public class WalkExecutor extends ActivityExecutor {
             case BANK -> {
                 Utility.setTask("Going to Bank");
                 //Log.info("Walk - Bank");
-                if (Utility.myTile(Location.MYTH_GUILD_UPPER) || Utility.getObject(ObjectId.BANK).valid()) {
+                if (Utility.myTile(Location.MYTH_GUILD_UPPER_WALK) || Utility.getObject(ObjectId.BANK).valid()) {
                     Utility.setActivity(Activity.BANK);
                     localActivity = WalkActivity.START;
                     return Utility.getLoopReturnLong();
@@ -57,10 +57,14 @@ public class WalkExecutor extends ActivityExecutor {
                         if (Utility.myTile(Location.MYTH_GUILD_LOWER)) {
                             Utility.step(Location.MYTH_STAIRS);
                         } else {
-                            Utility.step(Location.MYTH_GUILD_UPPER);
+                            if (Utility.myTile(Location.MYTH_GUILD_UPPPER)) {
+                                Utility.step(Location.MYTH_GUILD_UPPER_WALK);
+                            } else {
+                                Utility.tele();
+                            }
                         }
                     }
-                    Condition.wait(() -> Utility.myTile(Location.MYTH_GUILD_UPPER), 50, 20);
+                    Condition.wait(() -> Utility.myTile(Location.MYTH_GUILD_UPPER_WALK), 50, 20);
                     return Utility.getLoopReturnQuick();
                 }
             }

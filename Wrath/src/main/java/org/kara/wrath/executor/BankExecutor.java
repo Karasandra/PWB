@@ -22,7 +22,7 @@ public class BankExecutor extends ActivityExecutor {
     @Override
     public int execute() {
         //Log.info("Bank Executor");
-    if (!Utility.myTile(Location.MYTH_GUILD_UPPER) && !Utility.getObject(ObjectId.BANK).valid()) {
+    if (!Utility.myTile(Location.MYTH_GUILD_UPPER_WALK) && !Utility.getObject(ObjectId.BANK).valid()) {
         //Log.severe("Not at bank");
         Utility.setActivity(Activity.WALK);
         return Utility.getLoopReturnQuick();

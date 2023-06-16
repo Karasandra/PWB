@@ -42,7 +42,7 @@ public class CraftExecutor extends ActivityExecutor {
                 GameObject alter = Utility.getObject(ObjectId.WRATH_ALTER);
                 if (Utility.getEssenceCount() > 1) {
                     //Log.info("We have Essence");
-                    alter.click();
+                    alter.click("Craft-rune");
                     Condition.wait(() -> Utility.getEssenceCount() == 0, 50, 200);
                     //Log.fine("Crafted Runes");
                 }
@@ -55,7 +55,7 @@ public class CraftExecutor extends ActivityExecutor {
                 GameObject alter = Utility.getObject(ObjectId.WRATH_ALTER);
             if (Utility.getEssenceCount() > 1) {
                 //Log.info("We have Essence");
-                    alter.click();
+                    alter.click("Craft-rune");
                     Condition.wait(() -> Utility.getEssenceCount() == 0, 50, 200);
                 //Log.fine("Crafted Runes");
                 }

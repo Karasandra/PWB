@@ -71,6 +71,9 @@ public class WalkExecutor extends ActivityExecutor {
             case UNDER -> {
                 Utility.setTask("Going Underground");
                 //Log.info("Walk - Under");
+                if (Utility.myTile(Location.MYTH_GUILD_UPPPER)) {
+                    Utility.tele();
+                }
                 if (Utility.myTile(Location.MYTH_GUILD_LOWER)) {
                     GameObject statue = Utility.getObject(ObjectId.STATUE);
                     if (!statue.inViewport()) {

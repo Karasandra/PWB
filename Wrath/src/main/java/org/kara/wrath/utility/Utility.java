@@ -67,7 +67,7 @@ public class Utility {
         Item cape2 = Inventory.stream().id(ObjectId.RC_CAPE_T).first();
         if (cape.valid()) { return cape; }
         if (cape2.valid()) { return cape2; }
-        return null;
+        return cape;
     }
     public static Item getInvPouch() { return Inventory.stream().id(ObjectId.POUCH_ITEM).first(); }
     public static GameObject getObject(int obj) { return Objects.stream().id(obj).nearest().first(); }

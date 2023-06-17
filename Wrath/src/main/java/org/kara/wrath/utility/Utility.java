@@ -62,6 +62,13 @@ public class Utility {
         Bank.deposit(ObjectId.POTION_ITEM_1, Bank.Amount.ONE);
     }
     public static Item getInvFood() { return Inventory.stream().id(ObjectId.FOOD).first(); }
+    public static Item getInvCape() {
+        Item cape = Inventory.stream().id(ObjectId.RC_CAPE).first();
+        Item cape2 = Inventory.stream().id(ObjectId.RC_CAPE_T).first();
+        if (cape.valid()) { return cape; }
+        if (cape2.valid()) { return cape2; }
+        return null;
+    }
     public static Item getInvPouch() { return Inventory.stream().id(ObjectId.POUCH_ITEM).first(); }
     public static GameObject getObject(int obj) { return Objects.stream().id(obj).nearest().first(); }
     public static Item getInvWrathRune() { return Inventory.stream().id(ObjectId.WRATH_RUNE).first(); }

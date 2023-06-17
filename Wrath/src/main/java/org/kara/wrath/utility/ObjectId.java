@@ -18,5 +18,7 @@ public class ObjectId {
     public static final int BANK = 30087;
     public static final int FOOD = 385;
     public static final int MYTH_CAPE = 22114;
+    public static final int RC_CAPE = 9765;
+    public static final int RC_CAPE_T = 9766;
     public static final int MYTH_STAIRS = 31627;
 }

@@ -84,6 +84,10 @@ public class Wrath_Rune extends AbstractScript {
             Game.tab(Game.Tab.INVENTORY);
             return Utility.getLoopReturn();
         }
+        if (Utility.getInvCape().valid()) {
+            Utility.getInvCape().click("Wear");
+            return Utility.getLoopReturnQuick();
+        }
 
         //Global Conditions End
 

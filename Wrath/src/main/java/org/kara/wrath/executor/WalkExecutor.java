@@ -86,7 +86,10 @@ public class WalkExecutor extends ActivityExecutor {
                     Camera.turnTo(Utility.yawUnd, Utility.pitch);
                     return Utility.getLoopReturnLong();
                 }
-                if (!Utility.myTile(Location.MYTH_ALTER)) {
+                if (Utility.myTile(Location.MYTH_ALTER)) {
+                    localActivity = WalkActivity.ALTER;
+                    return Utility.getLoopReturn();
+                } else {
                     GameObject cave = Utility.getObject(ObjectId.CAVE);
                     if (cave.valid() && cave.inViewport()) {
                         cave.interactionType(ModelInteractionType.HullAccurate).click("Enter");
@@ -96,8 +99,6 @@ public class WalkExecutor extends ActivityExecutor {
                     }
                     return Utility.getLoopReturnQuick();
                 }
-                localActivity = WalkActivity.ALTER;
-                return Utility.getLoopReturn();
             }
             case ALTER -> {
                 Utility.setTask("Going to Wrath Alter");

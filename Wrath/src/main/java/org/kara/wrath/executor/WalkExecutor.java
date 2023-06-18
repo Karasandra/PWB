@@ -51,27 +51,29 @@ public class WalkExecutor extends ActivityExecutor {
                     return Utility.getLoopReturnLong();
                 } else {
                     GameObject stairs = Utility.getObject(ObjectId.MYTH_STAIRS);
-                    if (stairs.valid()) {
+                    if (stairs.inViewport()) {
                         stairs.click("Climb-up");
                     } else {
                         if (Utility.myTile(Location.MYTH_GUILD_LOWER)) {
                             Utility.step(Location.MYTH_STAIRS);
+                            return Utility.getLoopReturnQuick();
                         } else {
-                            if (Utility.myTile(Location.MYTH_GUILD_UPPPER)) {
+                            if (Utility.myTile(Location.MYTH_GUILD_UPPER)) {
                                 Utility.step(Location.MYTH_GUILD_UPPER_WALK);
+                                return Utility.getLoopReturnQuick();
                             } else {
                                 Utility.tele();
                             }
                         }
                     }
-                    Condition.wait(() -> Utility.myTile(Location.MYTH_GUILD_UPPER_WALK), 50, 20);
+                    Condition.wait(() -> Utility.myTile(Location.MYTH_GUILD_UPPER), 50, 20);
                     return Utility.getLoopReturnQuick();
                 }
             }
             case UNDER -> {
                 Utility.setTask("Going Underground");
                 //Log.info("Walk - Under");
-                if (Utility.myTile(Location.MYTH_GUILD_UPPPER)) {
+                if (Utility.myTile(Location.MYTH_GUILD_UPPER)) {
                     Utility.tele();
                 }
                 if (Utility.myTile(Location.MYTH_GUILD_LOWER)) {

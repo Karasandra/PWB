@@ -5,10 +5,7 @@ import org.kara.orb.utility.ObjectId;
 import org.kara.orb.utility.Utility;
 import org.powbot.api.Condition;
 import org.powbot.api.Locatable;
-import org.powbot.api.rt4.Bank;
-import org.powbot.api.rt4.Camera;
-import org.powbot.api.rt4.Inventory;
-import org.powbot.api.rt4.Item;
+import org.powbot.api.rt4.*;
 
 public class BankExecutor extends ActivityExecutor {
     private BankActivity localActivity = BankActivity.BANKING;
@@ -91,7 +88,7 @@ public class BankExecutor extends ActivityExecutor {
             case HEAL -> {
                 //Log.info("Bank - Heal");
                 Utility.setTask("Healing Time");
-                if (!Utility.healthLoss() && !Utility.invFood().valid()) {
+                if (Players.local().healthPercent() >= 90 && !Utility.invFood().valid()) {
                     //Log.info("Done Eating");
                     localActivity = BankActivity.BANKING;
                     return Utility.getLoopReturnQuick();

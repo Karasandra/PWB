@@ -28,14 +28,13 @@ public class CraftExecutor extends ActivityExecutor {
                 return Utility.getLoopReturnLong();
             }
             case SECOND -> {
-                Components.stream().widget(270).action("Charge").first().click();
-                Utility.tabInv();
-                Condition.wait(() -> !Utility.getInv(ObjectId.UNPOWERED_ORB).valid(), 1000, 80);
-                if (!Utility.getInv(ObjectId.UNPOWERED_ORB).valid()) {
+                if (Condition.wait(() -> !Utility.getInv(ObjectId.UNPOWERED_ORB).valid(), 20,50)) {
                     Utility.setActivity(Activity.WALK);
                     localActivity = CraftActivity.INITIAL;
                     return Utility.getLoopReturn();
                 }
+                Components.stream().widget(270).action("Charge").first().click();
+                Utility.tabInv();
                 if (!Utility.getInv(ObjectId.COSMIC_RUNE).valid()) {
                     Utility.setStopping(true);
                     return Utility.getLoopReturnQuick();

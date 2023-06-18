@@ -79,8 +79,7 @@ public class WalkExecutor extends ActivityExecutor {
                 if (Utility.myTile(Location.MYTH_GUILD_LOWER)) {
                     GameObject statue = Utility.getObject(ObjectId.STATUE);
                     if (!statue.inViewport()) {
-                        Camera.turnTo(statue);
-                        return Utility.getLoopReturn();
+                        Camera.turnTo(statue, 20);
                     }
                     statue.click("Enter");
                     Condition.wait(() -> !Utility.myTile(Location.MYTH_GUILD_LOWER), 50, 30);
@@ -108,7 +107,7 @@ public class WalkExecutor extends ActivityExecutor {
                     localActivity = WalkActivity.START;
                 } else {
                     Utility.getObject(ObjectId.MYTH_ALTER).click("Enter");
-                    Condition.wait(() -> Utility.myTile(Location.WRATH_ALTER), 50, 20);
+                    Condition.wait(() -> Utility.myTile(Location.WRATH_ALTER), 50, 10);
                 }
                 return Utility.getLoopReturnLong();
             }

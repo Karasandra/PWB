@@ -1,7 +1,7 @@
 package org.kara.orb.utility;
 
 public class ObjectId {
-    public static final int PILLAR = 99999;
+    public static final int PILLAR = 2153;
     public static final int UNPOWERED_ORB = 567;
     public static final int FIRE_ORB = 569;
     public static final int COSMIC_RUNE = 564;

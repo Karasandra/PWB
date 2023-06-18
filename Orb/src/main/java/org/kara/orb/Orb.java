@@ -5,6 +5,7 @@ import org.kara.orb.executor.BankExecutor;
 import org.kara.orb.executor.CraftExecutor;
 import org.kara.orb.executor.WalkExecutor;
 import org.kara.orb.utility.BreakTime;
+import org.kara.orb.utility.ObjectId;
 import org.kara.orb.utility.Utility;
 import org.powbot.api.rt4.Camera;
 import org.powbot.api.rt4.Game;
@@ -12,6 +13,7 @@ import org.powbot.api.rt4.Movement;
 import org.powbot.api.script.*;
 import org.powbot.api.script.paint.Paint;
 import org.powbot.api.script.paint.PaintBuilder;
+import org.powbot.api.script.paint.TrackInventoryOption;
 import org.powbot.mobile.service.ScriptUploader;
 
 import static java.lang.System.exit;
@@ -47,6 +49,7 @@ public class  Orb extends AbstractScript {
         Paint paint = PaintBuilder.newBuilder()
                 .removeScriptNameVersion()
                 .addString("Task: ", Utility::getTask)
+                .trackInventoryItem(ObjectId.FIRE_ORB, "Fire Orbs", TrackInventoryOption.QuantityChange)
                 .x(30)
                 .y(65)
                 .build();

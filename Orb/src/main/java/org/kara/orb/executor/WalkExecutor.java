@@ -9,6 +9,7 @@ public class WalkExecutor extends ActivityExecutor {
 
     @Override
     public int execute() {
+        Utility.setTask("Walk Time");
         Utility.tabInv();
         Item orb = Utility.getInv(ObjectId.UNPOWERED_ORB);
         if (orb.valid()) {

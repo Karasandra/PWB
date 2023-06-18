@@ -30,6 +30,7 @@ public class CraftExecutor extends ActivityExecutor {
                 return Utility.getLoopReturnLong();
             }
             case SECOND -> {
+                Utility.tabInv();
                 Condition.wait(() -> !Utility.getInv(ObjectId.UNPOWERED_ORB).valid(), 20,50);
                 if (!Utility.getInv(ObjectId.UNPOWERED_ORB).valid()) {
                     Utility.setActivity(Activity.WALK);
@@ -37,7 +38,6 @@ public class CraftExecutor extends ActivityExecutor {
                     return Utility.getLoopReturn();
                 }
                 Components.stream().widget(270).action("Charge").first().click();
-                Utility.tabInv();
                 if (!Utility.getInv(ObjectId.COSMIC_RUNE).valid()) {
                     Utility.setStopping(true);
                     return Utility.getLoopReturnQuick();

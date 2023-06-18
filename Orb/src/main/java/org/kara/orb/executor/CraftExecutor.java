@@ -30,7 +30,8 @@ public class CraftExecutor extends ActivityExecutor {
                 return Utility.getLoopReturnLong();
             }
             case SECOND -> {
-                if (Condition.wait(() -> !Utility.getInv(ObjectId.UNPOWERED_ORB).valid(), 20,50)) {
+                Condition.wait(() -> !Utility.getInv(ObjectId.UNPOWERED_ORB).valid(), 20,50);
+                if (!Utility.getInv(ObjectId.UNPOWERED_ORB).valid()) {
                     Utility.setActivity(Activity.WALK);
                     localActivity = CraftActivity.INITIAL;
                     return Utility.getLoopReturn();

@@ -15,7 +15,7 @@ public class WalkExecutor extends ActivityExecutor {
         if (orb.valid()) {
             Utility.move(Location.Pillar);
         }
-        if (!orb.valid() && Utility.myTile(Location.Pillar)) {
+        if (!orb.valid() && !Utility.myTile(Location.FALADOR)) {
             Utility.tele();
         }
         if (!orb.valid() && Utility.myTile(Location.FALADOR) && !Utility.myTile(Location.BANK)) {

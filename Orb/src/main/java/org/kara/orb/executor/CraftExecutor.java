@@ -20,6 +20,10 @@ public class CraftExecutor extends ActivityExecutor {
         Utility.setTask("Craft Time");
         switch (localActivity) {
             case INITIAL -> {
+                if (!Utility.getInv(ObjectId.UNPOWERED_ORB).valid()) {
+                    Utility.setActivity(Activity.WALK);
+                    return Utility.getLoopReturn();
+                }
                 Camera.turnTo(Utility.yawReg, Utility.pitch);
                 Utility.poisonCure();
                 Utility.tabMagic();

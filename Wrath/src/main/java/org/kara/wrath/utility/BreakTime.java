@@ -11,7 +11,6 @@ public class BreakTime {
         if (breakEvent == null) {
             return;
         }
-        boolean walking = Utility.myTile(Location.MYTH_ALTER);
         if (Utility.getActivity() == Activity.WALK || Bank.opened()) {
             breakEvent.delay(15000);
         } else {

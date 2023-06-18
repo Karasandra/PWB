@@ -1,7 +1,6 @@
 package org.kara.orb.utility;
 
 import com.google.common.eventbus.Subscribe;
-import org.kara.orb.executor.Activity;
 import org.powbot.api.event.BreakEvent;
 import org.powbot.api.rt4.Bank;
 
@@ -11,7 +10,7 @@ public class BreakTime {
         if (breakEvent == null) {
             return;
         }
-        if (Utility.getActivity().equals(Activity.WALK) || Bank.opened()) {
+        if (!Utility.myTile(Location.Pillar) || !Utility.myTile(Location.FALADOR) || Bank.opened()) {
             breakEvent.delay(5000);
         } else {
             breakEvent.accept();

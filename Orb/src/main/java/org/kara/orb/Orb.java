@@ -1,16 +1,18 @@
 package org.kara.orb;
 
 
-import org.kara.orb.executor.CraftExecutor;
 import org.kara.orb.executor.BankExecutor;
+import org.kara.orb.executor.CraftExecutor;
 import org.kara.orb.executor.WalkExecutor;
 import org.kara.orb.utility.BreakTime;
 import org.kara.orb.utility.Utility;
+import org.powbot.api.rt4.Camera;
 import org.powbot.api.rt4.Game;
 import org.powbot.api.rt4.Movement;
 import org.powbot.api.script.*;
 import org.powbot.api.script.paint.Paint;
 import org.powbot.api.script.paint.PaintBuilder;
+import org.powbot.mobile.service.ScriptUploader;
 
 import static java.lang.System.exit;
 
@@ -36,8 +38,8 @@ public class  Orb extends AbstractScript {
 
 
     public static void main(String[] args) {
-        new Orb().startScript();
-        //new ScriptUploader().uploadAndStart("Gotr", "Kara", "127.0.0.1:5555", true, false);
+        //new Orb().startScript();
+        new ScriptUploader().uploadAndStart("Orb", "Kara", "127.0.0.1:5585", true, false);
     }
 
     @Override
@@ -49,6 +51,7 @@ public class  Orb extends AbstractScript {
                 .y(65)
                 .build();
         addPaint(paint);
+        Camera.turnTo(Utility.yawReg, Utility.pitch);
         BreakTime.onBreakEvent(null);
     }
 

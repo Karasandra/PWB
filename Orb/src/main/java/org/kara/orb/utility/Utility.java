@@ -10,6 +10,8 @@ public class Utility {
     private static boolean stopping = false;
     private static Activity activity = Activity.BANK;
     private static String task = "Starting";
+    public static int yawReg = Random.nextInt(70, 90);
+    public static int pitch = Random.nextInt(94, 99);
     private static final int LOWER_RUN_THRESH = 50;
     private static final int UPPER_RUN_THRESH = 90;
     private static int runThreshold = Random.nextInt(LOWER_RUN_THRESH, UPPER_RUN_THRESH);

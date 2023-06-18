@@ -3,6 +3,7 @@ package org.kara.orb.executor;
 import org.kara.orb.utility.ObjectId;
 import org.kara.orb.utility.Utility;
 import org.powbot.api.Condition;
+import org.powbot.api.rt4.Components;
 import org.powbot.api.rt4.Magic;
 
 public class CraftExecutor extends ActivityExecutor {
@@ -13,6 +14,7 @@ public class CraftExecutor extends ActivityExecutor {
         Utility.tabMagic();
         Magic.Spell.CHARGE_FIRE_ORB.cast();
         Utility.getObject(ObjectId.PILLAR).click();
+        Components.stream(270, 14).action("Charge");
         Condition.wait(() -> !Utility.getInv(ObjectId.UNPOWERED_ORB).valid(), 1000, 80);
         if (!Utility.getInv(ObjectId.UNPOWERED_ORB).valid()) {
             Utility.setActivity(Activity.WALK);

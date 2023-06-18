@@ -3,6 +3,7 @@ package org.kara.orb.executor;
 import org.kara.orb.utility.ObjectId;
 import org.kara.orb.utility.Utility;
 import org.powbot.api.Condition;
+import org.powbot.api.rt4.Camera;
 import org.powbot.api.rt4.Components;
 import org.powbot.api.rt4.Magic;
 
@@ -19,6 +20,7 @@ public class CraftExecutor extends ActivityExecutor {
         Utility.setTask("Craft Time");
         switch (localActivity) {
             case INITIAL -> {
+                Camera.turnTo(Utility.yawReg, Utility.pitch);
                 Utility.poisonCure();
                 Utility.tabMagic();
                 Magic.Spell.CHARGE_FIRE_ORB.cast();

@@ -23,7 +23,7 @@ public class CraftExecutor extends ActivityExecutor {
                 Utility.tabMagic();
                 Magic.Spell.CHARGE_FIRE_ORB.cast();
                 Utility.getObject(ObjectId.PILLAR).click();
-                Condition.wait(() -> Utility.getIdle(), 50, 60);
+                Condition.wait(Utility::getIdle, 50, 60);
                 localActivity = CraftActivity.SECOND;
                 return Utility.getLoopReturnLong();
             }

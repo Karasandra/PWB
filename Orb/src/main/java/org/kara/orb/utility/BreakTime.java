@@ -10,7 +10,7 @@ public class BreakTime {
         if (breakEvent == null) {
             return;
         }
-        if (!Utility.myTile(Location.Pillar) || !Utility.myTile(Location.FALADOR) || Bank.opened()) {
+        if (!Utility.myTile(Location.Pillar) && !Utility.myTile(Location.FALADOR) || Bank.opened()) {
             breakEvent.delay(5000);
         } else {
             breakEvent.accept();

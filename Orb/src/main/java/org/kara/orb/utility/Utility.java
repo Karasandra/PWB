@@ -80,4 +80,5 @@ public class Utility {
     }
     private static int healthRandom() { return Random.nextInt(60, 75); }
     public static int health() { return Players.local().healthPercent(); }
+    public static boolean getIdle() { return !Players.local().inMotion(); }
 }

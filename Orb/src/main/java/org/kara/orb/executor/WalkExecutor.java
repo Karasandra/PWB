@@ -12,15 +12,15 @@ public class WalkExecutor extends ActivityExecutor {
     public int execute() {
         Utility.setTask("Walk Time");
         Utility.tabInv();
+        Utility.poisonCure();
         Item orb = Utility.getInv(ObjectId.UNPOWERED_ORB);
         if (orb.valid() && Utility.myTile(Location.PILLAR)) {
             Utility.setActivity(Activity.CRAFT);
-            Utility.poisonCure();
             return Utility.getLoopReturnQuick();
         }
         if (orb.valid()) {
             if (!Utility.myTile(Location.TAVERLEY_DUNGEON)) {
-                Utility.move(Location.TAVERLEY_DUNGEON_ENTRANCE);
+                Utility.move(Location.TAVERLEY_DUNGEON_ENTRANCE_WALK);
             } else {
                 if (Utility.myTile(Location.TAVERLEY_DUNGEON_ENTRANCE)) {
                     Utility.getObject(ObjectId.PIPE).click("Squeeze-through");
@@ -29,8 +29,8 @@ public class WalkExecutor extends ActivityExecutor {
                 } else {
                     if (Utility.myTile(Location.TAVERLEY_DUNGEON_RIGHT)) {
                         Utility.step(Location.TAVERLEY_DUNGEON_SPIDER);
-                        Condition.wait(() -> Utility.myTile(Location.TAVERLEY_DUNGEON_SPIDER), 100, 20);
-                        return Utility.getLoopReturnQuick();
+                        Condition.wait(() -> Utility.myTile(Location.TAVERLEY_DUNGEON_SPIDER), 100, 8);
+                        return Utility.getLoopReturn();
                     } else {
                         Utility.step(Location.PILLAR);
                     }

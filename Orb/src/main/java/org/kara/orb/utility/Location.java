@@ -10,6 +10,7 @@ public class Location {
     public static final Area TAVERLEY_DUNGEON = new Area(new Tile(2816, 9832), new Tile(2896, 9767));
     public static final Area TAVERLEY_DUNGEON_SPIDER = new Area(new Tile(2865, 9800), new Tile(2869, 9797));
     public static final Area TAVERLEY_DUNGEON_RIGHT = new Area(new Tile(2870, 9800), new Tile(2896, 9767));
-    public static final Area TAVERLEY_DUNGEON_ENTRANCE = new Area(new Tile(2883, 9800), new Tile(2886, 9796));
+    public static final Area TAVERLEY_DUNGEON_ENTRANCE = new Area(new Tile(2881, 9799), new Tile(2887, 9794));
+    public static final Area TAVERLEY_DUNGEON_ENTRANCE_WALK = new Area(new Tile(2883, 9799), new Tile(2886, 9797));
 
 }

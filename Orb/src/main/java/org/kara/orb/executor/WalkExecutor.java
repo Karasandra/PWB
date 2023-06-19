@@ -3,6 +3,7 @@ package org.kara.orb.executor;
 import org.kara.orb.utility.Location;
 import org.kara.orb.utility.ObjectId;
 import org.kara.orb.utility.Utility;
+import org.powbot.api.Condition;
 import org.powbot.api.rt4.Item;
 
 public class WalkExecutor extends ActivityExecutor {
@@ -20,21 +21,22 @@ public class WalkExecutor extends ActivityExecutor {
         if (orb.valid()) {
             if (!Utility.myTile(Location.TAVERLEY_DUNGEON)) {
                 Utility.move(Location.TAVERLEY_DUNGEON_ENTRANCE);
-                return Utility.getLoopReturnXLong();
             } else {
                 if (Utility.myTile(Location.TAVERLEY_DUNGEON_ENTRANCE)) {
                     Utility.getObject(ObjectId.PIPE).click("Squeeze-through");
-                    return Utility.getLoopReturnLong();
+                    Condition.wait(() -> !Utility.myTile(Location.TAVERLEY_DUNGEON_ENTRANCE), 50, 20);
+                    return Utility.getLoopReturn();
                 } else {
                     if (Utility.myTile(Location.TAVERLEY_DUNGEON_RIGHT)) {
                         Utility.step(Location.TAVERLEY_DUNGEON_SPIDER);
-                        return Utility.getLoopReturnLong();
+                        Condition.wait(() -> Utility.myTile(Location.TAVERLEY_DUNGEON_SPIDER), 100, 20);
+                        return Utility.getLoopReturnQuick();
                     } else {
                         Utility.step(Location.PILLAR);
-                        return Utility.getLoopReturnXLong();
                     }
                 }
             }
+            return Utility.getLoopReturnXLong();
         }
         if (!orb.valid() && !Utility.myTile(Location.FALADOR)) {
             Utility.tele();

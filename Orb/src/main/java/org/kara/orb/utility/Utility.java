@@ -34,6 +34,7 @@ public class Utility {
     public static int getLoopReturnQuick() { return Random.nextInt(0, 10); }
     public static int getLoopReturn() { return Random.nextInt(10, 200); }
     public static int getLoopReturnLong() { return Random.nextInt(200, 400); }
+    public static int getLoopReturnXLong() { return Random.nextInt(800, 1200); }
     public static void setTask(String task) {
         Log.info("TASK: " + task);
         Utility.task = task;
@@ -78,7 +79,7 @@ public class Utility {
     public static boolean healthLoss() {
         return Players.local().healthPercent() <= healthRandom();
     }
-    private static int healthRandom() { return Random.nextInt(60, 75); }
+    private static int healthRandom() { return Random.nextInt(70, 80); }
     public static int health() { return Players.local().healthPercent(); }
     public static boolean getIdle() { return !Players.local().inMotion(); }
 }

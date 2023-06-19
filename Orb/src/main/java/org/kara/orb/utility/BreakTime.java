@@ -11,7 +11,7 @@ public class BreakTime {
         if (breakEvent == null) {
             return;
         }
-        if (!Utility.myTile(Location.Pillar) && !Utility.myTile(Location.FALADOR) || Bank.opened() || Utility.getActivity() == Activity.WALK) {
+        if (!Utility.myTile(Location.PILLAR) && !Utility.myTile(Location.FALADOR) || Bank.opened() || Utility.getActivity() == Activity.WALK) {
             breakEvent.delay(15000);
         } else {
             breakEvent.accept();

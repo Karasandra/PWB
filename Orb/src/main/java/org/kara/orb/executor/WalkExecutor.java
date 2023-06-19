@@ -12,22 +12,39 @@ public class WalkExecutor extends ActivityExecutor {
         Utility.setTask("Walk Time");
         Utility.tabInv();
         Item orb = Utility.getInv(ObjectId.UNPOWERED_ORB);
+        if (orb.valid() && Utility.myTile(Location.PILLAR)) {
+            Utility.setActivity(Activity.CRAFT);
+            Utility.poisonCure();
+            return Utility.getLoopReturnQuick();
+        }
         if (orb.valid()) {
-            Utility.move(Location.Pillar);
+            if (!Utility.myTile(Location.TAVERLEY_DUNGEON)) {
+                Utility.move(Location.TAVERLEY_DUNGEON_ENTRANCE);
+                return Utility.getLoopReturnXLong();
+            } else {
+                if (Utility.myTile(Location.TAVERLEY_DUNGEON_ENTRANCE)) {
+                    Utility.getObject(ObjectId.PIPE).click("Squeeze-through");
+                    return Utility.getLoopReturnLong();
+                } else {
+                    if (Utility.myTile(Location.TAVERLEY_DUNGEON_RIGHT)) {
+                        Utility.step(Location.TAVERLEY_DUNGEON_SPIDER);
+                        return Utility.getLoopReturnLong();
+                    } else {
+                        Utility.step(Location.PILLAR);
+                        return Utility.getLoopReturnXLong();
+                    }
+                }
+            }
         }
         if (!orb.valid() && !Utility.myTile(Location.FALADOR)) {
             Utility.tele();
         }
         if (!orb.valid() && Utility.myTile(Location.FALADOR) && !Utility.myTile(Location.BANK)) {
             Utility.step(Location.BANK);
+            return Utility.getLoopReturnXLong();
         }
         if (Utility.myTile(Location.BANK) && !orb.valid()) {
             Utility.setActivity(Activity.BANK);
-            return Utility.getLoopReturnQuick();
-        }
-        Utility.poisonCure();
-        if (Utility.myTile(Location.Pillar)) {
-            Utility.setActivity(Activity.CRAFT);
             return Utility.getLoopReturnQuick();
         }
         return Utility.getLoopReturn();

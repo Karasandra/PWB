@@ -76,6 +76,6 @@ public class Utility {
     public static boolean healthLoss() {
         return Players.local().healthPercent() <= healthRandom();
     }
-    private static int healthRandom() { return Random.nextInt(60, 75); }
+    private static int healthRandom() { return Random.nextInt(70, 80); }
     public static int health() { return Players.local().healthPercent(); }
 }

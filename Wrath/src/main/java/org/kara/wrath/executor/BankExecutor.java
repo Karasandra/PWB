@@ -109,7 +109,7 @@ public class BankExecutor extends ActivityExecutor {
             case HEAL -> {
                 //Log.info("Bank - Heal");
                 Utility.setTask("Healing Time");
-                if (!Utility.healthLoss() && !Utility.getInvFood().valid()) {
+                if (Utility.health() >= 90 && !Utility.getInvFood().valid()) {
                     //Log.info("Done Eating");
                     localActivity = BankActivity.BANKING;
                     return Utility.getLoopReturnQuick();

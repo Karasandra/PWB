@@ -92,8 +92,9 @@ public class WalkExecutor extends ActivityExecutor {
                 } else {
                     GameObject cave = Utility.getObject(ObjectId.CAVE);
                     if (cave.valid() && cave.inViewport()) {
-                        cave.interactionType(ModelInteractionType.HullAccurate).click("Enter");
-                        Condition.wait(() -> Utility.myTile(Location.MYTH_ALTER), 50, 20);
+                        cave.interactionType(ModelInteractionType.HullAccurate); //.bounds(-20,20,-40,-10,-20,20);
+                        cave.click("Enter");
+                        Condition.wait(() -> Utility.myTile(Location.MYTH_ALTER), 50, 30);
                     } else {
                         Utility.step(Location.CAVE);
                     }
@@ -108,7 +109,7 @@ public class WalkExecutor extends ActivityExecutor {
                     localActivity = WalkActivity.START;
                 } else {
                     Utility.getObject(ObjectId.MYTH_ALTER).click("Enter");
-                    Condition.wait(() -> Utility.myTile(Location.WRATH_ALTER), 50, 10);
+                    Condition.wait(() -> Utility.myTile(Location.WRATH_ALTER), 50, 20);
                 }
                 return Utility.getLoopReturnLong();
             }

@@ -12,7 +12,7 @@ public class BankExecutor extends ActivityExecutor {
 
     enum BankActivity {
         BANKING,
-        POTION,
+        SUPPLY,
         HEAL
     }
 
@@ -61,8 +61,8 @@ public class BankExecutor extends ActivityExecutor {
                     localActivity = BankActivity.HEAL;
                     return Utility.getLoopReturn();
                 }
-                if (!Utility.invAntiPoison().valid()) {
-                    localActivity = BankActivity.POTION;
+                if (!Utility.invAntiPoison().valid() || !Utility.getInv(ObjectId.FOOD).valid()) {
+                    localActivity = BankActivity.SUPPLY;
                     return Utility.getLoopReturn();
                 }
                 if (!Utility.getInv(ObjectId.UNPOWERED_ORB).valid()) {
@@ -75,13 +75,19 @@ public class BankExecutor extends ActivityExecutor {
                 }
                 return Utility.getLoopReturn();
             }
-            case POTION -> {
+            case SUPPLY -> {
                 //Log.info("Bank-Potion");
-                Utility.setTask("Potion Time");
-                if (Utility.invAntiPoison().valid()) {
+                Utility.setTask("Supply Time");
+                if (Utility.invAntiPoison().valid() && Utility.getInv(ObjectId.FOOD).valid()) {
                     localActivity = BankActivity.BANKING;
+                    return Utility.getLoopReturn();
                 } else {
-                    Utility.getBankAntiPoison();
+                    if (!Utility.invAntiPoison().valid()) {
+                        Utility.getBankAntiPoison();
+                    }
+                    if (!Utility.getInv(ObjectId.FOOD).valid()) {
+                        Bank.withdraw(ObjectId.FOOD, Bank.Amount.ONE);
+                    }
                 }
                 return Utility.getLoopReturn();
             }

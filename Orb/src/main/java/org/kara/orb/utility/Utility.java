@@ -34,7 +34,7 @@ public class Utility {
     public static int getLoopReturnQuick() { return Random.nextInt(0, 10); }
     public static int getLoopReturn() { return Random.nextInt(10, 200); }
     public static int getLoopReturnLong() { return Random.nextInt(200, 400); }
-    public static int getLoopReturnXLong() { return Random.nextInt(800, 1200); }
+    public static int getLoopReturnXLong() { return Random.nextInt(600, 1000); }
     public static void setTask(String task) {
         Log.info("TASK: " + task);
         Utility.task = task;
@@ -68,6 +68,11 @@ public class Utility {
     public static void poisonCure() {
         if (Combat.isPoisoned()) {
             Inventory.stream().id(ObjectId.ANTI_POISON_4, ObjectId.ANTI_POISON_3, ObjectId.ANTI_POISON_2, ObjectId.ANTI_POISON_1).first().click("Drink");
+        }
+    }
+    public static void eating() {
+        if (healthLoss() && invFood().valid()) {
+            invFood().click("Eat");
         }
     }
     public static Item invAntiPoison() {

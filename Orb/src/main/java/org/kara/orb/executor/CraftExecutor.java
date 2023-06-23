@@ -42,8 +42,9 @@ public class CraftExecutor extends ActivityExecutor {
                     localActivity = CraftActivity.INITIAL;
                     return Utility.getLoopReturn();
                 }
+                Condition.wait(() -> !Utility.getInv(ObjectId.UNPOWERED_ORB).valid(), 100,10);
                 Components.stream().widget(270).action("Charge").first().click();
-                Condition.wait(() -> !Utility.getInv(ObjectId.UNPOWERED_ORB).valid(), 100,20);
+                Condition.wait(() -> !Utility.getInv(ObjectId.UNPOWERED_ORB).valid(), 100,10);
                 if (!Utility.getInv(ObjectId.COSMIC_RUNE).valid()) {
                     Utility.setStopping(true);
                     return Utility.getLoopReturnQuick();

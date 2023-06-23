@@ -6,6 +6,8 @@ import org.powbot.api.Condition;
 import org.powbot.api.rt4.Camera;
 import org.powbot.api.rt4.Components;
 import org.powbot.api.rt4.Magic;
+import org.powbot.api.rt4.Skills;
+import org.powbot.api.rt4.walking.model.Skill;
 
 public class CraftExecutor extends ActivityExecutor {
     private CraftActivity localActivity = CraftActivity.INITIAL;
@@ -35,16 +37,20 @@ public class CraftExecutor extends ActivityExecutor {
             }
             case SECOND -> {
                 Utility.tabInv();
-                Condition.wait(() -> !Utility.getInv(ObjectId.UNPOWERED_ORB).valid(), 20,50);
                 if (!Utility.getInv(ObjectId.UNPOWERED_ORB).valid()) {
                     Utility.setActivity(Activity.WALK);
                     localActivity = CraftActivity.INITIAL;
                     return Utility.getLoopReturn();
                 }
                 Components.stream().widget(270).action("Charge").first().click();
+                Condition.wait(() -> !Utility.getInv(ObjectId.UNPOWERED_ORB).valid(), 100,20);
                 if (!Utility.getInv(ObjectId.COSMIC_RUNE).valid()) {
                     Utility.setStopping(true);
                     return Utility.getLoopReturnQuick();
+                }
+                if (Skills.timeSinceExpGained(Skill.Magic) >= 5000) {
+                    localActivity = CraftActivity.INITIAL;
+                    return Utility.getLoopReturn();
                 }
             }
         }

@@ -5,6 +5,7 @@ import org.powbot.api.Area;
 import org.powbot.api.Condition;
 import org.powbot.api.Random;
 import org.powbot.api.rt4.*;
+import org.powbot.api.rt4.stream.item.EquipmentItemStream;
 
 public class Utility {
     private static boolean stopping = false;
@@ -42,7 +43,7 @@ public class Utility {
     public static void setStopping(boolean stopping) { Utility.stopping = stopping; }
     public static boolean isStopping() { return stopping; }
     public static GameObject getObject(int obj) { return Objects.stream().id(obj).nearest().first(); }
-    public static Item getInv(Integer integer) { return Inventory.stream().id(integer).first(); }
+    public static Item getInv(int obj) { return Inventory.stream().id(obj).first(); }
     public static boolean myTile(Area map) { return map.contains(Players.local().tile()); }
 
     public static void tabEquip() {
@@ -50,10 +51,8 @@ public class Utility {
             Game.tab(Game.tab().EQUIPMENT);
         }
     }
-    public static boolean healthLoss() {
-        return Players.local().healthPercent() <= healthRandom();
+    public static boolean checkRing() {
+        return Equipment.itemAt(Equipment.Slot.RING).valid();
     }
-    private static int healthRandom() { return Random.nextInt(70, 80); }
-    public static int health() { return Players.local().healthPercent(); }
     public static boolean getIdle() { return !Players.local().inMotion(); }
 }

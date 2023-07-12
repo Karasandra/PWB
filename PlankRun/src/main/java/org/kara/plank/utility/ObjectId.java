@@ -14,4 +14,8 @@ public class ObjectId {
             9996
     };
     public static final int RING = 9999;
+    public static final int BANK = 9999;
+    public static final int GOLD = 1;
+    public static final int WOOD_STORAGE = 99999;
+    public static final int FIRE_WOOD = 9999;
 }

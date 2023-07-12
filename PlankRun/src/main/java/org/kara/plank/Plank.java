@@ -2,6 +2,7 @@ package org.kara.plank;
 
 import org.kara.plank.executor.BankExecutor;
 import org.kara.plank.executor.CraftExecutor;
+import org.kara.plank.executor.ResupplyExecutor;
 import org.kara.plank.executor.WalkExecutor;
 import org.kara.plank.utility.Config;
 import org.kara.plank.utility.Log;
@@ -13,6 +14,7 @@ import org.powbot.api.script.*;
 import org.powbot.api.script.paint.Paint;
 import org.powbot.api.script.paint.PaintBuilder;
 import org.powbot.api.script.paint.TrackInventoryOption;
+import org.powbot.mobile.debug.Con;
 import org.powbot.mobile.service.ScriptUploader;
 
 import static java.lang.System.exit;
@@ -37,6 +39,12 @@ import static java.lang.System.exit;
                         defaultValue = "Plank"
                 ),
                 @ScriptConfiguration(
+                        name = "Coin Stop",
+                        optionType = OptionType.INTEGER,
+                        description = "Gold Cut-Off",
+                        defaultValue = "45000"
+                ),
+                @ScriptConfiguration(
                         name = "Example",
                         description = "Example GUI option",
                         optionType = OptionType.INFO)
@@ -50,6 +58,7 @@ public class  Plank extends AbstractScript {
     private final BankExecutor bankExecutor = new BankExecutor();
     private final WalkExecutor walkExecutor = new WalkExecutor();
     private final CraftExecutor craftExecutor = new CraftExecutor();
+    private final ResupplyExecutor resupplyExecutor = new ResupplyExecutor();
 
 
 
@@ -75,14 +84,16 @@ public class  Plank extends AbstractScript {
 
     private void setConfig() {
         Object craftChoice = getOption("Plank Options");
+        Object goldCut = getOption("Coin Stop");
 
-        if(craftChoice == null) {
+        if(craftChoice == null || goldCut == null) {
             Log.severe("GUI Value Null");
             Utility.setStopping(true);
             return;
         }
 
         Config.setCraftChoice((String) craftChoice);
+        Config.setGoldCut((String) goldCut);
     }
 
     @Override
@@ -110,7 +121,6 @@ public class  Plank extends AbstractScript {
             Movement.running(true);
             return Utility.getLoopReturn();
         }
-        Utility.tabEquip();
 
         //Global Conditions End
 
@@ -119,6 +129,7 @@ public class  Plank extends AbstractScript {
             case BANK -> bankExecutor.execute();
             case WALK -> walkExecutor.execute();
             case CRAFT -> craftExecutor.execute();
+            case RESUPPLY -> resupplyExecutor.execute();
         };
         //Activity Ends
 

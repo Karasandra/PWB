@@ -3,6 +3,10 @@ package org.kara.plank.utility;
 public class Config {
     private static int craftChoice;
     private static int logChoice;
+    private static int goldCut;
+    public static void setGoldCut(String goldCut) {
+        Config.goldCut = Integer.valueOf(goldCut);
+    }
 
     public static void setCraftChoice(String craftChoice) {
         if (craftChoice.equals("Plank")) {
@@ -24,4 +28,5 @@ public class Config {
     }
     public static int getCraftChoice() { return craftChoice; }
     public static int getLogChoice() { return logChoice; }
+    public static int getGoldCut() { return goldCut; }
 }

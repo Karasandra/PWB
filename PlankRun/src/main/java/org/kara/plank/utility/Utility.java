@@ -54,5 +54,8 @@ public class Utility {
     public static boolean checkRing() {
         return Equipment.itemAt(Equipment.Slot.RING).valid();
     }
+    public static boolean useRing() {
+        return Equipment.itemAt(Equipment.Slot.RING).click("Castle Wars");
+    }
     public static boolean getIdle() { return !Players.local().inMotion(); }
 }

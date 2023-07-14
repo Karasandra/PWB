@@ -9,11 +9,9 @@ import org.powbot.api.Locatable;
 import org.powbot.api.rt4.Bank;
 import org.powbot.api.rt4.Camera;
 import org.powbot.api.rt4.Chat;
-import org.powbot.api.script.ScriptConfiguration;
-
 import java.util.List;
 
-import static java.util.List.of;
+
 
 public class ResupplyExecutor extends ActivityExecutor {
     private ResupplyActivity localActivity = ResupplyActivity.BANK;
@@ -36,10 +34,6 @@ public class ResupplyExecutor extends ActivityExecutor {
                 if (!Utility.myTile(Location.CASTLE_WARS)) {
                     Utility.step(Location.CASTLE_WARS);
                     return Utility.getLoopReturnLong();
-                }
-                Locatable bank = Bank.nearest();
-                if (!Bank.inViewport()) {
-                    Camera.turnTo(bank, 20);
                 }
                 if (!Bank.open()) {
                     //Log.severe("Bank failed to click");
@@ -76,7 +70,7 @@ public class ResupplyExecutor extends ActivityExecutor {
                         Condition.wait(() -> !Chat.chatting(), 250, 8);
                     }
                 }
-                if (!Utility.getInv(ObjectId.FIRE_WOOD).valid() && Utility.myTile(Location.WOOD_STORAGE)) {
+                if (!Utility.getInv(ObjectId.FIRE_WOOD).valid()) {
                     localActivity = ResupplyActivity.BANK;
                     Utility.setActivity(Activity.BANK);
                     return Utility.getLoopReturn();

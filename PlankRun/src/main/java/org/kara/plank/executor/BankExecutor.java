@@ -5,7 +5,6 @@ import org.kara.plank.utility.Location;
 import org.kara.plank.utility.ObjectId;
 import org.kara.plank.utility.Utility;
 import org.powbot.api.Condition;
-import org.powbot.api.Locatable;
 import org.powbot.api.rt4.*;
 
 public class BankExecutor extends ActivityExecutor {
@@ -15,12 +14,11 @@ public class BankExecutor extends ActivityExecutor {
         BANKING,
         RING
     }
-    private static boolean ringValid;
 
     @Override
     public int execute() {
         //Log.info("Bank Executor");
-        if (!Utility.myTile(Location.CASTLE_WARS) && !Utility.getObject(ObjectId.BANK).valid()) {
+        if (!Utility.myTile(Location.CASTLE_WARS)) {
             //Log.severe("Not at bank");
             Utility.setActivity(Activity.WALK);
             localActivity = BankActivity.BANKING;
@@ -40,13 +38,10 @@ public class BankExecutor extends ActivityExecutor {
                     Utility.setActivity(Activity.WALK);
                     return Utility.getLoopReturnQuick();
                 }
+                boolean ringValid;
                 if (Utility.checkRing()) {
                     ringValid = true;
                 } else { ringValid = false; }
-                Locatable bank = Bank.nearest();
-                if (!Bank.inViewport()) {
-                    Camera.turnTo(bank, 20);
-                }
                 if (!Bank.open()) {
                     //Log.severe("Bank failed to click");
                     return Utility.getLoopReturnQuick();

@@ -1,5 +1,6 @@
 package org.kara.plank;
 
+import com.sun.source.tree.IfTree;
 import org.kara.plank.executor.BankExecutor;
 import org.kara.plank.executor.CraftExecutor;
 import org.kara.plank.executor.ResupplyExecutor;
@@ -7,9 +8,7 @@ import org.kara.plank.executor.WalkExecutor;
 import org.kara.plank.utility.Config;
 import org.kara.plank.utility.Log;
 import org.kara.plank.utility.Utility;
-import org.powbot.api.rt4.Camera;
-import org.powbot.api.rt4.Game;
-import org.powbot.api.rt4.Movement;
+import org.powbot.api.rt4.*;
 import org.powbot.api.script.*;
 import org.powbot.api.script.paint.Paint;
 import org.powbot.api.script.paint.PaintBuilder;
@@ -43,11 +42,7 @@ import static java.lang.System.exit;
                         optionType = OptionType.INTEGER,
                         description = "Gold Cut-Off",
                         defaultValue = "45000"
-                ),
-                @ScriptConfiguration(
-                        name = "Example",
-                        description = "Example GUI option",
-                        optionType = OptionType.INFO)
+                )
         }
 )
 
